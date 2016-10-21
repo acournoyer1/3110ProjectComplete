@@ -15,8 +15,8 @@ SYSC 3110 MILESTONE 1
 
 Adam Staples			[100978589]
 Alex Cournoyer			[100964534]
-Daman Singh				[100965225]
-Ryan Ha					[100975926]
+Daman Singh			[100965225]
+Ryan Ha				[100975926]
 
 21/10/2016
 
