@@ -2,7 +2,7 @@
  * GUI class that builds all of the gui's properties
  * 
  * Author: Alex Cournoyer
- * Last Edited by: 
+ * Last Edited by: Daman Singh
  */
 import java.awt.Font;
 import java.awt.event.*;
@@ -35,6 +35,10 @@ public class GUI extends JFrame{
 	
 	private final Font BOLD_FONT = new Font("Dialog", Font.BOLD, 12);
 	
+	/*
+	 *  Instantiate all global GUI elements and builds the layout
+	 * 
+	 */
 	public GUI()
 	{	
 		JMenuBar jMenuBar = new JMenuBar();
@@ -119,6 +123,10 @@ public class GUI extends JFrame{
 		this.setVisible(true);
 	}
 	
+	/*
+	 *  Add all global listeners in the method below 
+	 *  i.e anything that is in the main GUI window
+	 */
 	private void setUpListeners()
 	{
 		addNode.addActionListener(new ActionListener()
@@ -257,6 +265,10 @@ public class GUI extends JFrame{
 		});
 	}
 	
+	/*
+	 *  Builds a test simulation with pre-determined nodes and connections
+	 * 
+	 */
 	private void buildTest()
 	{
 		sim.clear();
@@ -280,6 +292,10 @@ public class GUI extends JFrame{
 		sim.addConnection(b, e);
 	}
 	
+	/*
+	 *  Call this class after appending to the statusWindow to re-evaluate.
+	 *  This class will then enable and disable GUI elements depending on current parameters
+	 */
 	private void refresh()
 	{
 		if(sim.getNodes().size() < 2)
@@ -334,6 +350,10 @@ public class GUI extends JFrame{
 		}
 	}
 	
+	/*
+	 *  This method takes input from the built in command line 
+	 *  and parses it to take appropriate action
+	 */
 	private class CommandParser
 	{
 		public void parse(String s)
@@ -588,6 +608,10 @@ public class GUI extends JFrame{
 		}
 	}
 	
+	/*
+	 *  Nested class that builds the GUI for the addNode button
+	 *  and sets up listeners for addNode GUI layout
+	 */
 	private class AddNode extends JFrame
 	{
 		private JTextField nameField;
@@ -674,6 +698,10 @@ public class GUI extends JFrame{
 		}
 	}
 	
+	/*
+	 *  Nested class that builds the GUI for the addConnection button
+	 *  and sets up listeners for addConnection GUI layout
+	 */
 	private class AddConnection extends JFrame
 	{
 		private JComboBox<Node> firstNode;
@@ -733,6 +761,10 @@ public class GUI extends JFrame{
 		}
 	}
 	
+	/*
+	 *  Nested class that builds the GUI for the addMessage button
+	 *  and sets up listeners for addMessage GUI layout
+	 */
 	private class AddMessage extends JFrame
 	{
 		private JComboBox<Node> source;
@@ -796,6 +828,10 @@ public class GUI extends JFrame{
 		}
 	}
 	
+	/*
+	 *  Nested class that builds the GUI for the removeNode button
+	 *  and sets up listeners for removeNode GUI layout
+	 */
 	private class RemoveNode extends JFrame
 	{
 		private JComboBox<Node> node;
@@ -852,6 +888,10 @@ public class GUI extends JFrame{
 		}
 	}
 	
+	/*
+	 *  Nested class that builds the GUI for the removeConnection button
+	 *  and sets up listeners for removeConnection GUI layout
+	 */
 	private class RemoveConnection extends JFrame
 	{
 		private JComboBox<Connection> connection;
@@ -907,6 +947,10 @@ public class GUI extends JFrame{
 		}
 	}
 	
+	/*
+	 *  Nested class that builds the GUI for the viewNode button
+	 *  and sets up listeners for viewNode GUI layout
+	 */
 	private class ViewNode extends JFrame
 	{
 		private JComboBox<Node> node;
@@ -962,6 +1006,10 @@ public class GUI extends JFrame{
 		}
 	}
 	
+	/*
+	 *  Builds a new GUI 
+	 * 
+	 */
 	public static void main(String args[])
 	{
 		new GUI();
