@@ -3,7 +3,7 @@
  * Manages the ability to manipulate node connections.
  *
  * Created by: Ryan Ha
- * Last Edited by: Alex Cournoyer
+ * Last Edited by: Adam Staples
  */
 
 import java.util.ArrayList;
@@ -246,36 +246,39 @@ public class Simulation {
 			break;
 		}
 	}
-	
+	/*
+	 * Run a created network, creating messages at a determined rate for a determined length of steps.
+	 * Type of simulation determines the method of sending messages.
+	 *
+	 * @param1 the rate at which messages will be created
+	 * @param2 the number of total steps that will be taken before the method stops creating messages
+	 */
 	public void run(int rate, int length) throws InterruptedException{
 		int toIndex= 0;
 		int fromIndex = 0;
-		messageJumps.clear();
+		messageJumps.clear();//clear all previously create messages and message 
 		listMessages.clear();
 		Random toFrom = new Random();
 		
 		for (int i =0; i<length;i++){
 			
-			if((i%rate) == 0){
-				System.out.println("new msg created");
+			if((i%rate) == 0){//a message is created just before step 1 and will continue depending on the given rate
 				toIndex = toFrom.nextInt(listNodes.size());
-				while(toIndex == fromIndex){
+				while(toIndex == fromIndex){//ensures the node does not send a message to itself
 					fromIndex = toFrom.nextInt(listNodes.size());
 				}
 				statusWindow.append("Message  " + ((i/rate)+1) + ": " + listNodes.get(fromIndex) + " -> " + listNodes.get(toIndex) + " has been added.\n");
 				Message msg = new Message(listNodes.get(fromIndex),listNodes.get(toIndex));
 				listMessages.add(msg);
 			}
-			System.out.println("step taken");
 			TimeUnit.MILLISECONDS.sleep(20);
 			step();
 		}
+		//after final message is created continue stepping until all messages reach destination
 		while(messageJumps.size() != (length/rate)){
 			TimeUnit.MILLISECONDS.sleep(20);
 			step();
 		}
-		System.out.println("finished");
-		
 	}
 	
 	/*

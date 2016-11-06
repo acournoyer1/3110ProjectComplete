@@ -2,7 +2,7 @@
  * GUI class that builds all of the gui's properties
  * 
  * Author: Alex Cournoyer
- * Last Edited by: Daman Singh
+ * Last Edited by: Adam Staples
  */
 import java.awt.Font;
 import java.awt.event.*;
