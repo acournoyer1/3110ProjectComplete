@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import javax.swing.JTextArea;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class Simulation {
 	private ArrayList<Node> listNodes;
@@ -24,6 +25,7 @@ public class Simulation {
 	private ArrayList<Connection> connections;
 	
 	public Simulation(JTextArea statusWindow){
+		
 		this.listNodes = new ArrayList<Node>();
 		this.messageJumps = new ArrayList<Integer>();
 		this.listMessages = new ArrayList<Message>();
@@ -54,6 +56,7 @@ public class Simulation {
 		messageJumps.clear();
 		listMessages.clear();
 		connections.clear();
+		
 	}
 	
 	/*
@@ -244,9 +247,34 @@ public class Simulation {
 		}
 	}
 	
-	public void run(){
+	public void run(int rate, int length) throws InterruptedException{
+		int toIndex= 0;
+		int fromIndex = 0;
 		messageJumps.clear();
 		listMessages.clear();
+		Random toFrom = new Random();
+		
+		for (int i =0; i<length;i++){
+			
+			if((i%rate) == 0){
+				System.out.println("new msg created");
+				toIndex = toFrom.nextInt(listNodes.size());
+				while(toIndex == fromIndex){
+					fromIndex = toFrom.nextInt(listNodes.size());
+				}
+				statusWindow.append("Message  " + ((i/rate)+1) + ": " + listNodes.get(fromIndex) + " -> " + listNodes.get(toIndex) + " has been added.\n");
+				Message msg = new Message(listNodes.get(fromIndex),listNodes.get(toIndex));
+				listMessages.add(msg);
+			}
+			System.out.println("step taken");
+			TimeUnit.MILLISECONDS.sleep(20);
+			step();
+		}
+		while(messageJumps.size() != (length/rate)){
+			TimeUnit.MILLISECONDS.sleep(20);
+			step();
+		}
+		System.out.println("finished");
 		
 	}
 	
