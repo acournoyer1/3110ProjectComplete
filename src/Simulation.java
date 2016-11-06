@@ -196,10 +196,10 @@ public class Simulation {
 	 * simulation selected
 	 */
 	public void step(){
+		ArrayList<Message> reachedDestination = new ArrayList<Message>();
 		switch(this.type){
 		//User selected RANDOM step type.
 		case RANDOM:
-			ArrayList<Message> reachedDestination = new ArrayList<Message>();
 			for(Message msg : this.listMessages){
 				Random nextNode = new Random();
 				Node refNode = msg.getPath().getLast();
