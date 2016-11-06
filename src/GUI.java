@@ -10,7 +10,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class GUI extends JFrame{
+public class GUI extends JFrame implements SimulationListener{
 	
 	private JMenuItem addNode;
 	private JMenuItem addConnection;
@@ -62,6 +62,8 @@ public class GUI extends JFrame{
 		commandSplit = new JSplitPane();
 		parser = new CommandParser();
 		sim = new Simulation(statusWindow);
+		sim.addListener(this);
+		refresh();
 		
 		JMenu fileMenu = new JMenu("File");
 		JMenu addMenu = new JMenu("Add");
@@ -113,7 +115,6 @@ public class GUI extends JFrame{
 		viewAverage.setEnabled(false);
 		statusWindow.setEditable(false);
 		commandField.setEditable(false);
-		refresh();
 		this.add(split);
 		this.setSize(600, 400);
 		split.setDividerLocation((int)(this.getHeight()*0.75));
@@ -220,7 +221,6 @@ public class GUI extends JFrame{
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				sim.step();
-				refresh();
 			}
 		});
 		createTest.addActionListener(new ActionListener()
@@ -228,8 +228,7 @@ public class GUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				buildTest();
-				refresh();
+				sim.buildTest();
 				statusWindow.setText("");
 				Message.reset();
 				statusWindow.append("Test Network has been created.\n");
@@ -257,7 +256,6 @@ public class GUI extends JFrame{
 				statusWindow.setText("");
 				sim.clear();
 				Message.reset();
-				refresh();
 				statusWindow.append("Simulation cleared.\n");
 			}
 		});
@@ -274,31 +272,9 @@ public class GUI extends JFrame{
 		});
 	}
 	
-	/*
-	 *  Builds a test simulation with pre-determined nodes and connections
-	 * 
-	 */
-	private void buildTest()
+	public void update()
 	{
-		sim.clear();
-		Node a = new Node("A");
-		Node b = new Node("B");
-		Node c = new Node("C");
-		Node d = new Node("D");
-		Node e = new Node("E");
-		
-		sim.addNode(a);
-		sim.addNode(b);
-		sim.addNode(c);
-		sim.addNode(d);
-		sim.addNode(e);
-		
-		sim.addConnection(a, b);
-		sim.addConnection(a, c);
-		sim.addConnection(a, e);
-		sim.addConnection(c, d);
-		sim.addConnection(d, b);
-		sim.addConnection(b, e);
+		refresh();
 	}
 	
 	/*
@@ -412,14 +388,12 @@ public class GUI extends JFrame{
 				}
 				else if(words[0].equalsIgnoreCase("test"))
 				{
-					buildTest();
-					refresh();
+					sim.buildTest();
 					statusWindow.append("The test network has been built.\n");
 				}
 				else if(words[0].equalsIgnoreCase("clear"))
 				{
 					sim.clear();
-					refresh();
 					statusWindow.setText("");
 					statusWindow.append("Simulation cleared.\n");
 				}
@@ -447,7 +421,6 @@ public class GUI extends JFrame{
 						{
 							sim.addNode(new Node(words[2]));
 							statusWindow.append("Node " + words[2] + " has been added.\n");
-							refresh();
 						}
 						else
 						{
@@ -477,7 +450,6 @@ public class GUI extends JFrame{
 						else
 						{
 							sim.addConnection(n1, n2);
-							refresh();
 							statusWindow.append("Connection " + words[2] + " < - > " + words[3] + " has been added.\n");
 						}
 					}
@@ -506,7 +478,6 @@ public class GUI extends JFrame{
 							Message msg = new Message(n1, n2);
 							statusWindow.append("Message " + msg.getId() + " : " + words[2] + " - > " + words[3] + " has been added.\n");
 							sim.addMsg(msg);
-							refresh();
 						}
 					}
 				}
@@ -534,7 +505,6 @@ public class GUI extends JFrame{
 						else
 						{
 							sim.removeNode(n);
-							refresh();
 							statusWindow.append("Node " + words[2] + " has been removed.\n");
 						}
 					}
@@ -568,7 +538,6 @@ public class GUI extends JFrame{
 							{
 								statusWindow.append("The specified connection does not exist.\n");
 							}
-							refresh();
 						}
 					}
 				}
@@ -686,7 +655,6 @@ public class GUI extends JFrame{
 					{
 						statusWindow.append("A node with this name already exists.\n");
 					}
-					refresh();
 					dispose();
 				}		
 			});
@@ -763,7 +731,6 @@ public class GUI extends JFrame{
 				{
 					sim.addConnection((Node)firstNode.getSelectedItem(), (Node)secondNode.getSelectedItem());
 					statusWindow.append("Connection " + ((Node)firstNode.getSelectedItem()).getName() + " < - > " + ((Node)secondNode.getSelectedItem()).getName() + " has been added.\n");
-					refresh();
 					dispose();
 				}		
 			});
@@ -829,7 +796,6 @@ public class GUI extends JFrame{
 					Message msg = new Message((Node)source.getSelectedItem(), (Node)destination.getSelectedItem());
 					sim.addMsg(msg);
 					statusWindow.append("Message " + msg.getId() + ": " + ((Node)source.getSelectedItem()).getName() + " - > " + ((Node)destination.getSelectedItem()).getName() + " has been added.\n");
-					refresh();
 					dispose();
 				}		
 			});
@@ -890,7 +856,6 @@ public class GUI extends JFrame{
 				{
 					sim.removeNode((Node)node.getSelectedItem());
 					statusWindow.append("Node " + ((Node)node.getSelectedItem()).getName() + " has been removed.\n");
-					refresh();
 					dispose();
 				}		
 			});

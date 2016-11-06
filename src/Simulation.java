@@ -6,6 +6,8 @@
  * Last Edited by: Adam Staples, Ryan Ha
  */
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -23,6 +25,8 @@ public class Simulation {
 	private SimulationType type;
 	private ArrayList<Message> listMessages;
 	private ArrayList<Connection> connections;
+	private ArrayList<SimulationListener> listeners;
+	private boolean ignoreUpdate = false;
 	
 	public Simulation(JTextArea statusWindow){
 		
@@ -30,10 +34,32 @@ public class Simulation {
 		this.messageJumps = new ArrayList<Integer>();
 		this.listMessages = new ArrayList<Message>();
 		this.connections = new ArrayList<Connection>();
+		this.listeners = new ArrayList<SimulationListener>();
 		this.statusWindow = statusWindow;
 		
 		//Temporary setup: Type is initialized at random
 		this.type = SimulationType.RANDOM;
+	}
+	
+	public void addListener(SimulationListener s)
+	{
+		listeners.add(s);
+	}
+	
+	public void update()
+	{
+		if(!ignoreUpdate)
+		{
+			for(SimulationListener s: listeners)
+			{
+				s.update();
+			}
+		}
+	}
+	
+	public void setIgnore(boolean ignore)
+	{
+		ignoreUpdate = ignore;
 	}
 	
 	/*
@@ -44,6 +70,7 @@ public class Simulation {
 	 */
 	public void addMsg(Message msg){
 		listMessages.add(msg);
+		update();
 	}
 	
 	/*
@@ -56,7 +83,7 @@ public class Simulation {
 		messageJumps.clear();
 		listMessages.clear();
 		connections.clear();
-		
+		update();
 	}
 	
 	/*
@@ -95,6 +122,7 @@ public class Simulation {
 	public void addNode(Node n)
 	{
 		listNodes.add(n);
+		update();
 	}
 	
 	/*
@@ -113,6 +141,7 @@ public class Simulation {
 			if(c.contains(n))toRemove.add(c);
 		}
 		connections.removeAll(toRemove);
+		update();
 	}
 	
 	/*
@@ -141,6 +170,7 @@ public class Simulation {
 		if(n1.equals(n2)) return;
 		n1.connect(n2);
 		connections.add(new Connection(n1, n2));
+		update();
 	}
 	
 	/*
@@ -167,6 +197,7 @@ public class Simulation {
 			connections.remove(toRemove);
 			n1.disconnect(n2);
 		}
+		update();
 		return removed;
 	}
 	
@@ -189,6 +220,7 @@ public class Simulation {
 	{
 		connections.remove(c);
 		c.getFirstNode().disconnect(c.getSecondNode());
+		update();
 	}
 	
 	/*
@@ -236,6 +268,7 @@ public class Simulation {
 				String s = "The average amount of jumps so far is: " + this.average() + "\n";
 				statusWindow.append(s);
 			}
+			update();
 			break;
 
 		//User selected FLOOD step type.
@@ -269,6 +302,7 @@ public class Simulation {
 			{
 				messageJumps.add(msg.getCount());
 			}
+			update();
 			break;
 
 		default:
@@ -309,6 +343,36 @@ public class Simulation {
 			TimeUnit.MILLISECONDS.sleep(20);
 			step();
 		}
+	}
+	
+	/*
+	 *  Builds a test simulation with pre-determined nodes and connections
+	 * 
+	 */
+	public void buildTest()
+	{
+		this.setIgnore(true);
+		this.clear();
+		Node a = new Node("A");
+		Node b = new Node("B");
+		Node c = new Node("C");
+		Node d = new Node("D");
+		Node e = new Node("E");
+		
+		this.addNode(a);
+		this.addNode(b);
+		this.addNode(c);
+		this.addNode(d);
+		this.addNode(e);
+		
+		this.addConnection(a, b);
+		this.addConnection(a, c);
+		this.addConnection(a, e);
+		this.addConnection(c, d);
+		this.addConnection(d, b);
+		this.addConnection(b, e);
+		this.setIgnore(false);
+		update();
 	}
 	
 	/*
