@@ -233,11 +233,11 @@ public class GUI extends JFrame{
 				statusWindow.setText("");
 				Message.reset();
 				statusWindow.append("Test Network has been created.\n");
-				try {
-					sim.run(3, 30);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				//try {
+					//sim.run(3, 30);
+				//} catch (InterruptedException e) {
+				//	e.printStackTrace();
+				//}
 				
 			}
 		});
