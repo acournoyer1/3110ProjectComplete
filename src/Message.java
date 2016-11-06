@@ -1,14 +1,12 @@
 
 /**
+ * MESSAGE V2.0
  * @Author Daman Singh , Ryan Ha
- * Last Edited Oct 20th 2016
+ * Last Edited Nov 06th 2016
  * 
  */
 
 import java.util.LinkedList;
-
-
-
 
 public class Message {
 	private Node dest;
@@ -24,6 +22,13 @@ public class Message {
 		this.nodePath = new LinkedList<Node>();
 		nodePath.addFirst(src);
 		this.id = idGenerator++;
+	}
+
+	public Message(int parentID, Node dest, Node src, int parentCount){
+		this.id = parentID;
+		this.nodePath = new LinkedList<Node>();
+		this.dest = dest;
+		this.count = parentCount;
 	}
 	
 	public void appendPath(Node node){
