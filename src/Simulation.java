@@ -218,7 +218,7 @@ public class Simulation {
 				if(msg.getDest().equals(currentNode))
 				{
 					reachedDestination.add(msg);
-					s += ", and has reached its destination.\n";
+					s += ", and has reached its destination. \n";
 				}
 				else
 				{
@@ -230,6 +230,8 @@ public class Simulation {
 			{
 				listMessages.remove(msg);
 				messageJumps.add(msg.getCount());
+				String s = "The average amount of jumps so far is: " + this.average() + "\n";
+				statusWindow.append(s);
 			}
 			break;
 			//To Implement: Flood step type
@@ -240,6 +242,12 @@ public class Simulation {
 			System.out.println("No current type selected!");
 			break;
 		}
+	}
+	
+	public void run(){
+		messageJumps.clear();
+		listMessages.clear();
+		
 	}
 	
 	/*
