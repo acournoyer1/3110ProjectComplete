@@ -237,8 +237,38 @@ public class Simulation {
 				statusWindow.append(s);
 			}
 			break;
-			//To Implement: Flood step type
+
+		//User selected FLOOD step type.
 		case FLOOD:
+			//Temporary list containing the children messages
+			ArrayList<Message> tempList = new ArrayList<Message>();
+			for(Message msg : this.listMessages){
+				msg.incCount();
+				Node refNode = msg.getPath().getFirst();
+				for(Node n : refNode.getConnections()){
+					if(!n.getMessagesVisited().contains(msg.getId())){
+						Message ChildMsg = new Message(msg.getId(), msg.getDest(), n, msg.getCount());
+						tempList.add(ChildMsg);
+						n.addMessagesVisited(ChildMsg.getId());
+						ChildMsg.appendPath(n);
+						String s = "Message " + ChildMsg.getId() + " sending child message to: " + n.getName();
+						if(ChildMsg.getDest().equals(n)){
+							s += " , and has reached its destination.\n";
+							reachedDestination.add(ChildMsg);
+						}
+						else
+							s+= ".\n";
+						statusWindow.append(s);
+					}
+				}
+			}
+			for(Message newMessages : tempList){
+				listMessages.add(newMessages);
+			}
+			for(Message msg: reachedDestination)
+			{
+				messageJumps.add(msg.getCount());
+			}
 			break;
 
 		default:
