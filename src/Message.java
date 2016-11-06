@@ -34,7 +34,10 @@ public class Message {
 	{
 		return id;
 	}
-
+	
+	public static void reset(){
+		idGenerator =1;
+	}
 	public LinkedList<Node> getPath(){
 		return nodePath;
 	}

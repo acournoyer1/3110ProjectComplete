@@ -230,7 +230,15 @@ public class GUI extends JFrame{
 			{
 				buildTest();
 				refresh();
+				statusWindow.setText("");
+				Message.reset();
 				statusWindow.append("Test Network has been created.\n");
+				//try {
+					//sim.run(3, 30);
+				//} catch (InterruptedException e) {
+				//	e.printStackTrace();
+				//}
+				
 			}
 		});
 		viewAverage.addActionListener(new ActionListener()
@@ -248,6 +256,7 @@ public class GUI extends JFrame{
 			{
 				statusWindow.setText("");
 				sim.clear();
+				Message.reset();
 				refresh();
 				statusWindow.append("Simulation cleared.\n");
 			}
