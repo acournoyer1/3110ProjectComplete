@@ -3,7 +3,7 @@
  * Manages the ability to manipulate node connections.
  *
  * Created by: Ryan Ha
- * Last Edited by: Adam Staples
+ * Last Edited by: Adam Staples, Ryan Ha
  */
 
 import java.util.ArrayList;
