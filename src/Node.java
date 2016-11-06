@@ -10,6 +10,7 @@ import java.util.*;
 public class Node {
 	private String name;
 	private HashSet<Node> connections;
+	private ArrayList<Integer> MessagesVisited;
 	
 	/*
 	 * Create a node that has connections to other nodes 
@@ -18,6 +19,7 @@ public class Node {
 	public Node(String name){
 		this.name = name;
 		connections = new HashSet<Node>();
+		this.MessagesVisited = new ArrayList<Integer>();
 	}
 	
 	/*
@@ -69,7 +71,6 @@ public class Node {
 		n.connections.remove(this);
 	}
 
-	
 	/*
 	 * Returns a list of all nodes connected to this node
 	 * 
@@ -90,6 +91,17 @@ public class Node {
 		}
 	}
 
+	/*
+	 * Add a message ID to the list
+	 */
+	public void addMessagesVisited(int msgID){
+		MessagesVisited.add(msgID);
+	}
+	
+	public ArrayList<Integer> getMessagesVisited(){
+		return MessagesVisited;
+	}
+	
 	@Override
 	public String toString() {
 		return name;
