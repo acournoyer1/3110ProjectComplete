@@ -1,3 +1,5 @@
+import java.awt.Graphics2D;
+
 /**
  * Connection class defines the properties to connect two nodes
  * 
@@ -66,5 +68,12 @@ public class Connection {
 		if(!(o instanceof Connection)) return false;
 		Connection c = (Connection)o;
 		return c.firstNode.equals(this.firstNode) && c.secondNode.equals(this.secondNode);
+	}
+	
+	public void paint(Graphics2D g)
+	{
+		NodeImage n1 = firstNode.getNodeImage();
+		NodeImage n2 = secondNode.getNodeImage();
+		g.drawLine(n1.getCenterX(), n1.getCenterY(), n2.getCenterX(), n2.getCenterY());
 	}
 }

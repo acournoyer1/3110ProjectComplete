@@ -11,6 +11,7 @@ public class Node {
 	private String name;
 	private HashSet<Node> connections;
 	private ArrayList<Integer> MessagesVisited;
+	private NodeImage image;
 	
 	/*
 	 * Create a node that has connections to other nodes 
@@ -20,6 +21,16 @@ public class Node {
 		this.name = name;
 		connections = new HashSet<Node>();
 		this.MessagesVisited = new ArrayList<Integer>();
+	}
+	
+	public NodeImage getNodeImage()
+	{
+		return image;
+	}
+	
+	public void setNodeImage(NodeImage image)
+	{
+		this.image = image;
 	}
 	
 	/*

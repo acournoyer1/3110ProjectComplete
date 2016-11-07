@@ -34,10 +34,13 @@ public class GUI extends JFrame implements SimulationListener{
 	private JButton runButton;
 	private JSplitPane split;
 	private JSplitPane commandSplit;
+	private JSplitPane buttonSplit;
+	private JSplitPane bottomSplit;
 	private CommandParser parser;
 	private JScrollPane scrollPane;
 	private Simulation sim;
 	private DialogManager dialog;
+	private GraphicsCanvas canvas;
 	
 	private final Font BOLD_FONT = new Font("Dialog", Font.BOLD, 12);
 	
@@ -72,10 +75,12 @@ public class GUI extends JFrame implements SimulationListener{
 		viewCommand.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_DOWN_MASK));
 		commandField = new JTextField();
 		commandSplit = new JSplitPane();
+		bottomSplit = new JSplitPane();
 		sim = new Simulation(statusWindow);
 		sim.addListener(this);
 		dialog = new DialogManager(sim, statusWindow);
 		parser = new CommandParser(statusWindow, dialog, sim);
+		canvas = new GraphicsCanvas(sim);
 		refresh();
 		
 		JMenu fileMenu = new JMenu("File");
@@ -110,26 +115,32 @@ public class GUI extends JFrame implements SimulationListener{
 		typeMenu.add(floodType);
 		this.setJMenuBar(jMenuBar);
 		
-		JSplitPane buttonPanel = new JSplitPane();
-		buttonPanel.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-		buttonPanel.setDividerSize(1);
-		buttonPanel.setLeftComponent(stepButton);
-		buttonPanel.setRightComponent(runButton);
+		buttonSplit = new JSplitPane();
+		buttonSplit.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		buttonSplit.setDividerSize(1);
+		buttonSplit.setLeftComponent(stepButton);
+		buttonSplit.setRightComponent(runButton);
 		
 		scrollPane = new JScrollPane(statusWindow);
 		scrollPane.setHorizontalScrollBar(new JScrollBar(JScrollBar.HORIZONTAL));
-		
-		split = new JSplitPane();
-		split.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		split.setTopComponent(scrollPane);
-		split.setBottomComponent(buttonPanel);
-		split.setDividerSize(1);
-	    split.setEnabled(false);
 	    
 	    commandSplit.setOrientation(JSplitPane.VERTICAL_SPLIT);
 	    commandSplit.setTopComponent(commandField);
 	    commandSplit.setDividerSize(5);
 	    commandSplit.setEnabled(false);
+	    
+	    bottomSplit.setOrientation(JSplitPane.VERTICAL_SPLIT);
+	    bottomSplit.setTopComponent(canvas);
+	    bottomSplit.setBottomComponent(buttonSplit);
+	    bottomSplit.setDividerSize(1);
+	    bottomSplit.setEnabled(false);
+	    
+	    split = new JSplitPane();
+		split.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		split.setTopComponent(scrollPane);
+		split.setBottomComponent(bottomSplit);
+		split.setDividerSize(1);
+	    split.setEnabled(false);
 	    
 		stepButton.setEnabled(false);
 		removeNode.setEnabled(false);
@@ -139,9 +150,10 @@ public class GUI extends JFrame implements SimulationListener{
 		statusWindow.setEditable(false);
 		commandField.setEditable(false);
 		this.add(split);
-		this.setSize(600, 400);
-		split.setDividerLocation((int)(this.getHeight()*0.75));
-		buttonPanel.setDividerLocation((int)(this.getWidth()*0.50));
+		this.setSize(1000, 650);
+		split.setDividerLocation((int)(this.getHeight()*0.15));
+		buttonSplit.setDividerLocation((int)(this.getWidth()*0.50));
+		bottomSplit.setDividerLocation((int)(this.getHeight()*0.675));
 		this.setTitle("Network Simulation");
 		this.setLocationRelativeTo(null);
 		setUpListeners();
@@ -214,7 +226,7 @@ public class GUI extends JFrame implements SimulationListener{
 					commandSplit.setBottomComponent(scrollPane);
 					split.setTopComponent(commandSplit);
 					commandSplit.setDividerLocation(30);
-					split.setDividerLocation((int)(GUI.this.getHeight()*0.75));
+					split.setDividerLocation((int)(GUI.this.getHeight()*0.15));
 					commandField.setFont(BOLD_FONT);
 					commandField.setText("");
 					commandField.setEditable(true);
@@ -224,7 +236,7 @@ public class GUI extends JFrame implements SimulationListener{
 				{
 					commandField.setEditable(false);
 					split.setTopComponent(scrollPane);
-					split.setDividerLocation((int)(GUI.this.getHeight()*0.75));
+					split.setDividerLocation((int)(GUI.this.getHeight()*0.15));
 				}
 			}
 		});
