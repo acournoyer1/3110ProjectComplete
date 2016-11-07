@@ -1,8 +1,6 @@
 package tests;
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,9 +8,6 @@ import backEnd.Message;
 import backEnd.Node;
 import backEnd.Simulation;
 
-/**
- * 
- */
 
 /**
  * @author Daman
@@ -21,8 +16,6 @@ import backEnd.Simulation;
 public class SimulationTest {
 
 	private Message testMsg;
-	private Message testMsg1;
-	private Message testMsg2;
 	
 	private Node srcNode;
 	private Node destNode;

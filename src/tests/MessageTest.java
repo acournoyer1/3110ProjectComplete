@@ -20,8 +20,6 @@ import backEnd.Node;
 public class MessageTest {
 
 	private Message testMsg;
-	private Message testMsg1;
-	private Message testMsg2;
 	
 	private Node srcNode;
 	private Node destNode;
