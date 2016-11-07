@@ -339,7 +339,7 @@ public class Simulation {
 			step();
 		}
 		//after final message is created continue stepping until all messages reach destination
-		while(messageJumps.size() != (length/rate)){
+		while(listMessages.size() != 0){
 			TimeUnit.MILLISECONDS.sleep(20);
 			step();
 		}
