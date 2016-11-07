@@ -6,6 +6,9 @@
  * 
  */
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.util.LinkedList;
 
 public class Message {
@@ -13,6 +16,7 @@ public class Message {
 	private int count;
 	private LinkedList<Node> nodePath;
 	private int id;
+	private boolean stopped = false;
 	
 	private static int idGenerator = 1;
 	
@@ -22,6 +26,7 @@ public class Message {
 		this.nodePath = new LinkedList<Node>();
 		nodePath.addFirst(src);
 		this.id = idGenerator++;
+		src.addMessagesVisited(this.id);
 	}
 
 	public Message(int parentID, Node dest, Node src, int parentCount){
@@ -56,6 +61,11 @@ public class Message {
 		return dest;
 	}
 	
+	public boolean reachedDestination()
+	{
+		return nodePath.getLast().equals(dest);
+	}
+	
 	
 	
 	public int getCount() {
@@ -64,6 +74,32 @@ public class Message {
 	
 	public void incCount() {
 		count++;
+	}
+	
+	public void stop()
+	{
+		stopped = true;
+	}
+	
+	public boolean isStopped()
+	{
+		return stopped;
+	}
+	
+	public void paint(Graphics2D g)
+	{
+		NodeImage n = nodePath.getLast().getNodeImage();
+		Ellipse2D.Double circle = new Ellipse2D.Double(n.getCenterX()-30, n.getCenterY()-30, 60, 60);
+		if(!reachedDestination())
+		{
+			if(stopped) g.setColor(Color.YELLOW);
+			else g.setColor(Color.GREEN);
+		}
+		else g.setColor(Color.RED);
+		g.fill(circle);
+		g.setColor(Color.BLACK);
+		g.draw(circle);
+		g.drawString(""+this.getId(), n.getCenterX()+30, n.getCenterY()-30);
 	}
 	
 }

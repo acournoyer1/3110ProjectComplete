@@ -140,7 +140,7 @@ public class GUI extends JFrame implements SimulationListener{
 		split.setTopComponent(scrollPane);
 		split.setBottomComponent(bottomSplit);
 		split.setDividerSize(1);
-	    split.setEnabled(false);
+		split.setEnabled(false);
 	    
 		stepButton.setEnabled(false);
 		removeNode.setEnabled(false);
@@ -151,9 +151,9 @@ public class GUI extends JFrame implements SimulationListener{
 		commandField.setEditable(false);
 		this.add(split);
 		this.setSize(1000, 650);
-		split.setDividerLocation((int)(this.getHeight()*0.15));
+		split.setDividerLocation((int)(this.getHeight()*0.25));
 		buttonSplit.setDividerLocation((int)(this.getWidth()*0.50));
-		bottomSplit.setDividerLocation((int)(this.getHeight()*0.675));
+		bottomSplit.setDividerLocation((int)(this.getHeight()*0.60));
 		this.setTitle("Network Simulation");
 		this.setLocationRelativeTo(null);
 		setUpListeners();
@@ -226,7 +226,7 @@ public class GUI extends JFrame implements SimulationListener{
 					commandSplit.setBottomComponent(scrollPane);
 					split.setTopComponent(commandSplit);
 					commandSplit.setDividerLocation(30);
-					split.setDividerLocation((int)(GUI.this.getHeight()*0.15));
+					split.setDividerLocation((int)(GUI.this.getHeight()*0.25));
 					commandField.setFont(BOLD_FONT);
 					commandField.setText("");
 					commandField.setEditable(true);
@@ -236,7 +236,7 @@ public class GUI extends JFrame implements SimulationListener{
 				{
 					commandField.setEditable(false);
 					split.setTopComponent(scrollPane);
-					split.setDividerLocation((int)(GUI.this.getHeight()*0.15));
+					split.setDividerLocation((int)(GUI.this.getHeight()*0.25));
 				}
 			}
 		});
@@ -410,7 +410,6 @@ public class GUI extends JFrame implements SimulationListener{
 			}
 			else
 			{
-				statusWindow.append("Yo");
 				stepButton.setEnabled(true);
 				runButton.setEnabled(true);
 			}

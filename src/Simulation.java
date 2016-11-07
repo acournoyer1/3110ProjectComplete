@@ -126,6 +126,11 @@ public class Simulation {
 		return listMessages.size();
 	}
 	
+	public ArrayList<Message> getMessageList()
+	{
+		return listMessages;
+	}
+	
 	/*
 	 * Gets the number of completed message entries in the list.
 	 *
@@ -262,6 +267,20 @@ public class Simulation {
 		switch(this.type){
 		//User selected RANDOM step type.
 		case RANDOM:
+			for(Message msg: listMessages)
+			{
+				if(msg.reachedDestination())
+				{
+					reachedDestination.add(msg);
+				}
+			}
+			for(Message msg: reachedDestination)
+			{
+				listMessages.remove(msg);
+				messageJumps.add(msg.getCount());
+				String s = "The average amount of jumps so far is: " + this.average() + "\n";
+				statusWindow.append(s);
+			}
 			for(Message msg : this.listMessages){
 				Random nextNode = new Random();
 				Node refNode = msg.getPath().getLast();
@@ -280,22 +299,14 @@ public class Simulation {
 
 				String s = "Message " + msg.getId() + " has moved to " + currentNode.getName();
 
-				if(msg.getDest().equals(currentNode))
+				if(msg.reachedDestination())
 				{
-					reachedDestination.add(msg);
 					s += ", and has reached its destination. \n";
 				}
 				else
 				{
 					s += ".\n";
 				}
-				statusWindow.append(s);
-			}
-			for(Message msg: reachedDestination)
-			{
-				listMessages.remove(msg);
-				messageJumps.add(msg.getCount());
-				String s = "The average amount of jumps so far is: " + this.average() + "\n";
 				statusWindow.append(s);
 			}
 			update();
@@ -305,6 +316,29 @@ public class Simulation {
 		case FLOOD:
 			//Temporary list containing the children messages
 			ArrayList<Message> tempList = new ArrayList<Message>();
+			ArrayList<Integer> idList = new ArrayList<Integer>();
+			ArrayList<Message> removeList = new ArrayList<Message>();
+			for(Message msg: listMessages)
+			{
+				if(msg.reachedDestination())
+				{
+					idList.add(msg.getId());
+				}
+			}
+			for(Message msg: listMessages)
+			{
+				if(idList.contains(msg.getId()))
+				{
+					removeList.add(msg);
+				}
+			}
+			for(Message msg: removeList)
+			{
+				listMessages.remove(msg);
+			}
+			idList.clear();
+			removeList.clear();
+			
 			for(Message msg : this.listMessages){
 				msg.incCount();
 				Node refNode = msg.getPath().getFirst();
@@ -315,7 +349,7 @@ public class Simulation {
 						n.addMessagesVisited(ChildMsg.getId());
 						ChildMsg.appendPath(n);
 						String s = "Message " + ChildMsg.getId() + " sending child message to: " + n.getName();
-						if(ChildMsg.getDest().equals(n)){
+						if(ChildMsg.reachedDestination()){
 							s += " , and has reached its destination.\n";
 							reachedDestination.add(ChildMsg);
 						}
@@ -324,6 +358,12 @@ public class Simulation {
 						statusWindow.append(s);
 					}
 				}
+				removeList.add(msg);
+			}
+			//Questionable, talk to Ryan
+			for(Message msg: removeList)
+			{
+				listMessages.remove(msg);
 			}
 			for(Message newMessages : tempList){
 				listMessages.add(newMessages);
@@ -337,9 +377,23 @@ public class Simulation {
 				}
 				messageJumps.add(msg.getCount());
 			}
-			for(Message removeMessage : indexList){
-				listMessages.remove(removeMessage);
+			for(Message msg: listMessages)
+			{
+				if(msg.reachedDestination())
+				{
+					idList.add(msg.getId());
+				}
 			}
+			for(Message msg: listMessages)
+			{
+				if(idList.contains(msg.getId()))
+				{
+					msg.stop();
+				}
+			}
+//			for(Message removeMessage : indexList){
+//				listMessages.remove(removeMessage);
+//			}
 			update();
 			break;
 

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 public class GraphicsCanvas extends JPanel implements SimulationListener{
 	private ArrayList<NodeImage> nodes;
 	private ArrayList<Connection> connections;
+	private ArrayList<Message> messages;
 	private Simulation sim;
 	
 	public GraphicsCanvas(Simulation sim)
@@ -18,6 +19,8 @@ public class GraphicsCanvas extends JPanel implements SimulationListener{
 		this.sim = sim;
 		connections = sim.getConnections();
 		sim.addListener(this);
+		connections = sim.getConnections();
+		messages = sim.getMessageList();
 	}
 	
 	@Override
@@ -26,6 +29,10 @@ public class GraphicsCanvas extends JPanel implements SimulationListener{
 		super.paint(g);
 		setBackground(Color.WHITE);
 		Graphics2D g2 = (Graphics2D)g;
+		for(Message m: messages)
+		{
+			m.paint(g2);
+		}
 		for(Connection c: connections)
 		{
 			c.paint(g2);
@@ -41,10 +48,11 @@ public class GraphicsCanvas extends JPanel implements SimulationListener{
 		nodes.clear();
 		ArrayList<Node> nodeList = sim.getNodes();
 		connections = sim.getConnections();
+		messages = sim.getMessageList();
 		ArrayList<Point> points = getCircle(new Point(this.getWidth()/2, this.getHeight()/2), getRadius(), nodeList.size());
 		for(int i = 0; i < nodeList.size(); i++)
 		{
-			NodeImage n = new NodeImage(points.get(i), 50, 50, nodeList.get(i));
+			NodeImage n = new NodeImage(points.get(i), nodeList.get(i));
 			nodeList.get(i).setNodeImage(n);
 			nodes.add(n);
 		}

@@ -7,9 +7,9 @@ public class NodeImage {
 	private Ellipse2D.Double circle;
 	private Node node;
 	
-	public NodeImage(Point p, int width, int height, Node node)
+	public NodeImage(Point p, Node node)
 	{
-		circle = new Ellipse2D.Double(p.getX() - width/2, p.getY() - height/2, width, height);
+		circle = new Ellipse2D.Double(p.getX() - 25, p.getY() - 25, 50, 50);
 		this.node = node;
 	}
 	
