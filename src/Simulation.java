@@ -6,8 +6,6 @@
  * Last Edited by: Adam Staples, Ryan Ha
  */
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -60,6 +58,11 @@ public class Simulation {
 	public void setIgnore(boolean ignore)
 	{
 		ignoreUpdate = ignore;
+	}
+	
+	public void setType(SimulationType type)
+	{
+		this.type = type;
 	}
 	
 	/*

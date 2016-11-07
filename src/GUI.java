@@ -21,7 +21,8 @@ public class GUI extends JFrame implements SimulationListener{
 	private JMenuItem viewNode;
 	private JMenuItem viewAllNodes;
 	private JMenuItem viewAverage;
-	private JMenuItem randomType;
+	private JCheckBoxMenuItem randomType;
+	private JCheckBoxMenuItem floodType;
 	private JMenuItem clearSim;
 	private JCheckBoxMenuItem viewCommand;
 	private JTextField commandField;
@@ -54,7 +55,9 @@ public class GUI extends JFrame implements SimulationListener{
 		viewAverage = new JMenuItem("Average");
 		statusWindow = new JTextArea();
 		stepButton = new JButton("Step");
-		randomType = new JMenuItem("Random");
+		randomType = new JCheckBoxMenuItem("Random");
+		randomType.setSelected(true);
+		floodType = new JCheckBoxMenuItem("Flood");
 		clearSim = new JMenuItem("Clear Simulation");
 		viewCommand = new JCheckBoxMenuItem("Command Line", false);
 		viewCommand.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_DOWN_MASK));
@@ -91,6 +94,7 @@ public class GUI extends JFrame implements SimulationListener{
 		viewToolbars.add(viewCommand);
 		simulationMenu.add(typeMenu);
 		typeMenu.add(randomType);
+		typeMenu.add(floodType);
 		this.setJMenuBar(jMenuBar);
 		
 		scrollPane = new JScrollPane(statusWindow);
@@ -268,6 +272,26 @@ public class GUI extends JFrame implements SimulationListener{
 				{
 					statusWindow.append(n.getDetails() + "\n");
 				}
+			}
+		});
+		randomType.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				floodType.setSelected(false);
+				sim.setType(SimulationType.RANDOM);
+				statusWindow.append("Simulation Type set to Random.\n");
+			}
+		});
+		floodType.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				randomType.setSelected(false);
+				sim.setType(SimulationType.FLOOD);
+				statusWindow.append("Simulation Type set to Flood.\n");
 			}
 		});
 	}
