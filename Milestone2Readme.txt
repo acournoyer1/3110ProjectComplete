@@ -5,7 +5,7 @@
 *	|    /|  __||  _  | | | | | |\/| ||  __| 	*
 *	| |\ \| |___| | | | |/ /  | |  | || |___ 	*
 *	\_| \_\____/\_| |_/___/   \_|  |_/\____/ 	*
-*							*
+*												*
 *********************************************************
 
                        
@@ -13,10 +13,10 @@
 
 SYSC 3110 MILESTONE 
 
-Ryan Ha				[100975926]
+Ryan Ha					[100975926]
 Adam Staples			[100978589]
 Alex Cournoyer			[100964534]
-Daman Singh			[100965225]
+Daman Singh				[100965225]
 
 
 21/10/2016
@@ -29,7 +29,9 @@ TEAM LOGISTICS
 		- 
 		
 	Alex Cournoyer
-		- 
+		- Implemented new GraphicsCanvas class
+		- Split the GUI class from its nested classes in iteration 1 into a few distinct classes 
+		  to assure each class has only one responsibility
 	
 	Daman Singh
 		-
@@ -69,29 +71,55 @@ INSTRUCTIONS TO USE PROGRAM:
 ------------------------------------------------------------
 SOURCE FILE INFORMATION:
 
-Message.java
+Package backEnd
 
-	Message Class that creates a message to be sent from a node to another node.
+	Message.java
 
-Simulation.java
+		Message Class that creates a message to be sent from a node to another node.
 
-	Simulation class designated to manage the step process of walking through the simulation.
-	Manages the ability to manipulate node connections.
+	Simulation.java
+
+		Simulation class designated to manage the step process of walking through the simulation.
+		Manages the ability to manipulate node connections.
 	
-Connection.java
+	Connection.java
 
-	Connection class defines the properties to connect two nodes.
+		Connection class defines the properties to connect two nodes.
 
-Node.java
+	Node.java
 
-	Node class that holds the properties of every node that will be manipulated. 
+		Node class that holds the properties of every node that will be manipulated. 
+
+	SimulationType.java
+
+		SimulationType enum defines what mode the user has currently selected.
+		
+	SimulationListener.java
 	
-GUI.java
+Package userInterface
+	
+	CommandParser.java
+		
+		Parser that parses commands given to the program's command prompt.
+	
+	DialogManager.java
+	
+		Manages all Dialog Menus that can be opened by the program.
+	
+	GraphicsCanvas.java
+	
+		Displays the network of nodes on a canvas and shows simulations as they progress.
+	
+	GUI.java
 
-	GUI class that builds all of the gui's properties.
-
-SimulationType.java
-
-	SimulationType enum defines what mode the user has currently selected.
+		GUI class that builds all of the gui's properties.
+		
+	NodeImage.java
+	
+		Holds the information necessary to draw a Node on the canvas.
+	
+	PolarPoint.java
+	
+		Polar Point representation used in auto generating node placements.
 	
 ------------------------------------------------------------
