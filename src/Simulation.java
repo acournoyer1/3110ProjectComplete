@@ -6,12 +6,15 @@
  * Last Edited by: Adam Staples, Ryan Ha
  */
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -308,6 +311,7 @@ public class Simulation {
 					s += ".\n";
 				}
 				statusWindow.append(s);
+				System.out.println(s);
 			}
 			update();
 			break;
@@ -360,7 +364,6 @@ public class Simulation {
 				}
 				removeList.add(msg);
 			}
-			//Questionable, talk to Ryan
 			for(Message msg: removeList)
 			{
 				listMessages.remove(msg);
@@ -391,9 +394,6 @@ public class Simulation {
 					msg.stop();
 				}
 			}
-//			for(Message removeMessage : indexList){
-//				listMessages.remove(removeMessage);
-//			}
 			update();
 			break;
 
@@ -408,45 +408,69 @@ public class Simulation {
 	 *
 	 */
 	public void run() throws InterruptedException{
-		int stepCount = 1;
-		if(randomMessages)
+		
+		Timer t = new Timer(1000, new ActionListener()
 		{
-			int toIndex= 0;
-			int fromIndex = 0;
-			messageJumps.clear();//clear all previously create messages and message 
-			listMessages.clear();
-			Message.reset();
-			Random toFrom = new Random();
-			
-			for (int i =0; i<simulationLength;i++,stepCount++){
-				statusWindow.append("Step " + stepCount + ":\n");
-				if((i%simulationRate) == 0){//a message is created just before step 1 and will continue depending on the given rate
-					toIndex = toFrom.nextInt(listNodes.size());
-					while(toIndex == fromIndex){//ensures the node does not send a message to itself
-						fromIndex = toFrom.nextInt(listNodes.size());
+			int i = 0;
+			int stepCount = 1;
+			public void actionPerformed(ActionEvent e)
+			{
+				int toIndex= 0;
+				int fromIndex = 0;
+				messageJumps.clear();//clear all previously create messages and message 
+				listMessages.clear();
+				Message.reset();
+				Random toFrom = new Random();
+				
+				if(i < simulationLength)
+				{
+					statusWindow.append("Step " + stepCount + ":\n");
+					if((i%simulationRate) == 0){//a message is created just before step 1 and will continue depending on the given rate
+						toIndex = toFrom.nextInt(listNodes.size());
+						while(toIndex == fromIndex){//ensures the node does not send a message to itself
+							fromIndex = toFrom.nextInt(listNodes.size());
+						}
+						statusWindow.append("Message  " + ((i/simulationRate)+1) + ": " + listNodes.get(fromIndex) + " -> " + listNodes.get(toIndex) + " has been added.\n");
+						Message msg = new Message(listNodes.get(fromIndex),listNodes.get(toIndex));
+						listMessages.add(msg);
 					}
-					statusWindow.append("Message  " + ((i/simulationRate)+1) + ": " + listNodes.get(fromIndex) + " -> " + listNodes.get(toIndex) + " has been added.\n");
-					Message msg = new Message(listNodes.get(fromIndex),listNodes.get(toIndex));
-					listMessages.add(msg);
+					step();
+					i++;
+					stepCount++;
 				}
-				TimeUnit.MILLISECONDS.sleep(20);
-				step();
+				else if(listMessages.size() != 0){
+					statusWindow.append("Step " + stepCount + ":\n");
+					
+					step();
+					stepCount++;
+				}
+				else
+				{
+					((Timer)e.getSource()).stop();
+				}
 			}
-			//after final message is created continue stepping until all messages reach destination
-			while(listMessages.size() != 0){
-				statusWindow.append("Step " + stepCount + ":\n");
-				TimeUnit.MILLISECONDS.sleep(20);
-				step();
-				stepCount++;
-			}
-		}
-		else
-		{
-			while(listMessages.size() != 0){
-				TimeUnit.MILLISECONDS.sleep(20);
-				step();
-			}
-		}
+		});
+		t.start();
+//		if(randomMessages)
+//		{
+//			
+//			
+//			for (int i =0; i<simulationLength;i++,stepCount++){
+//				
+//				}
+//				
+//				step();
+//			}
+//			//after final message is created continue stepping until all messages reach destination
+//			
+//		}
+//		else
+//		{
+//			while(listMessages.size() != 0){
+//				TimeUnit.MILLISECONDS.sleep(20);
+//				step();
+//			}
+//		}
 	}
 	
 	/*
