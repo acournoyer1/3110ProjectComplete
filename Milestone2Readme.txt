@@ -54,11 +54,15 @@ INSTRUCTIONS TO USE PROGRAM:
 	
 	1.	Run .jar file located in submitted file.
 	2. 	Once GUI has appeared, press "Add" on the menu bar and select "Create Test Network". *
-	3.	Once again select the "Add" menu and create a new message. **
-	4.	Now that new message has been created, click the "Step" button at the bottom of the GUI
+	3.	Once a network exists, the run button can be used to run simulations with random messages
+		or alternatively, the Randomly Generated Messages checkbox can be unselected in the
+		simulation menu. Steps 4 through 6 deal with this alternative.
+	4.	New messages can be added to the simulation by pressing "Add" on the menu bar and selecting
+		"Add Message". **
+	5.	Now that new message has been created, click the "Step" button at the bottom of the GUI
 		to move the message from node to node until it reaches it's destination.
-	5.	A new message can now be created, or the network reset and a new one created.
-	6.	To quit simply X off the program.
+	6.	A new message can now be created, or the network reset and a new one created.
+	7.	To quit simply X off the program.
 	
 	*This will create a network with nodes and connections identical to the example given in the 
 	project description PDF. You can use the other options in the "Add" menu to create your own
@@ -66,6 +70,10 @@ INSTRUCTIONS TO USE PROGRAM:
 	
 	**A message being sent from a node to the exact same node will be sent from
 	the node to a neighbouring node, continuing on until it comes back to itself.**
+	
+	Note: Commands can also be run from a command prompt, opened by either going into 
+		  View -> Toolbars -> Command Prompt, or using the Ctrl-Enter accelerator. All 
+		  useable commands can be displayed with the command 'Help' (not case sensitive).
 	
 
 ------------------------------------------------------------
