@@ -379,14 +379,13 @@ public class GUI extends JFrame implements SimulationListener{
 		}
 		if(randomMessages.isSelected())
 		{
+			stepButton.setEnabled(false);
 			if(sim.getConnections().size() == 0)
 			{
-				stepButton.setEnabled(false);
 				runButton.setEnabled(false);
 			}
 			else
 			{
-				stepButton.setEnabled(true);
 				runButton.setEnabled(true);
 			}
 		}

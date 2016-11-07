@@ -361,6 +361,7 @@ public class Simulation {
 			int fromIndex = 0;
 			messageJumps.clear();//clear all previously create messages and message 
 			listMessages.clear();
+			Message.reset();
 			Random toFrom = new Random();
 			
 			for (int i =0; i<simulationLength;i++,stepCount++){
