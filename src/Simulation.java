@@ -298,9 +298,19 @@ public class Simulation {
 			for(Message newMessages : tempList){
 				listMessages.add(newMessages);
 			}
+			ArrayList<Message> indexList = new ArrayList<Message>();
 			for(Message msg: reachedDestination)
-			{
+			{	
+				for(int i = 0; i < listMessages.size(); i++){
+					if(listMessages.get(i).getId() == msg.getId()){
+						System.out.println(listMessages.get(i).getId()  + " " + msg.getId());
+						indexList.add(listMessages.get(i));
+					}
+				}
 				messageJumps.add(msg.getCount());
+			}
+			for(Message removeMessage : indexList){
+				listMessages.remove(removeMessage);
 			}
 			update();
 			break;
