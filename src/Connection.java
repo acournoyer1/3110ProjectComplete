@@ -54,6 +54,7 @@ public class Connection {
 	 */
 	public boolean contains(Node n)
 	{
+		
 		return firstNode == n || secondNode == n;
 	}
 	
