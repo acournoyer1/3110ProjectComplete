@@ -24,7 +24,12 @@ public class Simulation {
 	private ArrayList<Message> listMessages;
 	private ArrayList<Connection> connections;
 	private ArrayList<SimulationListener> listeners;
+	
 	private boolean ignoreUpdate = false;
+	private boolean randomMessages = true;
+	private int simulationLength = 30;
+	private int simulationRate = 3;
+	
 	
 	public Simulation(JTextArea statusWindow){
 		
@@ -60,6 +65,27 @@ public class Simulation {
 		ignoreUpdate = ignore;
 	}
 	
+	public boolean getRandomMessage()
+	{
+		return this.randomMessages;
+	}
+	
+	public void setRandomMessage(boolean b)
+	{
+		this.randomMessages = b;
+		update();
+	}
+	
+	public void setRate(int rate)
+	{
+		this.simulationRate = rate;
+	}
+	
+	public void setLength(int length)
+	{
+		this.simulationLength = length;
+	}
+	
 	public void setType(SimulationType type)
 	{
 		this.type = type;
@@ -86,6 +112,7 @@ public class Simulation {
 		messageJumps.clear();
 		listMessages.clear();
 		connections.clear();
+		Message.reset();
 		update();
 	}
 	
@@ -327,34 +354,45 @@ public class Simulation {
 	 * Run a created network, creating messages at a determined rate for a determined length of steps.
 	 * Type of simulation determines the method of sending messages.
 	 *
-	 * @param1 the rate at which messages will be created
-	 * @param2 the number of total steps that will be taken before the method stops creating messages
 	 */
-	public void run(int rate, int length) throws InterruptedException{
-		int toIndex= 0;
-		int fromIndex = 0;
-		messageJumps.clear();//clear all previously create messages and message 
-		listMessages.clear();
-		Random toFrom = new Random();
-		
-		for (int i =0; i<length;i++){
+	public void run() throws InterruptedException{
+		int stepCount = 1;
+		if(randomMessages)
+		{
+			int toIndex= 0;
+			int fromIndex = 0;
+			messageJumps.clear();//clear all previously create messages and message 
+			listMessages.clear();
+			Random toFrom = new Random();
 			
-			if((i%rate) == 0){//a message is created just before step 1 and will continue depending on the given rate
-				toIndex = toFrom.nextInt(listNodes.size());
-				while(toIndex == fromIndex){//ensures the node does not send a message to itself
-					fromIndex = toFrom.nextInt(listNodes.size());
+			for (int i =0; i<simulationLength;i++,stepCount++){
+				statusWindow.append("Step " + stepCount + ":\n");
+				if((i%simulationRate) == 0){//a message is created just before step 1 and will continue depending on the given rate
+					toIndex = toFrom.nextInt(listNodes.size());
+					while(toIndex == fromIndex){//ensures the node does not send a message to itself
+						fromIndex = toFrom.nextInt(listNodes.size());
+					}
+					statusWindow.append("Message  " + ((i/simulationRate)+1) + ": " + listNodes.get(fromIndex) + " -> " + listNodes.get(toIndex) + " has been added.\n");
+					Message msg = new Message(listNodes.get(fromIndex),listNodes.get(toIndex));
+					listMessages.add(msg);
 				}
-				statusWindow.append("Message  " + ((i/rate)+1) + ": " + listNodes.get(fromIndex) + " -> " + listNodes.get(toIndex) + " has been added.\n");
-				Message msg = new Message(listNodes.get(fromIndex),listNodes.get(toIndex));
-				listMessages.add(msg);
+				TimeUnit.MILLISECONDS.sleep(20);
+				step();
 			}
-			TimeUnit.MILLISECONDS.sleep(20);
-			step();
+			//after final message is created continue stepping until all messages reach destination
+			while(listMessages.size() != 0){
+				statusWindow.append("Step " + stepCount + ":\n");
+				TimeUnit.MILLISECONDS.sleep(20);
+				step();
+				stepCount++;
+			}
 		}
-		//after final message is created continue stepping until all messages reach destination
-		while(listMessages.size() != 0){
-			TimeUnit.MILLISECONDS.sleep(20);
-			step();
+		else
+		{
+			while(listMessages.size() != 0){
+				TimeUnit.MILLISECONDS.sleep(20);
+				step();
+			}
 		}
 	}
 	
