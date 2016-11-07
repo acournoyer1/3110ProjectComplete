@@ -1,4 +1,3 @@
-package backEnd;
 /**
  * Simulation class designated to manage the step process of walking through the simulation.
  * Manages the ability to manipulate node connections.
@@ -18,7 +17,6 @@ import javax.swing.JTextArea;
 import javax.swing.Timer;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Simulation {
 	private ArrayList<Node> listNodes;
@@ -312,7 +310,6 @@ public class Simulation {
 					s += ".\n";
 				}
 				statusWindow.append(s);
-				System.out.println(s);
 			}
 			update();
 			break;
@@ -409,69 +406,74 @@ public class Simulation {
 	 *
 	 */
 	public void run() throws InterruptedException{
+
+		Random toFrom = new Random();
+		if(randomMessages)
+		{
+			messageJumps.clear();//clear all previously create messages and message 
+			listMessages.clear();
+			Message.reset();
+		}
 		
-		Timer t = new Timer(1000, new ActionListener()
+		Timer t = new Timer(500, new ActionListener()
 		{
 			int i = 0;
 			int stepCount = 1;
 			public void actionPerformed(ActionEvent e)
 			{
-				int toIndex= 0;
-				int fromIndex = 0;
-				messageJumps.clear();//clear all previously create messages and message 
-				listMessages.clear();
-				Message.reset();
-				Random toFrom = new Random();
-				
-				if(i < simulationLength)
+				if(randomMessages)
 				{
-					statusWindow.append("Step " + stepCount + ":\n");
-					if((i%simulationRate) == 0){//a message is created just before step 1 and will continue depending on the given rate
-						toIndex = toFrom.nextInt(listNodes.size());
-						while(toIndex == fromIndex){//ensures the node does not send a message to itself
-							fromIndex = toFrom.nextInt(listNodes.size());
-						}
-						statusWindow.append("Message  " + ((i/simulationRate)+1) + ": " + listNodes.get(fromIndex) + " -> " + listNodes.get(toIndex) + " has been added.\n");
-						Message msg = new Message(listNodes.get(fromIndex),listNodes.get(toIndex));
-						listMessages.add(msg);
-					}
-					step();
-					i++;
-					stepCount++;
-				}
-				else if(listMessages.size() != 0){
-					statusWindow.append("Step " + stepCount + ":\n");
+					int toIndex= 0;
+					int fromIndex = 0;
 					
-					step();
-					stepCount++;
+					if(i < simulationLength)
+					{
+						statusWindow.append("Step " + stepCount + ":\n");
+						if((i%simulationRate) == 0){//a message is created just before step 1 and will continue depending on the given rate
+							toIndex = toFrom.nextInt(listNodes.size());
+							while(toIndex == fromIndex){//ensures the node does not send a message to itself
+								fromIndex = toFrom.nextInt(listNodes.size());
+							}
+							statusWindow.append("Message  " + ((i/simulationRate)+1) + ": " + listNodes.get(fromIndex) + " -> " + listNodes.get(toIndex) + " has been added.\n");
+							Message msg = new Message(listNodes.get(fromIndex),listNodes.get(toIndex));
+							
+							listMessages.add(msg);
+						}
+						
+						step();
+						i++;
+						stepCount++;
+					}
+					else if(listMessages.size() != 0){
+						statusWindow.append("Step " + stepCount + ":\n");
+						
+						step();
+						stepCount++;
+					}
+					else
+					{
+						((Timer)e.getSource()).stop();
+					}
 				}
 				else
 				{
-					((Timer)e.getSource()).stop();
+					if(listMessages.size() != 0){
+						statusWindow.append("Step " + stepCount + ":\n");
+						
+						step();
+						stepCount++;
+					}
+					else
+					{
+						((Timer)e.getSource()).stop();
+					}
 				}
+				
+				
 			}
 		});
 		t.start();
-//		if(randomMessages)
-//		{
-//			
-//			
-//			for (int i =0; i<simulationLength;i++,stepCount++){
-//				
-//				}
-//				
-//				step();
-//			}
-//			//after final message is created continue stepping until all messages reach destination
-//			
-//		}
-//		else
-//		{
-//			while(listMessages.size() != 0){
-//				TimeUnit.MILLISECONDS.sleep(20);
-//				step();
-//			}
-//		}
+
 	}
 	
 	/*
