@@ -24,7 +24,7 @@ public class SimulationTest {
 	private Node node;
 	
 	private Simulation testSim;
-	private ArrayList<Message> listMessages;
+	
 	
 	/**
 	 * @throws java.lang.Exception
@@ -152,31 +152,12 @@ public class SimulationTest {
 	 */
 	@Test
 	public void testRemoveConnectionConnection() {
-		fail("Not yet implemented");
+		testSim.removeConnection(testSim.getConnections().get(0));
+		assertEquals("remove the connection", 0 , testSim.getConnections().size());
 	}
 
-	/**
-	 * Test method for {@link Simulation#step()}.
-	 */
-	@Test
-	public void testStep() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link Simulation#run(int, int)}.
-	 */
-	@Test
-	public void testRun() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link Simulation#average()}.
-	 */
-	@Test
-	public void testAverage() {
-		fail("Not yet implemented");
-	}
+	
+	
+	
 
 }

@@ -8,32 +8,38 @@ import org.junit.Test;
  */
 
 /**
- * @author daman
+ * @author Daman
  *
  */
 public class ConnectionTest {
 
+	private Connection testConnect;
+	private Connection testConnect1;
+	private Connection testConnect2;
+	private Node srcNode; 
+	private Node destNode;
+	private Node testNode;
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
+		
+		testNode = new Node("test");
+		srcNode = new Node("Source");
+		destNode = new Node("Destination");
+		testConnect = new Connection(srcNode, destNode);
+		testConnect1 = new Connection(srcNode, destNode);
+		testConnect2 = new Connection(srcNode , testNode);
 	}
 
-	/**
-	 * Test method for {@link Connection#Connection(Node, Node)}.
-	 */
-	@Test
-	public void testConnection() {
-		fail("Not yet implemented");
-	}
-
+	
 	/**
 	 * Test method for {@link Connection#getFirstNode()}.
 	 */
 	@Test
 	public void testGetFirstNode() {
-		fail("Not yet implemented");
+		assertEquals("The first node is Source", srcNode, testConnect.getFirstNode());
 	}
 
 	/**
@@ -41,23 +47,17 @@ public class ConnectionTest {
 	 */
 	@Test
 	public void testGetSecondNode() {
-		fail("Not yet implemented");
+		assertEquals("The second node is Destination", destNode, testConnect.getSecondNode());
 	}
 
-	/**
-	 * Test method for {@link Connection#toString()}.
-	 */
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
 
 	/**
 	 * Test method for {@link Connection#contains(Node)}.
 	 */
 	@Test
 	public void testContains() {
-		fail("Not yet implemented");
+		assertTrue("The connection contains source",testConnect.contains(srcNode));
+		assertFalse("The connection does not contain testNode ", testConnect.contains(testNode));
 	}
 
 	/**
@@ -65,7 +65,8 @@ public class ConnectionTest {
 	 */
 	@Test
 	public void testEqualsObject() {
-		fail("Not yet implemented");
+		assertTrue("TestConnect has the same connections as TestConnect1", testConnect.equals(testConnect1));
+		assertFalse("TestConnect does not have the same connections as TestConnect2", testConnect.equals(testConnect2));
 	}
 
 }
