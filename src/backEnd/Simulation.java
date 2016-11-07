@@ -1,3 +1,5 @@
+package backEnd;
+
 /**
  * Simulation class designated to manage the step process of walking through the simulation.
  * Manages the ability to manipulate node connections.
@@ -283,6 +285,10 @@ public class Simulation {
 				String s = "The average amount of jumps so far is: " + this.average() + "\n";
 				statusWindow.append(s);
 			}
+			if(reachedDestination.size()>0)
+			{
+				statusWindow.append("----------------------------\n");
+			}
 			for(Message msg : this.listMessages){
 				Random nextNode = new Random();
 				Node refNode = msg.getPath().getLast();
@@ -312,6 +318,7 @@ public class Simulation {
 				statusWindow.append(s);
 			}
 			update();
+			if(listMessages.size()==0) statusWindow.append("No activity this step.\n");
 			break;
 
 		//User selected FLOOD step type.
@@ -320,19 +327,22 @@ public class Simulation {
 			ArrayList<Message> tempList = new ArrayList<Message>();
 			ArrayList<Integer> idList = new ArrayList<Integer>();
 			ArrayList<Message> removeList = new ArrayList<Message>();
-			for(Message msg: listMessages){
+			for(Message msg: listMessages)
+			{
 				if(msg.reachedDestination())
 				{
 					idList.add(msg.getId());
 				}
 			}
-			for(Message msg: listMessages){
+			for(Message msg: listMessages)
+			{
 				if(idList.contains(msg.getId()))
 				{
 					removeList.add(msg);
 				}
 			}
-			for(Message msg: removeList){
+			for(Message msg: removeList)
+			{
 				listMessages.remove(msg);
 			}
 			idList.clear();
@@ -390,6 +400,7 @@ public class Simulation {
 				}
 			}
 			update();
+			if(listMessages.size()==0) statusWindow.append("No activity this step.\n");
 			break;
 
 		default:
@@ -400,28 +411,32 @@ public class Simulation {
 	/*
 	 * Run a created network, creating messages at a determined rate for a determined length of steps.
 	 * Type of simulation determines the method of sending messages.
-	 * Whether the method creates messages or uses existing messages is determined by user in the GUI
 	 *
 	 */
 	public void run() throws InterruptedException{
 
 		Random toFrom = new Random();
-		if(randomMessages){// if the random method is activated, the method WILL create random messages
+		statusWindow.append("\nSimulation Started\n");
+		if(randomMessages)
+		{
 			messageJumps.clear();//clear all previously create messages and message 
 			listMessages.clear();
 			Message.reset();
 		}
 		
-		Timer t = new Timer(500, new ActionListener(){//timer used to slow down the stepping process
+		Timer t = new Timer(500, new ActionListener()
+		{
 			int i = 0;
-			int stepCount = 1;
-			public void actionPerformed(ActionEvent e){
-				if(randomMessages){
+			public void actionPerformed(ActionEvent e)
+			{
+				if(randomMessages)
+				{
 					int toIndex= 0;
 					int fromIndex = 0;
 					
-					if(i < simulationLength){
-						statusWindow.append("Step " + stepCount + ":\n");
+					if(i < simulationLength)
+					{
+						statusWindow.append("----------------------------\n");
 						if((i%simulationRate) == 0){//a message is created just before step 1 and will continue depending on the given rate
 							toIndex = toFrom.nextInt(listNodes.size());
 							while(toIndex == fromIndex){//ensures the node does not send a message to itself
@@ -435,28 +450,35 @@ public class Simulation {
 						
 						step();
 						i++;
-						stepCount++;
-					}else if(listMessages.size() != 0){//if there are messages still but will create no more
-						statusWindow.append("Step " + stepCount + ":\n");
-						
+					}
+					else if(listMessages.size() != 0){
+						statusWindow.append("----------------------------\n");
 						step();
-						stepCount++;
-					}else{//all messages have been completed
+					}
+					else
+					{
+						statusWindow.append("----------------------------\n");
 						((Timer)e.getSource()).stop();
 					}
-				}else{//NO messages will be created and shall therefore use exisiting ones
+				}
+				else
+				{
 					if(listMessages.size() != 0){
-						statusWindow.append("Step " + stepCount + ":\n");
-						
+						statusWindow.append("----------------------------\n");
 						step();
-						stepCount++;
-					}else{//all messages have been completed
+					}
+					else
+					{
+						statusWindow.append("----------------------------\n");
 						((Timer)e.getSource()).stop();
 					}
-				}	
+				}
+				
+				
 			}
 		});
 		t.start();
+
 	}
 	
 	/*
