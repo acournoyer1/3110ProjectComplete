@@ -305,10 +305,8 @@ public class Simulation {
 			for(Message msg: reachedDestination)
 			{	
 				for(int i = 0; i < listMessages.size(); i++){
-					if(listMessages.get(i).getId() == msg.getId()){
-						System.out.println(listMessages.get(i).getId()  + " " + msg.getId());
+					if(listMessages.get(i).getId() == msg.getId())
 						indexList.add(listMessages.get(i));
-					}
 				}
 				messageJumps.add(msg.getCount());
 			}
