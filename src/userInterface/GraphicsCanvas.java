@@ -1,3 +1,4 @@
+package userInterface;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -5,6 +6,12 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+
+import backEnd.Connection;
+import backEnd.Message;
+import backEnd.Node;
+import backEnd.Simulation;
+import backEnd.SimulationListener;
 
 @SuppressWarnings("serial")
 public class GraphicsCanvas extends JPanel implements SimulationListener{

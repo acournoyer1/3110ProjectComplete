@@ -1,3 +1,4 @@
+package backEnd;
 
 /**
  * MESSAGE V2.0
@@ -10,6 +11,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.LinkedList;
+
+import userInterface.NodeImage;
 
 public class Message {
 	private Node dest;

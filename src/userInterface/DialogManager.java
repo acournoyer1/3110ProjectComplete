@@ -1,9 +1,15 @@
+package userInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
+
+import backEnd.Connection;
+import backEnd.Message;
+import backEnd.Node;
+import backEnd.Simulation;
 
 public class DialogManager {
 	Simulation sim;

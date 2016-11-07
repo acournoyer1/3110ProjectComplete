@@ -1,3 +1,4 @@
+package backEnd;
 /**
  * Node class that holds the properties of every node that will be manipulated.
  *
@@ -6,6 +7,8 @@
  */
 
 import java.util.*;
+
+import userInterface.NodeImage;
 
 public class Node {
 	private String name;

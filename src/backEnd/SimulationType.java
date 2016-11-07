@@ -1,3 +1,4 @@
+package backEnd;
 /**
  * SimulationType enum defines what mode the user has currently selected.
  *

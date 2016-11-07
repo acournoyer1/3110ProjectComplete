@@ -1,3 +1,4 @@
+package userInterface;
 /**
  * GUI class that builds all of the gui's properties
  * 
@@ -8,6 +9,12 @@ import java.awt.Font;
 import java.awt.event.*;
 
 import javax.swing.*;
+
+import backEnd.Message;
+import backEnd.Node;
+import backEnd.Simulation;
+import backEnd.SimulationListener;
+import backEnd.SimulationType;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements SimulationListener{

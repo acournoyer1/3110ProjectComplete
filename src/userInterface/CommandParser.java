@@ -1,4 +1,9 @@
+package userInterface;
 import javax.swing.JTextArea;
+
+import backEnd.Message;
+import backEnd.Node;
+import backEnd.Simulation;
 
 public class CommandParser {
 	
