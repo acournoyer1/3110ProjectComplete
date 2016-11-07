@@ -1,5 +1,3 @@
-package backEnd;
-
 /**
  * Simulation class designated to manage the step process of walking through the simulation.
  * Manages the ability to manipulate node connections.
@@ -322,22 +320,19 @@ public class Simulation {
 			ArrayList<Message> tempList = new ArrayList<Message>();
 			ArrayList<Integer> idList = new ArrayList<Integer>();
 			ArrayList<Message> removeList = new ArrayList<Message>();
-			for(Message msg: listMessages)
-			{
+			for(Message msg: listMessages){
 				if(msg.reachedDestination())
 				{
 					idList.add(msg.getId());
 				}
 			}
-			for(Message msg: listMessages)
-			{
+			for(Message msg: listMessages){
 				if(idList.contains(msg.getId()))
 				{
 					removeList.add(msg);
 				}
 			}
-			for(Message msg: removeList)
-			{
+			for(Message msg: removeList){
 				listMessages.remove(msg);
 			}
 			idList.clear();
@@ -405,31 +400,27 @@ public class Simulation {
 	/*
 	 * Run a created network, creating messages at a determined rate for a determined length of steps.
 	 * Type of simulation determines the method of sending messages.
+	 * Whether the method creates messages or uses existing messages is determined by user in the GUI
 	 *
 	 */
 	public void run() throws InterruptedException{
 
 		Random toFrom = new Random();
-		if(randomMessages)
-		{
+		if(randomMessages){// if the random method is activated, the method WILL create random messages
 			messageJumps.clear();//clear all previously create messages and message 
 			listMessages.clear();
 			Message.reset();
 		}
 		
-		Timer t = new Timer(500, new ActionListener()
-		{
+		Timer t = new Timer(500, new ActionListener(){//timer used to slow down the stepping process
 			int i = 0;
 			int stepCount = 1;
-			public void actionPerformed(ActionEvent e)
-			{
-				if(randomMessages)
-				{
+			public void actionPerformed(ActionEvent e){
+				if(randomMessages){
 					int toIndex= 0;
 					int fromIndex = 0;
 					
-					if(i < simulationLength)
-					{
+					if(i < simulationLength){
 						statusWindow.append("Step " + stepCount + ":\n");
 						if((i%simulationRate) == 0){//a message is created just before step 1 and will continue depending on the given rate
 							toIndex = toFrom.nextInt(listNodes.size());
@@ -445,37 +436,27 @@ public class Simulation {
 						step();
 						i++;
 						stepCount++;
-					}
-					else if(listMessages.size() != 0){
+					}else if(listMessages.size() != 0){//if there are messages still but will create no more
 						statusWindow.append("Step " + stepCount + ":\n");
 						
 						step();
 						stepCount++;
-					}
-					else
-					{
+					}else{//all messages have been completed
 						((Timer)e.getSource()).stop();
 					}
-				}
-				else
-				{
+				}else{//NO messages will be created and shall therefore use exisiting ones
 					if(listMessages.size() != 0){
 						statusWindow.append("Step " + stepCount + ":\n");
 						
 						step();
 						stepCount++;
-					}
-					else
-					{
+					}else{//all messages have been completed
 						((Timer)e.getSource()).stop();
 					}
-				}
-				
-				
+				}	
 			}
 		});
 		t.start();
-
 	}
 	
 	/*
