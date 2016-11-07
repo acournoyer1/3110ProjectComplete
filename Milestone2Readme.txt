@@ -11,7 +11,7 @@
                        
 
 
-SYSC 3110 MILESTONE 1
+SYSC 3110 MILESTONE 
 
 Ryan Ha				[100975926]
 Adam Staples			[100978589]
@@ -26,22 +26,19 @@ Daman Singh			[100965225]
 TEAM LOGISTICS
 
 	Adam Staples
-		- UML
-		- Readme
+		- 
 		
 	Alex Cournoyer
-		- Created GUI
+		- 
 	
 	Daman Singh
-		- Created Node class
-		- Created Message class
+		-
 
 	Ryan Ha
-		- Created Simulation
-		- Implemented Simulation
+		- 
 
 -----------------------------------------------------------
-CONTENTS OF SUBMITTED MILESTONE 1:
+CONTENTS OF SUBMITTED MILESTONE 2:
 
 	- Runable .jar file of program, including source code
 		This .jar file meets the requirements of milestone 1 and has gone further to implement
