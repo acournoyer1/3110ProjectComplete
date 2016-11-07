@@ -29,7 +29,8 @@ public class DialogManager {
 		else if(s.equals("Remove Node")) new RemoveNode();
 		else if(s.equals("Remove Connection")) new RemoveConnection();
 		else if(s.equals("View Node")) new ViewNode();
-		
+		else if(s.equals("Set Rate")) new SetRate();
+		else if(s.equals("Set Length")) new SetLength();
 	}
 	
 	/*
@@ -428,7 +429,179 @@ public class DialogManager {
 					dispose();
 				}		
 			});
-			//Possibly implement enter shortcut
 		}
 	}
+	
+	/*
+	 *  Nested class that builds the GUI for the setRate button
+	 *  and sets up listeners for SetRate GUI layout
+	 */
+	@SuppressWarnings("serial")
+	private class SetRate extends JDialog
+	{
+		private JTextField rateField;
+		private JButton okButton;
+		private JButton cancelButton;
+		
+		public SetRate()
+		{
+			JLabel label = new JLabel("Rate: ");
+			label.setHorizontalAlignment(SwingConstants.RIGHT);
+			JSplitPane split = new JSplitPane();
+			JSplitPane top = new JSplitPane();
+			JPanel bottom = new JPanel();
+			rateField = new JTextField();
+			okButton = new JButton("OK");
+			cancelButton = new JButton("Cancel");
+			bottom.add(okButton);
+			bottom.add(cancelButton);
+			split.setOrientation(JSplitPane.VERTICAL_SPLIT);
+			split.setTopComponent(top);
+			split.setBottomComponent(bottom);
+			split.setEnabled(false);
+			split.setDividerSize(1);
+			top.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+			top.setLeftComponent(label);
+			top.setRightComponent(rateField);
+			top.setEnabled(false);
+			top.setDividerSize(1);
+			this.add(split);
+			this.setSize(200,100);
+			this.setResizable(false);
+			this.setTitle("Set Rate");
+			split.setDividerLocation((int)(this.getHeight()*0.35));
+			top.setDividerLocation((int)(this.getWidth()*0.35));
+			this.setLocationRelativeTo(null);
+			setUpListeners();
+			okButton.setEnabled(false);
+			this.setVisible(true);
+		}
+		
+		private void setUpListeners()
+		{
+			cancelButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					dispose();	
+				}			
+			});
+			okButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					if(!rateField.getText().equals(""))
+					{
+						int rate = Integer.parseInt(rateField.getText());
+						sim.setRate(rate);
+						statusWindow.append("Simulation rate changed to " + rate + ".\n");
+						dispose();
+					}
+				}		
+			});
+			rateField.addKeyListener(new KeyAdapter()
+			{
+				public void keyPressed(KeyEvent e)
+				{
+					if(!(e.getKeyCode() == KeyEvent.VK_ENTER))
+					{
+						okButton.setEnabled(true);
+					}
+					else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+					{
+						okButton.doClick();
+					}
+				}
+			});
+		}
+	}
+	
+	/*
+	 *  Nested class that builds the GUI for the setRate button
+	 *  and sets up listeners for SetRate GUI layout
+	 */
+	@SuppressWarnings("serial")
+	private class SetLength extends JDialog
+	{
+		private JTextField lengthField;
+		private JButton okButton;
+		private JButton cancelButton;
+		
+		public SetLength()
+		{
+			JLabel label = new JLabel("Length: ");
+			label.setHorizontalAlignment(SwingConstants.RIGHT);
+			JSplitPane split = new JSplitPane();
+			JSplitPane top = new JSplitPane();
+			JPanel bottom = new JPanel();
+			lengthField = new JTextField();
+			okButton = new JButton("OK");
+			cancelButton = new JButton("Cancel");
+			bottom.add(okButton);
+			bottom.add(cancelButton);
+			split.setOrientation(JSplitPane.VERTICAL_SPLIT);
+			split.setTopComponent(top);
+			split.setBottomComponent(bottom);
+			split.setEnabled(false);
+			split.setDividerSize(1);
+			top.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+			top.setLeftComponent(label);
+			top.setRightComponent(lengthField);
+			top.setEnabled(false);
+			top.setDividerSize(1);
+			this.add(split);
+			this.setSize(200,100);
+			this.setResizable(false);
+			this.setTitle("Set Length");
+			split.setDividerLocation((int)(this.getHeight()*0.35));
+			top.setDividerLocation((int)(this.getWidth()*0.35));
+			this.setLocationRelativeTo(null);
+			setUpListeners();
+			okButton.setEnabled(false);
+			this.setVisible(true);
+		}
+		
+		private void setUpListeners()
+		{
+			cancelButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					dispose();	
+				}			
+			});
+			okButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					if(!lengthField.getText().equals(""))
+					{
+						int length = Integer.parseInt(lengthField.getText());
+						sim.setLength(length);
+						statusWindow.append("Simulation length changed to " + length + ".\n");
+						dispose();
+					}
+				}		
+			});
+			lengthField.addKeyListener(new KeyAdapter()
+			{
+				public void keyPressed(KeyEvent e)
+				{
+					if(!(e.getKeyCode() == KeyEvent.VK_ENTER))
+					{
+						okButton.setEnabled(true);
+					}
+					else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+					{
+						okButton.doClick();
+					}
+				}
+			});
+		}
+	}
+	
 }

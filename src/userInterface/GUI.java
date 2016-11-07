@@ -355,6 +355,22 @@ public class GUI extends JFrame implements SimulationListener{
 				}
 			}
 		});
+		simRate.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				dialog.open("Set Rate");
+			}
+		});
+		simLength.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				dialog.open("Set Length");
+			}
+		});
 	}
 	
 	public void update()
@@ -399,6 +415,8 @@ public class GUI extends JFrame implements SimulationListener{
 		if(randomMessages.isSelected())
 		{
 			stepButton.setEnabled(false);
+			simRate.setEnabled(true);
+			simLength.setEnabled(true);
 			if(sim.getConnections().size() == 0)
 			{
 				runButton.setEnabled(false);
@@ -410,6 +428,8 @@ public class GUI extends JFrame implements SimulationListener{
 		}
 		else
 		{
+			simRate.setEnabled(false);
+			simLength.setEnabled(false);
 			if(sim.getMessageListSize() == 0)
 			{
 				stepButton.setEnabled(false);
