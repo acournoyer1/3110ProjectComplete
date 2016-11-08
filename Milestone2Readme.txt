@@ -26,7 +26,10 @@ Daman Singh				[100965225]
 TEAM LOGISTICS
 
 	Adam Staples
-		- 
+		- Implemented all feedback fixes,aside form GUI refactoring, from previous milestone.
+		- run() method implemented and hooked into GUI
+		- Documentation of Simulation class
+		- Individual and collaboration UMLs for GUI and Backend classes(except Node)
 		
 	Alex Cournoyer
 		- Implemented new GraphicsCanvas class
@@ -37,7 +40,7 @@ TEAM LOGISTICS
 		-
 
 	Ryan Ha
-		- 
+		- Individual and collaboration UMLs
 
 -----------------------------------------------------------
 CONTENTS OF SUBMITTED MILESTONE 2:
@@ -81,6 +84,8 @@ SOURCE FILE INFORMATION:
 
 Package backEnd
 
+
+
 	Message.java
 
 		Message Class that creates a message to be sent from a node to another node.
@@ -104,7 +109,10 @@ Package backEnd
 		
 	SimulationListener.java
 	
+	
+	
 Package userInterface
+
 	
 	CommandParser.java
 		
@@ -129,5 +137,25 @@ Package userInterface
 	PolarPoint.java
 	
 		Polar Point representation used in auto generating node placements.
+		
+
+
+Package tests
+	
+	ConnectionTest.java
+	
+		Unit test class designed to test the Connection class methods
+		
+	messageTest.java
+	
+		Unit test class designed to test the sMessage class methods
+	
+	NodeTest.java
+	
+		Unit test class designed to test the Node class methods
+	
+	SimulationTest.
+		
+		Unit test class designed to test the Simulation class methods
 	
 ------------------------------------------------------------
