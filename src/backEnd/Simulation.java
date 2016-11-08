@@ -34,7 +34,13 @@ public class Simulation {
 	private int simulationLength = 30;
 	private int simulationRate = 3;
 	
-	
+	/**
+	 * Constructor:
+	 * Instantiates an instace of simulation that builds
+	 * the GUI
+	 *
+	 * @param1 GUI status window. The JTextArea of the GUI
+	 */
 	public Simulation(JTextArea statusWindow){
 		
 		this.listNodes = new ArrayList<Node>();
@@ -48,11 +54,21 @@ public class Simulation {
 		this.type = SimulationType.RANDOM;
 	}
 	
+	/**
+	 * addListener method:
+	 * Adds a listener to the listener list
+	 * 
+	 * @param1 SimulationListener object to add to the list
+	 */
 	public void addListener(SimulationListener s)
 	{
 		listeners.add(s);
 	}
 	
+	/**
+	 * update method:
+	 * Notifies all listeners to update in the GUI
+	 */
 	public void update()
 	{
 		if(!ignoreUpdate)
@@ -64,32 +80,69 @@ public class Simulation {
 		}
 	}
 	
+	/**
+	 * setIgnore method:
+	 * Changes the boolean value of the "ignore" state variable
+	 * 
+	 * @param1 TRUE/FALSE value desired to ignore updates
+	 */
 	public void setIgnore(boolean ignore)
 	{
 		ignoreUpdate = ignore;
 	}
 	
+	/**
+	 * getRandomMessage method:
+	 * returns the value of the bollean value of RandomMessages
+	 *
+	 * @return the TRUE/FALSE value (boolean) of random messages
+	 */
 	public boolean getRandomMessage()
 	{
 		return this.randomMessages;
 	}
 	
+	/**
+	 * setRandomMessage method:
+	 * sets the value of the "RandomMessage" variable
+	 * also updates the listeners
+	 *
+	 * @param1 the boolean value to set the Random Message variable
+	 */
 	public void setRandomMessage(boolean b)
 	{
 		this.randomMessages = b;
 		update();
 	}
 	
+	/**
+	 * setRate method:
+	 * sets the rate at which the simulation generates messages
+	 *
+	 * @param1 the value of the rate to set the variable to
+	 */
 	public void setRate(int rate)
 	{
 		this.simulationRate = rate;
 	}
 	
+	/**
+	 * setLength method:
+	 * Sets the length of the simulation duration during run
+	 *
+	 * @param1 the integer value to set the length to
+	 */
 	public void setLength(int length)
 	{
 		this.simulationLength = length;
 	}
 	
+	/**
+	 * setType method:
+	 * Sets the type of simulation to be run
+	 * 
+	 * @param1 the SimulationType value to set the type of simulation to
+	 */
 	public void setType(SimulationType type)
 	{
 		this.type = type;
