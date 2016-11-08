@@ -5,13 +5,13 @@ import backEnd.Message;
 import backEnd.Node;
 import backEnd.Simulation;
 
-public class CommandParser {
+public class CommandParserGUI {
 	
 	private JTextArea statusWindow;
-	private DialogManager dialog;
+	private DialogManagerGUI dialog;
 	private Simulation sim;
 	
-	public CommandParser(JTextArea statusWindow, DialogManager dialog, Simulation sim)
+	public CommandParserGUI(JTextArea statusWindow, DialogManagerGUI dialog, Simulation sim)
 	{
 		this.statusWindow = statusWindow;
 		this.dialog = dialog;

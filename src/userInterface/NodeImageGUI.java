@@ -6,11 +6,11 @@ import java.awt.geom.Ellipse2D;
 
 import backEnd.Node;
 
-public class NodeImage {
+public class NodeImageGUI {
 	private Ellipse2D.Double circle;
 	private Node node;
 	
-	public NodeImage(Point p, Node node)
+	public NodeImageGUI(Point p, Node node)
 	{
 		circle = new Ellipse2D.Double(p.getX() - 25, p.getY() - 25, 50, 50);
 		this.node = node;
