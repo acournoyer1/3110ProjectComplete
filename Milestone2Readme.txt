@@ -13,10 +13,10 @@
 
 SYSC 3110 MILESTONE 
 
-Ryan Ha					[100975926]
+Ryan Ha				[100975926]
 Adam Staples			[100978589]
 Alex Cournoyer			[100964534]
-Daman Singh				[100965225]
+Daman Singh			[100965225]
 
 
 21/10/2016
@@ -37,7 +37,9 @@ TEAM LOGISTICS
 		-
 
 	Ryan Ha
-		- 
+		- Implemented the flood algorithm
+		- Added JavaDoc
+		- UML Diagrams
 
 -----------------------------------------------------------
 CONTENTS OF SUBMITTED MILESTONE 2:
