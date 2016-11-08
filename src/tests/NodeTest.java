@@ -18,10 +18,10 @@ import backEnd.Node;
  */
 public class NodeTest {
 
-	Node test = null;
-	Node test1 = null;
-	Node test2 = null;
-	HashSet<Node> testHashSet = null;
+	private Node test = null;
+	private Node test1 = null;
+	private Node test2 = null;
+	private HashSet<Node> testHashSet = null;
 	
 	/**
 	 * @throws java.lang.Exception
