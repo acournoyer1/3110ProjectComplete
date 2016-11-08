@@ -12,8 +12,8 @@ import backEnd.Node;
 import backEnd.Simulation;
 
 public class DialogManager {
-	Simulation sim;
-	JTextArea statusWindow;
+	private Simulation sim;
+	private JTextArea statusWindow;
 	
 	public DialogManager(Simulation sim, JTextArea statusWindow)
 	{
