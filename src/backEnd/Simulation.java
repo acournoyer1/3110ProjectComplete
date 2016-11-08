@@ -411,20 +411,21 @@ public class Simulation {
 	/*
 	 * Run a created network, creating messages at a determined rate for a determined length of steps.
 	 * Type of simulation determines the method of sending messages.
+	 * Random or precreated messages will be used based on setting found in the GUI
 	 *
 	 */
 	public void run() throws InterruptedException{
 
 		Random toFrom = new Random();
 		statusWindow.append("\nSimulation Started\n");
-		if(randomMessages)
+		if(randomMessages)//if randomMessages will be created when running
 		{
 			messageJumps.clear();//clear all previously create messages and message 
 			listMessages.clear();
 			Message.reset();
 		}
 		
-		Timer t = new Timer(500, new ActionListener()
+		Timer t = new Timer(500, new ActionListener()//waits half a second between each step for easy visualization
 		{
 			int i = 0;
 			public void actionPerformed(ActionEvent e)
@@ -451,23 +452,23 @@ public class Simulation {
 						step();
 						i++;
 					}
-					else if(listMessages.size() != 0){
+					else if(listMessages.size() != 0){//length of steps reached, finishing remaining messages
 						statusWindow.append("----------------------------\n");
 						step();
 					}
-					else
+					else//all messages reached destination
 					{
 						statusWindow.append("----------------------------\n");
 						((Timer)e.getSource()).stop();
 					}
 				}
-				else
+				else//Use pre created messages when running
 				{
 					if(listMessages.size() != 0){
 						statusWindow.append("----------------------------\n");
 						step();
 					}
-					else
+					else//all messages reached destination
 					{
 						statusWindow.append("----------------------------\n");
 						((Timer)e.getSource()).stop();
