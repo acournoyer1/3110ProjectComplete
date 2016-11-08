@@ -320,10 +320,12 @@ public class Simulation {
 	 * simulation selected
 	 */
 	public void step(){
+		//Create list to store the messages that have finished
 		ArrayList<Message> reachedDestination = new ArrayList<Message>();
 		switch(this.type){
 		//User selected RANDOM step type.
 		case RANDOM:
+			//Add messages that have finished to the list
 			for(Message msg: listMessages)
 			{
 				if(msg.reachedDestination())
@@ -331,6 +333,8 @@ public class Simulation {
 					reachedDestination.add(msg);
 				}
 			}
+			//Remove the messages from the list when it is complete
+			//Also total the jump counts and print to window
 			for(Message msg: reachedDestination)
 			{
 				listMessages.remove(msg);
@@ -338,10 +342,12 @@ public class Simulation {
 				String s = "The average amount of jumps so far is: " + this.average() + "\n";
 				statusWindow.append(s);
 			}
+			//Draw a break line in the status window
 			if(reachedDestination.size()>0)
 			{
 				statusWindow.append("----------------------------\n");
 			}
+			//Iterate through every message in the simulation
 			for(Message msg : this.listMessages){
 				Random nextNode = new Random();
 				Node refNode = msg.getPath().getLast();
@@ -357,17 +363,19 @@ public class Simulation {
 				Node currentNode = iter.next();
 				msg.appendPath(currentNode);
 				msg.incCount();
-
+				
 				String s = "Message " + msg.getId() + " has moved to " + currentNode.getName();
-
+				//Check if the value has reached its destination & print to console
 				if(msg.reachedDestination())
 				{
 					s += ", and has reached its destination. \n";
 				}
+				//Else keep iterating with new lines
 				else
 				{
 					s += ".\n";
 				}
+				//Print to window
 				statusWindow.append(s);
 			}
 			update();
@@ -380,6 +388,7 @@ public class Simulation {
 			ArrayList<Message> tempList = new ArrayList<Message>();
 			ArrayList<Integer> idList = new ArrayList<Integer>();
 			ArrayList<Message> removeList = new ArrayList<Message>();
+			//Get the ID of the parent & child message and store it if it is complete
 			for(Message msg: listMessages)
 			{
 				if(msg.reachedDestination())
@@ -387,6 +396,7 @@ public class Simulation {
 					idList.add(msg.getId());
 				}
 			}
+			//Add to a list all of the messages with the corresponding ID that have complete
 			for(Message msg: listMessages)
 			{
 				if(idList.contains(msg.getId()))
@@ -394,23 +404,32 @@ public class Simulation {
 					removeList.add(msg);
 				}
 			}
+			//Remove all items from the list of messages in the simulation that are done
 			for(Message msg: removeList)
 			{
 				listMessages.remove(msg);
 			}
+			//Clear the list that has finished
 			idList.clear();
-			removeList.clear();
-			
+			removeList.clear();			
+			//Loop to send messages to adjacent nodes
 			for(Message msg : this.listMessages){
 				msg.incCount();
 				Node refNode = msg.getPath().getFirst();
+				//Check all adjacent nodes
 				for(Node n : refNode.getConnections()){
+					//Check if the adjacent node has already been visited by a child message
 					if(!n.getMessagesVisited().contains(msg.getId())){
+						//Create a message with the same parentID, the same destination, and the parent count 
 						Message ChildMsg = new Message(msg.getId(), msg.getDest(), n, msg.getCount());
+						//Append the created child to a temporary list to add to the list of messages
 						tempList.add(ChildMsg);
+						//Notify the node that it has been visited
 						n.addMessagesVisited(ChildMsg.getId());
+						//Put the current node in the message path
 						ChildMsg.appendPath(n);
 						String s = "Message " + ChildMsg.getId() + " sending child message to: " + n.getName();
+						//If a child message has reached its destination, add it to the list
 						if(ChildMsg.reachedDestination()){
 							s += " , and has reached its destination.\n";
 							reachedDestination.add(ChildMsg);
@@ -422,22 +441,27 @@ public class Simulation {
 				}
 				removeList.add(msg);
 			}
+			//Remove the messages from the list
 			for(Message msg: removeList)
 			{
 				listMessages.remove(msg);
 			}
+			//Add all the child messages to the message list
 			for(Message newMessages : tempList){
 				listMessages.add(newMessages);
 			}
 			ArrayList<Message> indexList = new ArrayList<Message>();
 			for(Message msg: reachedDestination)
 			{	
+				//Save the message to a list if it shares the same id as a completed message
 				for(int i = 0; i < listMessages.size(); i++){
 					if(listMessages.get(i).getId() == msg.getId())
 						indexList.add(listMessages.get(i));
 				}
+				//Add the jump count to the messageList
 				messageJumps.add(msg.getCount());
 			}
+			//Add ID to list of completed messages
 			for(Message msg: listMessages)
 			{
 				if(msg.reachedDestination())
@@ -445,6 +469,7 @@ public class Simulation {
 					idList.add(msg.getId());
 				}
 			}
+			//If list contains the message, stop the message from spreading
 			for(Message msg: listMessages)
 			{
 				if(idList.contains(msg.getId()))
@@ -464,10 +489,8 @@ public class Simulation {
 	/*
 	 * Run a created network, creating messages at a determined rate for a determined length of steps.
 	 * Type of simulation determines the method of sending messages.
-	 *
 	 */
 	public void run() throws InterruptedException{
-
 		Random toFrom = new Random();
 		statusWindow.append("\nSimulation Started\n");
 		if(randomMessages)
@@ -476,17 +499,17 @@ public class Simulation {
 			listMessages.clear();
 			Message.reset();
 		}
-		
+		//Create a timer to perform the run method on a delay
 		Timer t = new Timer(500, new ActionListener()
 		{
 			int i = 0;
 			public void actionPerformed(ActionEvent e)
 			{
+				//If the randomMessages boolean is set
 				if(randomMessages)
 				{
 					int toIndex= 0;
 					int fromIndex = 0;
-					
 					if(i < simulationLength)
 					{
 						statusWindow.append("----------------------------\n");
@@ -500,26 +523,30 @@ public class Simulation {
 							
 							listMessages.add(msg);
 						}
-						
 						step();
 						i++;
 					}
+					//If there are messages in the list
 					else if(listMessages.size() != 0){
 						statusWindow.append("----------------------------\n");
 						step();
 					}
+					//If the message list is empty stop the timer
 					else
 					{
 						statusWindow.append("----------------------------\n");
 						((Timer)e.getSource()).stop();
 					}
 				}
+				//If the random messages settings is false 
 				else
 				{
+					//if the list is not empty
 					if(listMessages.size() != 0){
 						statusWindow.append("----------------------------\n");
 						step();
 					}
+					//If the list is empty stop the timer
 					else
 					{
 						statusWindow.append("----------------------------\n");
