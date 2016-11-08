@@ -390,7 +390,7 @@ public class Simulation {
 				if(msg.reachedDestination())
 				{
 					idList.add(msg.getId());
-				}
+				} 
 			}
 			for(Message msg: listMessages)
 			{
