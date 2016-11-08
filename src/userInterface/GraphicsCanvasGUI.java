@@ -14,15 +14,15 @@ import backEnd.Simulation;
 import backEnd.SimulationListener;
 
 @SuppressWarnings("serial")
-public class GraphicsCanvas extends JPanel implements SimulationListener{
-	private ArrayList<NodeImage> nodes;
+public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
+	private ArrayList<NodeImageGUI> nodes;
 	private ArrayList<Connection> connections;
 	private ArrayList<Message> messages;
 	private Simulation sim;
 	
-	public GraphicsCanvas(Simulation sim)
+	public GraphicsCanvasGUI(Simulation sim)
 	{
-		nodes = new ArrayList<NodeImage>();
+		nodes = new ArrayList<NodeImageGUI>();
 		this.sim = sim;
 		connections = sim.getConnections();
 		sim.addListener(this);
@@ -44,7 +44,7 @@ public class GraphicsCanvas extends JPanel implements SimulationListener{
 		{
 			c.paint(g2);
 		}
-		for(NodeImage n: nodes)
+		for(NodeImageGUI n: nodes)
 		{
 			n.paint(g2);
 		}
@@ -59,7 +59,7 @@ public class GraphicsCanvas extends JPanel implements SimulationListener{
 		ArrayList<Point> points = getCircle(new Point(this.getWidth()/2, this.getHeight()/2), getRadius(), nodeList.size());
 		for(int i = 0; i < nodeList.size(); i++)
 		{
-			NodeImage n = new NodeImage(points.get(i), nodeList.get(i));
+			NodeImageGUI n = new NodeImageGUI(points.get(i), nodeList.get(i));
 			nodeList.get(i).setNodeImage(n);
 			nodes.add(n);
 		}
@@ -82,13 +82,13 @@ public class GraphicsCanvas extends JPanel implements SimulationListener{
 		{
 			double angleJump = (2*Math.PI)/n;
 			double currentAngle = 0;
-			ArrayList<PolarPoint> polarPoints = new ArrayList<PolarPoint>();
+			ArrayList<PolarPointGUI> polarPoints = new ArrayList<PolarPointGUI>();
 			while(currentAngle < 2*Math.PI)
 			{
-				polarPoints.add(new PolarPoint(radius, currentAngle));
+				polarPoints.add(new PolarPointGUI(radius, currentAngle));
 				currentAngle += angleJump;
 			}
-			for(PolarPoint p: polarPoints)
+			for(PolarPointGUI p: polarPoints)
 			{
 				Point pCartesian = p.convertToCartesian();
 			    pCartesian.translate(center.x, center.y);

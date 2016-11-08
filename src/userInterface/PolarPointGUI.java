@@ -1,11 +1,11 @@
 package userInterface;
 import java.awt.Point;
 
-public class PolarPoint {
+public class PolarPointGUI {
 	private double radius;
 	private double theta;
 	
-	public PolarPoint(double radius, double theta)
+	public PolarPointGUI(double radius, double theta)
 	{
 		this.radius = radius;
 		this.theta = theta;

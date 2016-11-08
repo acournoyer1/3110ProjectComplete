@@ -12,7 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.LinkedList;
 
-import userInterface.NodeImage;
+import userInterface.NodeImageGUI;
 
 public class Message {
 	private Node dest;
@@ -91,7 +91,7 @@ public class Message {
 	
 	public void paint(Graphics2D g)
 	{
-		NodeImage n = nodePath.getLast().getNodeImage();
+		NodeImageGUI n = nodePath.getLast().getNodeImage();
 		Ellipse2D.Double circle = new Ellipse2D.Double(n.getCenterX()-30, n.getCenterY()-30, 60, 60);
 		if(!reachedDestination())
 		{

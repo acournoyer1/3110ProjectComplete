@@ -11,11 +11,11 @@ import backEnd.Message;
 import backEnd.Node;
 import backEnd.Simulation;
 
-public class DialogManager {
+public class DialogManagerGUI {
 	private Simulation sim;
 	private JTextArea statusWindow;
 	
-	public DialogManager(Simulation sim, JTextArea statusWindow)
+	public DialogManagerGUI(Simulation sim, JTextArea statusWindow)
 	{
 		this.sim = sim;
 		this.statusWindow = statusWindow;
@@ -23,14 +23,14 @@ public class DialogManager {
 	
 	public void open(String s)
 	{
-		if(s.equals("Add Node")) new AddNode();
-		else if(s.equals("Add Connection")) new AddConnection();
-		else if(s.equals("Add Message")) new AddMessage();
-		else if(s.equals("Remove Node")) new RemoveNode();
-		else if(s.equals("Remove Connection")) new RemoveConnection();
-		else if(s.equals("View Node")) new ViewNode();
-		else if(s.equals("Set Rate")) new SetRate();
-		else if(s.equals("Set Length")) new SetLength();
+		if(s.equals("Add Node")) new AddNodeGUI();
+		else if(s.equals("Add Connection")) new AddConnectionGUI();
+		else if(s.equals("Add Message")) new AddMessageGUI();
+		else if(s.equals("Remove Node")) new RemoveNodeGUI();
+		else if(s.equals("Remove Connection")) new RemoveConnectionGUI();
+		else if(s.equals("View Node")) new ViewNodeGUI();
+		else if(s.equals("Set Rate")) new SetRateGUI();
+		else if(s.equals("Set Length")) new SetLengthGUI();
 	}
 	
 	/*
@@ -38,13 +38,13 @@ public class DialogManager {
 	 *  and sets up listeners for addNode GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class AddNode extends JDialog
+	private class AddNodeGUI extends JDialog
 	{
 		private JTextField nameField;
 		private JButton addButton;
 		private JButton cancelButton;
 		
-		public AddNode()
+		public AddNodeGUI()
 		{
 			JLabel label = new JLabel("Name: ");
 			label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -128,14 +128,14 @@ public class DialogManager {
 	 *  and sets up listeners for addConnection GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class AddConnection extends JDialog
+	private class AddConnectionGUI extends JDialog
 	{
 		private JComboBox<Node> firstNode;
 		private JComboBox<Node> secondNode;
 		private JButton addButton;
 		private JButton cancelButton;
 		
-		public AddConnection()
+		public AddConnectionGUI()
 		{
 			firstNode = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
 			secondNode = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
@@ -191,14 +191,14 @@ public class DialogManager {
 	 *  and sets up listeners for addMessage GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class AddMessage extends JDialog
+	private class AddMessageGUI extends JDialog
 	{
 		private JComboBox<Node> source;
 		private JComboBox<Node> destination;
 		private JButton addButton;
 		private JButton cancelButton;
 		
-		public AddMessage()
+		public AddMessageGUI()
 		{
 			source = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
 			destination = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
@@ -258,13 +258,13 @@ public class DialogManager {
 	 *  and sets up listeners for removeNode GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class RemoveNode extends JDialog
+	private class RemoveNodeGUI extends JDialog
 	{
 		private JComboBox<Node> node;
 		private JButton removeButton;
 		private JButton cancelButton;
 		
-		public RemoveNode()
+		public RemoveNodeGUI()
 		{
 			node = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
 			removeButton = new JButton("Remove");
@@ -318,13 +318,13 @@ public class DialogManager {
 	 *  and sets up listeners for removeConnection GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class RemoveConnection extends JDialog
+	private class RemoveConnectionGUI extends JDialog
 	{
 		private JComboBox<Connection> connection;
 		private JButton removeButton;
 		private JButton cancelButton;
 		
-		public RemoveConnection()
+		public RemoveConnectionGUI()
 		{
 			connection = new JComboBox<Connection>(sim.getConnections().toArray(new Connection[sim.getConnections().size()]));
 			removeButton = new JButton("Remove");
@@ -378,13 +378,13 @@ public class DialogManager {
 	 *  and sets up listeners for viewNode GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class ViewNode extends JDialog
+	private class ViewNodeGUI extends JDialog
 	{
 		private JComboBox<Node> node;
 		private JButton viewButton;
 		private JButton cancelButton;
 		
-		public ViewNode()
+		public ViewNodeGUI()
 		{
 			node = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
 			viewButton = new JButton("View");
@@ -437,13 +437,13 @@ public class DialogManager {
 	 *  and sets up listeners for SetRate GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class SetRate extends JDialog
+	private class SetRateGUI extends JDialog
 	{
 		private JTextField rateField;
 		private JButton okButton;
 		private JButton cancelButton;
 		
-		public SetRate()
+		public SetRateGUI()
 		{
 			JLabel label = new JLabel("Rate: ");
 			label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -523,13 +523,13 @@ public class DialogManager {
 	 *  and sets up listeners for SetRate GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class SetLength extends JDialog
+	private class SetLengthGUI extends JDialog
 	{
 		private JTextField lengthField;
 		private JButton okButton;
 		private JButton cancelButton;
 		
-		public SetLength()
+		public SetLengthGUI()
 		{
 			JLabel label = new JLabel("Length: ");
 			label.setHorizontalAlignment(SwingConstants.RIGHT);

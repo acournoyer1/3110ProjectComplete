@@ -1,7 +1,7 @@
 package backEnd;
 import java.awt.Graphics2D;
 
-import userInterface.NodeImage;
+import userInterface.NodeImageGUI;
 
 /**
  * Connection class defines the properties to connect two nodes
@@ -76,8 +76,8 @@ public class Connection {
 	
 	public void paint(Graphics2D g)
 	{
-		NodeImage n1 = firstNode.getNodeImage();
-		NodeImage n2 = secondNode.getNodeImage();
+		NodeImageGUI n1 = firstNode.getNodeImage();
+		NodeImageGUI n2 = secondNode.getNodeImage();
 		g.drawLine(n1.getCenterX(), n1.getCenterY(), n2.getCenterX(), n2.getCenterY());
 	}
 }

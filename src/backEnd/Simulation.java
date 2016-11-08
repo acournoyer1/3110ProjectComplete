@@ -493,7 +493,7 @@ public class Simulation {
 	public void run() throws InterruptedException{
 		Random toFrom = new Random();
 		statusWindow.append("\nSimulation Started\n");
-		if(randomMessages)
+		if(randomMessages)//if randomMessages will be created when running
 		{
 			messageJumps.clear();//clear all previously create messages and message 
 			listMessages.clear();

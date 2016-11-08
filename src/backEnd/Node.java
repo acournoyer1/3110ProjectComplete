@@ -8,13 +8,13 @@ package backEnd;
 
 import java.util.*;
 
-import userInterface.NodeImage;
+import userInterface.NodeImageGUI;
 
 public class Node {
 	private String name;
 	private HashSet<Node> connections;
 	private ArrayList<Integer> MessagesVisited;
-	private NodeImage image;
+	private NodeImageGUI image;
 	
 	/*
 	 * Create a node that has connections to other nodes 
@@ -26,12 +26,12 @@ public class Node {
 		this.MessagesVisited = new ArrayList<Integer>();
 	}
 	
-	public NodeImage getNodeImage()
+	public NodeImageGUI getNodeImage()
 	{
 		return image;
 	}
 	
-	public void setNodeImage(NodeImage image)
+	public void setNodeImage(NodeImageGUI image)
 	{
 		this.image = image;
 	}

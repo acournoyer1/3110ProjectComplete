@@ -43,11 +43,11 @@ public class GUI extends JFrame implements SimulationListener{
 	private JSplitPane commandSplit;
 	private JSplitPane buttonSplit;
 	private JSplitPane bottomSplit;
-	private CommandParser parser;
+	private CommandParserGUI parser;
 	private JScrollPane scrollPane;
 	private Simulation sim;
-	private DialogManager dialog;
-	private GraphicsCanvas canvas;
+	private DialogManagerGUI dialog;
+	private GraphicsCanvasGUI canvas;
 	
 	private final Font BOLD_FONT = new Font("Dialog", Font.BOLD, 12);
 	
@@ -85,9 +85,9 @@ public class GUI extends JFrame implements SimulationListener{
 		bottomSplit = new JSplitPane();
 		sim = new Simulation(statusWindow);
 		sim.addListener(this);
-		dialog = new DialogManager(sim, statusWindow);
-		parser = new CommandParser(statusWindow, dialog, sim);
-		canvas = new GraphicsCanvas(sim);
+		dialog = new DialogManagerGUI(sim, statusWindow);
+		parser = new CommandParserGUI(statusWindow, dialog, sim);
+		canvas = new GraphicsCanvasGUI(sim);
 		refresh();
 		
 		JMenu fileMenu = new JMenu("File");
