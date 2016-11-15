@@ -24,6 +24,8 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 	private NodeImageGUI selectedNode = null;
 	private CanvasState state = CanvasState.NEUTRAL;
 	
+	private Node tempNode;
+	
 	public GraphicsCanvasGUI(Simulation sim)
 	{
 		nodes = new ArrayList<NodeImageGUI>();
@@ -43,16 +45,33 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 			@Override
 			public void mousePressed(MouseEvent e)
 			{
-				boolean found = false;
-				for(NodeImageGUI n: nodes)
+				switch(state)
 				{
-					if(n.contains(e.getPoint()))
+				case NEUTRAL:
+					boolean found = false;
+					for(NodeImageGUI n: nodes)
 					{
-						selectedNode = n;
-						found = true;
+						if(n.contains(e.getPoint()))
+						{
+							selectedNode = n;
+							found = true;
+						}
 					}
+					if(!found) selectedNode = null;
+					break;
+					
+				case ADDNODE:
+					state = CanvasState.NEUTRAL;
+					sim.addNode(tempNode);
+					selectedNode = null;
+					break;
+				case ADDCONNECTION:
+					break;
+				default:
+					break;
+					
 				}
-				if(!found) selectedNode = null;
+				
 				repaint();
 			}
 		});
@@ -61,10 +80,50 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 			@Override
 			public void mouseDragged(MouseEvent e)
 			{
-				if(selectedNode != null)
+				switch(state)
 				{
-					selectedNode.setCenter(e.getPoint());
+				case ADDCONNECTION:
+					break;
+				case ADDNODE:
+					break;
+				case NEUTRAL:
+					if(selectedNode != null)
+					{
+						selectedNode.setCenter(e.getPoint());
+						repaint();
+					}
+					break;
+				default:
+					break;
+				
+				}
+			}
+			
+			@Override
+			public void mouseMoved(MouseEvent e)
+			{
+				switch(state)
+				{
+				case ADDCONNECTION:
+					break;
+				case ADDNODE:
+					if(selectedNode != null)
+					{
+						selectedNode.setCenter(e.getPoint());
+						repaint();
+					}
+					else
+					{
+						selectedNode = new NodeImageGUI(e.getPoint(), tempNode);
+						nodes.add(selectedNode);
+					}
 					repaint();
+					break;
+				case NEUTRAL:
+					break;
+				default:
+					break;
+				
 				}
 			}
 		});
@@ -73,6 +132,16 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 	public void setState(CanvasState s)
 	{
 		state = s;
+	}
+	
+	public CanvasState getState()
+	{
+		return state;
+	}
+	
+	public void setTempNode(Node n)
+	{
+		tempNode = n;
 	}
 	
 	public void clearSelection()
@@ -96,8 +165,18 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		}
 		for(NodeImageGUI n: nodes)
 		{
-			if(n != selectedNode)g.setColor(Color.CYAN);
-			else g.setColor(Color.ORANGE);
+			switch(state)
+			{
+			case NEUTRAL:
+				if(n != selectedNode)g2.setColor(Color.CYAN);
+				else g2.setColor(Color.ORANGE);
+				break;
+				
+			case ADDNODE:
+				if(n != selectedNode)g.setColor(Color.CYAN);
+				else g2.setColor(new Color(0,255,255,75));
+				break;
+			}
 			n.paint(g2);
 		}
 	}

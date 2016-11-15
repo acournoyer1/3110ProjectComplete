@@ -10,9 +10,11 @@ public class CommandParserGUI {
 	private JTextArea statusWindow;
 	private DialogManagerGUI dialog;
 	private Simulation sim;
+	private GraphicsCanvasGUI canvas;
 	
-	public CommandParserGUI(JTextArea statusWindow, DialogManagerGUI dialog, Simulation sim)
+	public CommandParserGUI(JTextArea statusWindow, DialogManagerGUI dialog, Simulation sim, GraphicsCanvasGUI canvas)
 	{
+		this.canvas = canvas;
 		this.statusWindow = statusWindow;
 		this.dialog = dialog;
 		this.sim = sim;
@@ -29,8 +31,8 @@ public class CommandParserGUI {
 				statusWindow.append("The commands in this program are:\n"
 						+ "\tHELP\n"
 						+ "\t\tShows all available commands.\n"
-						+ "\tADD NODE\n"
-						+ "\t\tOpens the window to add nodes.\n"
+						//+ "\tADD NODE\n"
+						//+ "\t\tOpens the window to add nodes.\n"
 						+ "\tADD NODE name\n"
 						+ "\t\tAdds a new node with the provided name.\n"
 						+ "\tADD CONNECTION\n"
@@ -85,7 +87,7 @@ public class CommandParserGUI {
 			{
 				if(words.length == 2)
 				{
-					dialog.open("Add Node");
+					//dialog.open("Add Node"); Note to Daman, command no longer necessary
 				}
 				else if(words.length != 3)
 				{
@@ -96,8 +98,10 @@ public class CommandParserGUI {
 					Node n = sim.getNodeByName(words[2]);
 					if(n == null)
 					{
-						sim.addNode(new Node(words[2]));
-						statusWindow.append("Node " + words[2] + " has been added.\n");
+						canvas.clearSelection();
+						canvas.setTempNode(new Node(words[2]));
+						canvas.setState(CanvasState.ADDNODE);
+						statusWindow.append("Use the canvas to place the node.\n");
 					}
 					else
 					{
