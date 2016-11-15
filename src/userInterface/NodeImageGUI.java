@@ -21,6 +21,11 @@ public class NodeImageGUI {
 		return (int)circle.getCenterX();
 	}
 	
+	public boolean contains(Point p)
+	{
+		return circle.contains(p.x, p.y);
+	}
+	
 	public int getCenterY()
 	{
 		return (int)circle.getCenterY();
@@ -31,9 +36,18 @@ public class NodeImageGUI {
 		return circle;
 	}
 	
+	public void setCenter(Point p)
+	{
+		circle.setFrame(p.getX() - 25, p.getY() - 25, 50, 50);
+	}
+	
+	public Node getNode()
+	{
+		return node;
+	}
+	
 	public void paint(Graphics2D g)
 	{
-		g.setColor(Color.CYAN);
 		g.fill(circle);
 		g.setColor(Color.BLACK);
 		g.draw(circle);

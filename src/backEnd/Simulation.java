@@ -1,5 +1,7 @@
 package backEnd;
 
+import java.awt.Point;
+
 /**
  * Simulation class designated to manage the step process of walking through the simulation.
  * Manages the ability to manipulate node connections.
@@ -17,6 +19,8 @@ import java.util.LinkedList;
 
 import javax.swing.JTextArea;
 import javax.swing.Timer;
+
+import userInterface.NodeImageGUI;
 
 import java.util.Random;
 
@@ -570,10 +574,15 @@ public class Simulation {
 		this.setIgnore(true);
 		this.clear();
 		Node a = new Node("A");
+		a.setNodeImage(new NodeImageGUI(new Point(300, 90), a));
 		Node b = new Node("B");
+		b.setNodeImage(new NodeImageGUI(new Point(620, 100), b));
 		Node c = new Node("C");
+		c.setNodeImage(new NodeImageGUI(new Point(350, 270), c));
 		Node d = new Node("D");
+		d.setNodeImage(new NodeImageGUI(new Point(570, 300), d));
 		Node e = new Node("E");
+		e.setNodeImage(new NodeImageGUI(new Point(700, 200), e));
 		
 		this.addNode(a);
 		this.addNode(b);

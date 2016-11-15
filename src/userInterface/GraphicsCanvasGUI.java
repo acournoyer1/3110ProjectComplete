@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -19,6 +21,8 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 	private ArrayList<Connection> connections;
 	private ArrayList<Message> messages;
 	private Simulation sim;
+	private NodeImageGUI selectedNode = null;
+	private CanvasState state = CanvasState.NEUTRAL;
 	
 	public GraphicsCanvasGUI(Simulation sim)
 	{
@@ -28,6 +32,52 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		sim.addListener(this);
 		connections = sim.getConnections();
 		messages = sim.getMessageList();
+		this.setUpListeners();
+		this.setEnabled(true);
+	}
+	
+	private void setUpListeners()
+	{
+		this.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				boolean found = false;
+				for(NodeImageGUI n: nodes)
+				{
+					if(n.contains(e.getPoint()))
+					{
+						selectedNode = n;
+						found = true;
+					}
+				}
+				if(!found) selectedNode = null;
+				repaint();
+			}
+		});
+		this.addMouseMotionListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseDragged(MouseEvent e)
+			{
+				if(selectedNode != null)
+				{
+					selectedNode.setCenter(e.getPoint());
+					repaint();
+				}
+			}
+		});
+	}
+	
+	public void setState(CanvasState s)
+	{
+		state = s;
+	}
+	
+	public void clearSelection()
+	{
+		selectedNode = null;
 	}
 	
 	@Override
@@ -46,6 +96,8 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		}
 		for(NodeImageGUI n: nodes)
 		{
+			if(n != selectedNode)g.setColor(Color.CYAN);
+			else g.setColor(Color.ORANGE);
 			n.paint(g2);
 		}
 	}
@@ -56,45 +108,10 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		ArrayList<Node> nodeList = sim.getNodes();
 		connections = sim.getConnections();
 		messages = sim.getMessageList();
-		ArrayList<Point> points = getCircle(new Point(this.getWidth()/2, this.getHeight()/2), getRadius(), nodeList.size());
-		for(int i = 0; i < nodeList.size(); i++)
+		for(Node n: nodeList)
 		{
-			NodeImageGUI n = new NodeImageGUI(points.get(i), nodeList.get(i));
-			nodeList.get(i).setNodeImage(n);
-			nodes.add(n);
+			nodes.add(n.getNodeImage());
 		}
 		repaint();
-	}
-	
-	private int getRadius()
-	{
-		return this.getWidth() < this.getWidth() ? (int)(this.getWidth()*0.40):(int)(this.getHeight()*0.40); 
-	}
-	
-	private ArrayList<Point> getCircle(Point center, int radius, int n)
-	{
-		ArrayList<Point> points = new ArrayList<Point>();
-		if(n == 1)
-		{
-			points.add(center);
-		}
-		else
-		{
-			double angleJump = (2*Math.PI)/n;
-			double currentAngle = 0;
-			ArrayList<PolarPointGUI> polarPoints = new ArrayList<PolarPointGUI>();
-			while(currentAngle < 2*Math.PI)
-			{
-				polarPoints.add(new PolarPointGUI(radius, currentAngle));
-				currentAngle += angleJump;
-			}
-			for(PolarPointGUI p: polarPoints)
-			{
-				Point pCartesian = p.convertToCartesian();
-			    pCartesian.translate(center.x, center.y);
-				points.add(pCartesian);
-			}
-		}
-		return points;
 	}
 }

@@ -158,11 +158,13 @@ public class GUI extends JFrame implements SimulationListener{
 		commandField.setEditable(false);
 		this.add(split);
 		this.setSize(1000, 650);
+		this.setResizable(false);
 		split.setDividerLocation((int)(this.getHeight()*0.25));
 		buttonSplit.setDividerLocation((int)(this.getWidth()*0.50));
 		bottomSplit.setDividerLocation((int)(this.getHeight()*0.60));
 		this.setTitle("Network Simulation");
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setUpListeners();
 		this.setVisible(true);
 	}
@@ -263,6 +265,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				canvas.clearSelection();
 				sim.step();
 			}
 		});
@@ -271,6 +274,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				canvas.clearSelection();
 				try {
 					sim.run();
 				} catch (InterruptedException e) {
