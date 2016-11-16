@@ -2,12 +2,14 @@ package userInterface;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
+import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import backEnd.Connection;
 import backEnd.Message;
@@ -19,17 +21,20 @@ import backEnd.SimulationListener;
 public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 	private ArrayList<NodeImageGUI> nodes;
 	private ArrayList<Connection> connections;
+	private Shape tempShape;
 	private ArrayList<Message> messages;
 	private Simulation sim;
+	private JTextArea statusWindow;
 	private NodeImageGUI selectedNode = null;
 	private CanvasState state = CanvasState.NEUTRAL;
 	
 	private Node tempNode;
 	
-	public GraphicsCanvasGUI(Simulation sim)
+	public GraphicsCanvasGUI(Simulation sim, JTextArea statusWindow)
 	{
 		nodes = new ArrayList<NodeImageGUI>();
 		this.sim = sim;
+		this.statusWindow = statusWindow;
 		connections = sim.getConnections();
 		sim.addListener(this);
 		connections = sim.getConnections();
@@ -45,10 +50,11 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 			@Override
 			public void mousePressed(MouseEvent e)
 			{
+				boolean found;
 				switch(state)
 				{
 				case NEUTRAL:
-					boolean found = false;
+					found = false;
 					for(NodeImageGUI n: nodes)
 					{
 						if(n.contains(e.getPoint()))
@@ -61,11 +67,58 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 					break;
 					
 				case ADDNODE:
-					state = CanvasState.NEUTRAL;
+					setState(CanvasState.NEUTRAL);
 					sim.addNode(tempNode);
 					selectedNode = null;
 					break;
 				case ADDCONNECTION:
+					if(selectedNode == null)
+					{
+						found = false;
+						for(NodeImageGUI n: nodes)
+						{
+							if(n.contains(e.getPoint()))
+							{
+								selectedNode = n;
+								statusWindow.append("Select the second node.\n");
+								found = true;
+							}
+						}
+						if(!found)
+						{
+							statusWindow.append("Invalid selection, terminating the creation of the connection.\n");
+							setState(CanvasState.NEUTRAL);
+							selectedNode = null;
+						}
+					}
+					else
+					{
+						found = false;
+						NodeImageGUI temp = null;
+						for(NodeImageGUI n: nodes)
+						{
+							if(n.contains(e.getPoint()))
+							{
+								temp = n;
+								found = true;
+							}
+						}
+						if(!found)
+						{
+							statusWindow.append("Invalid selection, terminating the creation of the connection.\n");
+							setState(CanvasState.NEUTRAL);
+							selectedNode = null;
+						}
+						else
+						{
+							sim.addConnection(temp.getNode(), selectedNode.getNode());
+							statusWindow.append("Connection " + selectedNode.getNode().getName() + " < - > " + temp.getNode().getName() + " has been added.\n");
+							tempShape = null;
+							selectedNode = null;
+							setState(CanvasState.NEUTRAL);
+							
+						}
+					}
 					break;
 				default:
 					break;
@@ -105,6 +158,11 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 				switch(state)
 				{
 				case ADDCONNECTION:
+					if(selectedNode != null)
+					{
+						tempShape = new Line2D.Double(selectedNode.getCenter(), e.getPoint());
+						repaint();
+					}
 					break;
 				case ADDNODE:
 					if(selectedNode != null)
@@ -163,6 +221,10 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		{
 			c.paint(g2);
 		}
+		if(tempShape != null)
+		{
+			g2.draw(tempShape);
+		}
 		for(NodeImageGUI n: nodes)
 		{
 			switch(state)
@@ -173,8 +235,12 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 				break;
 				
 			case ADDNODE:
-				if(n != selectedNode)g.setColor(Color.CYAN);
+				if(n != selectedNode)g2.setColor(Color.CYAN);
 				else g2.setColor(new Color(0,255,255,75));
+				break;
+				
+			case ADDCONNECTION:
+				g2.setColor(Color.CYAN);
 				break;
 			}
 			n.paint(g2);

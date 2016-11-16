@@ -32,6 +32,11 @@ public class NodeImageGUI {
 		return (int)circle.getCenterY();
 	}
 	
+	public Point getCenter()
+	{
+		return new Point((int)circle.getCenterX(), (int)circle.getCenterY());
+	}
+	
 	public Ellipse2D.Double getCircle()
 	{
 		return circle;

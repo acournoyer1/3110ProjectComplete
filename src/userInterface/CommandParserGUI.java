@@ -113,7 +113,10 @@ public class CommandParserGUI {
 			{
 				if(words.length == 2)
 				{
-					dialog.open("Add Connection");
+					//dialog.open("Add Connection");
+					canvas.clearSelection();
+					canvas.setState(CanvasState.ADDCONNECTION);
+					statusWindow.append("Select the first node.\n");
 				}
 				else if(words.length != 4)
 				{
