@@ -28,10 +28,10 @@ public class Simulation {
 	private ArrayList<Node> listNodes;
 	private ArrayList<Integer> messageJumps;
 	private JTextArea statusWindow;
-	private SimulationType type;
 	private ArrayList<Message> listMessages;
 	private ArrayList<Connection> connections;
 	private ArrayList<SimulationListener> listeners;
+	private SimulationAlgorithm simStep;
 	
 	private boolean ignoreUpdate = false;
 	private boolean randomMessages = true;
@@ -54,8 +54,38 @@ public class Simulation {
 		this.listeners = new ArrayList<SimulationListener>();
 		this.statusWindow = statusWindow;
 		
-		//Temporary setup: Type is initialized at random
-		this.type = SimulationType.RANDOM;
+		//Default Type is initialized at random
+		simStep = new RandomAlgorithm(this);
+	}
+	
+	/**
+	 * getStatusWindow method:
+	 * Method to get reference to the status window of the current simulation
+	 * 
+	 * @return a JTextArea object of the status window
+	 */
+	public JTextArea getStatusWindow(){
+		return this.statusWindow;
+	}
+	
+	/**
+	 * getListMessages method:
+	 * Returns the list of nodes in the current simulation
+	 * 
+	 * @return an arraylist containing all of the messages
+	 */
+	public ArrayList<Message> getListMessages(){
+		return this.listMessages;
+	}
+	
+	/**
+	 * getMessageJumps method:
+	 * returns a list of all the finished message jumps
+	 * 
+	 * @return a list containing the finished message jumps
+	 */
+	public ArrayList<Integer> getMessageJumps(){
+		return this.messageJumps;
 	}
 	
 	/**
@@ -149,10 +179,20 @@ public class Simulation {
 	 */
 	public void setType(SimulationType type)
 	{
-		this.type = type;
+		switch(type){
+		case RANDOM:
+			this.simStep = new RandomAlgorithm(this);
+			break;
+		case FLOOD:
+			this.simStep = new FloodAlgorithm(this);
+			break;
+		default:
+			this.simStep = new RandomAlgorithm(this);
+			break;
+		}
 	}
 	
-	/*
+	/**
 	 * Adds a message object that is created by the user to give
 	 * reference for the simulation.
 	 * 
@@ -163,7 +203,7 @@ public class Simulation {
 		update();
 	}
 	
-	/*
+	/**
 	 * Resets the simulation to default values. Empties the list of nodes,
 	 * connections, and messages.
 	 */
@@ -177,10 +217,10 @@ public class Simulation {
 		update();
 	}
 	
-	/*
+	/**
 	 * Get the size of the message list.
 	 * 
-	 * @ret an integer representing the number of entries in the messages list
+	 * @return an integer representing the number of entries in the messages list
 	 */
 	public int getMessageListSize()
 	{
@@ -192,28 +232,32 @@ public class Simulation {
 		return listMessages;
 	}
 	
-	/*
+	/**
 	 * Gets the number of completed message entries in the list.
 	 *
-	 * @ret an integer containing the size of the message jump list
+	 * @return an integer containing the size of the message jump list
 	 */
 	public int getMessageJumpSize()
 	{
 		return messageJumps.size();
 	}
 	
-	/*
+	/**
 	 * Get the list of nodes that are in the simulation currently.
 	 *
-	 * @ret the array list containing the list of nodes.
+	 * @return the array list containing the list of nodes.
 	 */
 	public ArrayList<Node> getNodes()
 	{
 		return listNodes;
 	}
 	
-	/*
+	/**
 	 * Add a node to the simulation.
+	 * Adds a node to the list of nodes in the current simulation
+	 * and updates the GUI
+	 * 
+	 * @param1 the node object to add to the simulation
 	 */
 	public void addNode(Node n)
 	{
@@ -221,8 +265,11 @@ public class Simulation {
 		update();
 	}
 	
-	/*
-	 * Remove a node from the simulation.
+	/**
+	 * Remove a node from the simulation and all of its associated
+	 * connections
+	 * 
+	 * @param1 the node object to be removed
 	 */
 	public void removeNode(Node n)
 	{
@@ -240,11 +287,11 @@ public class Simulation {
 		update();
 	}
 	
-	/*
+	/**
 	 * Get a node object based off of the name property.
 	 *
 	 * @param1 the name of the node that is being requested
-	 * @ret the node object that has the name specified by param1
+	 * @return the node object that has the name specified by param1
 	 */
 	public Node getNodeByName(String s)
 	{
@@ -255,7 +302,7 @@ public class Simulation {
 		return null;
 	}
 	
-	/*
+	/**
 	 * Build a connection between two nodes
 	 *
 	 * @param1 the first node to add a connection to
@@ -269,12 +316,12 @@ public class Simulation {
 		update();
 	}
 	
-	/*
+	/**
 	 * Remove the connection between two nodes
 	 * 
 	 * @param1 the first node to remove the connection from
 	 * @param2 the second node to remove the connection from
-	 * @ret a boolean variable that describes if the connection is successfully removed
+	 * @return a boolean variable that describes if the connection is successfully removed
 	 */
 	public boolean removeConnection(Node n1, Node n2)
 	{
@@ -297,17 +344,17 @@ public class Simulation {
 		return removed;
 	}
 	
-	/*
+	/**
 	 * Return the list of connections
 	 * 
-	 * @ret the ArrayList object containing all connections
+	 * @return the ArrayList object containing all connections
 	 */
 	public ArrayList<Connection> getConnections()
 	{
 		return connections;
 	}
 	
-	/*
+	/**
 	 * Remove a connection from the simulation. Also removes the connection from the two ndoes.
 	 *
 	 * @param1 the connection object to be removed
@@ -319,178 +366,14 @@ public class Simulation {
 		update();
 	}
 	
-	/*
+	/**
 	 * Iterates over a simulation process depending on the type of
 	 * simulation selected
 	 */
 	public void step(){
-		//Create list to store the messages that have finished
-		ArrayList<Message> reachedDestination = new ArrayList<Message>();
-		switch(this.type){
-		//User selected RANDOM step type.
-		case RANDOM:
-			//Add messages that have finished to the list
-			for(Message msg: listMessages)
-			{
-				if(msg.reachedDestination())
-				{
-					reachedDestination.add(msg);
-				}
-			}
-			//Remove the messages from the list when it is complete
-			//Also total the jump counts and print to window
-			for(Message msg: reachedDestination)
-			{
-				listMessages.remove(msg);
-				messageJumps.add(msg.getCount());
-				String s = "The average amount of jumps so far is: " + this.average() + "\n";
-				statusWindow.append(s);
-			}
-			//Draw a break line in the status window
-			if(reachedDestination.size()>0)
-			{
-				statusWindow.append("----------------------------\n");
-			}
-			//Iterate through every message in the simulation
-			for(Message msg : this.listMessages){
-				Random nextNode = new Random();
-				Node refNode = msg.getPath().getLast();
-				HashSet<Node> refPath = refNode.getConnections();
-
-				//Generate a randomly selected node from the hash set
-				int index = nextNode.nextInt(refPath.size());
-				Iterator<Node> iter = refPath.iterator();
-				for (int i = 0; i < index; i++) {
-					iter.next();
-				}
-				//Set the current node reference to a random node that the node is connected to
-				Node currentNode = iter.next();
-				msg.appendPath(currentNode);
-				msg.incCount();
-				
-				String s = "Message " + msg.getId() + " has moved to " + currentNode.getName();
-				//Check if the value has reached its destination & print to console
-				if(msg.reachedDestination())
-				{
-					s += ", and has reached its destination. \n";
-				}
-				//Else keep iterating with new lines
-				else
-				{
-					s += ".\n";
-				}
-				//Print to window
-				statusWindow.append(s);
-			}
-			update();
-			if(listMessages.size()==0) statusWindow.append("No activity this step.\n");
-			break;
-
-		//User selected FLOOD step type.
-		case FLOOD:
-			//Temporary list containing the children messages
-			ArrayList<Message> tempList = new ArrayList<Message>();
-			ArrayList<Integer> idList = new ArrayList<Integer>();
-			ArrayList<Message> removeList = new ArrayList<Message>();
-			//Get the ID of the parent & child message and store it if it is complete
-			for(Message msg: listMessages)
-			{
-				if(msg.reachedDestination())
-				{
-					idList.add(msg.getId());
-				}
-			}
-			//Add to a list all of the messages with the corresponding ID that have complete
-			for(Message msg: listMessages)
-			{
-				if(idList.contains(msg.getId()))
-				{
-					removeList.add(msg);
-				}
-			}
-			//Remove all items from the list of messages in the simulation that are done
-			for(Message msg: removeList)
-			{
-				listMessages.remove(msg);
-			}
-			//Clear the list that has finished
-			idList.clear();
-			removeList.clear();			
-			//Loop to send messages to adjacent nodes
-			for(Message msg : this.listMessages){
-				msg.incCount();
-				Node refNode = msg.getPath().getFirst();
-				//Check all adjacent nodes
-				for(Node n : refNode.getConnections()){
-					//Check if the adjacent node has already been visited by a child message
-					if(!n.getMessagesVisited().contains(msg.getId())){
-						//Create a message with the same parentID, the same destination, and the parent count 
-						Message ChildMsg = new Message(msg.getId(), msg.getDest(), n, msg.getCount());
-						//Append the created child to a temporary list to add to the list of messages
-						tempList.add(ChildMsg);
-						//Notify the node that it has been visited
-						n.addMessagesVisited(ChildMsg.getId());
-						//Put the current node in the message path
-						ChildMsg.appendPath(n);
-						String s = "Message " + ChildMsg.getId() + " sending child message to: " + n.getName();
-						//If a child message has reached its destination, add it to the list
-						if(ChildMsg.reachedDestination()){
-							s += " , and has reached its destination.\n";
-							reachedDestination.add(ChildMsg);
-						}
-						else
-							s+= ".\n";
-						statusWindow.append(s);
-					}
-				}
-				removeList.add(msg);
-			}
-			//Remove the messages from the list
-			for(Message msg: removeList)
-			{
-				listMessages.remove(msg);
-			}
-			//Add all the child messages to the message list
-			for(Message newMessages : tempList){
-				listMessages.add(newMessages);
-			}
-			ArrayList<Message> indexList = new ArrayList<Message>();
-			for(Message msg: reachedDestination)
-			{	
-				//Save the message to a list if it shares the same id as a completed message
-				for(int i = 0; i < listMessages.size(); i++){
-					if(listMessages.get(i).getId() == msg.getId())
-						indexList.add(listMessages.get(i));
-				}
-				//Add the jump count to the messageList
-				messageJumps.add(msg.getCount());
-			}
-			//Add ID to list of completed messages
-			for(Message msg: listMessages)
-			{
-				if(msg.reachedDestination())
-				{
-					idList.add(msg.getId());
-				}
-			}
-			//If list contains the message, stop the message from spreading
-			for(Message msg: listMessages)
-			{
-				if(idList.contains(msg.getId()))
-				{
-					msg.stop();
-				}
-			}
-			update();
-			if(listMessages.size()==0) statusWindow.append("No activity this step.\n");
-			break;
-
-		default:
-			System.out.println("No current type selected!");
-			break;
-		}
+		this.simStep.step();
 	}
-	/*
+	/**
 	 * Run a created network, creating messages at a determined rate for a determined length of steps.
 	 * Type of simulation determines the method of sending messages.
 	 */
@@ -600,11 +483,11 @@ public class Simulation {
 		update();
 	}
 	
-	/*
+	/**
 	 * Sums the list of number of jumps messages went through
 	 * Finds the average number of jumps done between all messages
 	 * 
-	 * @ret integer containing average
+	 * @return integer containing average
 	 */
 	public int average(){
 		int tempSum = 0;
