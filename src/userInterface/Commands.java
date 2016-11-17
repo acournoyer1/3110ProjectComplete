@@ -1,9 +1,15 @@
+package userInterface;
+
+import backEnd.Message;
+import backEnd.Node;
+import backEnd.Simulation;
+
 
 interface Commands{
 	
 	
 	public boolean isTrue(String[] words);
-    public String runCommand(Simulation sim, DialogManager dialog);
+    public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas);
 	
 	
 }
@@ -17,7 +23,7 @@ class helpCommand implements Commands {
     	
     }
 
-    public String runCommand(Simulation sim, DialogManager dialog){
+    public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas){
     	
     	
     	return ("The commands in this program are:\n"
@@ -64,7 +70,7 @@ class avgCommand implements Commands {
     	
     }
 
-    public String runCommand(Simulation sim, DialogManager dialog){
+    public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas){
     	
     return 	"The average number of jumps messages have taken is " + sim.average() + ".\n";
     	
@@ -81,7 +87,7 @@ class testCommand implements Commands {
     	
     }
 
-    public String runCommand(Simulation sim, DialogManager dialog){
+    public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas){
     	sim.buildTest();
 		
     return "The test network has been built.\n";
@@ -97,7 +103,7 @@ class clearCommand implements Commands {
     	
     }
 
-    public String runCommand(Simulation sim, DialogManager dialog){
+    public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas){
     	sim.clear();
 		
     return "Simulation cleared.\n";
@@ -115,7 +121,7 @@ class addCommand implements Commands {
 		
     }
 
-    public String runCommand(Simulation sim, DialogManager dialog, GraphicsCanvasGUI canvas){
+    public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas){
     	
     	if(words[1].equalsIgnoreCase("node"))
 		{
@@ -223,7 +229,7 @@ class removeCommand implements Commands {
     	
     }
 
-    public String runCommand(Simulation sim, DialogManager dialog){
+    public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas){
     	
     	if(words[1].equalsIgnoreCase("node"))
 		{
@@ -299,7 +305,7 @@ class viewCommand implements Commands {
     	
     }
 
-    public String runCommand(Simulation sim, DialogManager dialog){
+    public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas){
     	
     	
     	if(words[1].equalsIgnoreCase("node"))

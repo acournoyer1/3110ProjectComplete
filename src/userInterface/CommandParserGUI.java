@@ -1,5 +1,7 @@
 
 package userInterface;
+import java.util.*;
+
 import javax.swing.JTextArea;
 
 import backEnd.Message;
