@@ -40,7 +40,7 @@ public class CommandParserGUI {
 		
 		
 		if (words.length == 0){}
-		else if(words.length == 1)
+		else if(words.length >= 1)
 		{
 			for(Commands c : commands){
 				
