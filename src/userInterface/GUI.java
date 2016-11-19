@@ -33,7 +33,6 @@ public class GUI extends JFrame implements SimulationListener{
 	private JCheckBoxMenuItem randomType;
 	private JCheckBoxMenuItem floodType;
 	private JMenuItem clearSim;
-	private JCheckBoxMenuItem viewCommand;
 	private JCheckBoxMenuItem randomMessages;
 	private JTextField commandField;
 	private JTextArea statusWindow;
@@ -76,11 +75,11 @@ public class GUI extends JFrame implements SimulationListener{
 		simRate = new JMenuItem("Set Rate");
 		simLength = new JMenuItem("Set Length");
 		clearSim = new JMenuItem("Clear Simulation");
-		viewCommand = new JCheckBoxMenuItem("Command Line");
 		randomMessages = new JCheckBoxMenuItem("Generate Random Messages", true);
 		
-		viewCommand.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_DOWN_MASK));
-		commandField = new JTextField();
+		commandField = new JTextField("");
+		commandField.setFont(BOLD_FONT);
+		commandField.setEditable(true);
 		commandSplit = new JSplitPane();
 		bottomSplit = new JSplitPane();
 		sim = new Simulation(statusWindow);
@@ -96,7 +95,6 @@ public class GUI extends JFrame implements SimulationListener{
 		JMenu viewMenu = new JMenu("View");
 		JMenu simulationMenu = new JMenu("Simulation");
 		JMenu typeMenu = new JMenu("Set type");
-		JMenu viewToolbars = new JMenu("Toolbars");
 		jMenuBar.add(fileMenu);
 		jMenuBar.add(addMenu);
 		jMenuBar.add(removeMenu);
@@ -112,8 +110,6 @@ public class GUI extends JFrame implements SimulationListener{
 		removeMenu.add(removeConnection);
 		viewMenu.add(viewNode);
 		viewMenu.add(viewAverage);
-		viewMenu.add(viewToolbars);
-		viewToolbars.add(viewCommand);
 		simulationMenu.add(typeMenu);
 		simulationMenu.add(randomMessages);
 		simulationMenu.add(simRate);
@@ -133,6 +129,7 @@ public class GUI extends JFrame implements SimulationListener{
 	    
 	    commandSplit.setOrientation(JSplitPane.VERTICAL_SPLIT);
 	    commandSplit.setTopComponent(commandField);
+	    commandSplit.setBottomComponent(scrollPane);
 	    commandSplit.setDividerSize(5);
 	    commandSplit.setEnabled(false);
 	    
@@ -144,22 +141,17 @@ public class GUI extends JFrame implements SimulationListener{
 	    
 	    split = new JSplitPane();
 		split.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		split.setTopComponent(scrollPane);
+		split.setTopComponent(commandSplit);
 		split.setBottomComponent(bottomSplit);
 		split.setDividerSize(1);
 		split.setEnabled(false);
-	    
-		stepButton.setEnabled(false);
-		removeNode.setEnabled(false);
-		removeConnection.setEnabled(false);
-		viewNode.setEnabled(false);
-		viewAverage.setEnabled(false);
+	 
 		statusWindow.setEditable(false);
-		commandField.setEditable(false);
 		this.add(split);
 		this.setSize(1000, 650);
 		this.setResizable(false);
-		split.setDividerLocation((int)(this.getHeight()*0.25));
+		commandSplit.setDividerLocation(30);
+		split.setDividerLocation((int)(GUI.this.getHeight()*0.25));
 		buttonSplit.setDividerLocation((int)(this.getWidth()*0.50));
 		bottomSplit.setDividerLocation((int)(this.getHeight()*0.60));
 		this.setTitle("Network Simulation");
@@ -223,30 +215,6 @@ public class GUI extends JFrame implements SimulationListener{
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				dialog.open("View Node");
-			}
-		});
-		viewCommand.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				if(viewCommand.isSelected())
-				{
-					commandSplit.setBottomComponent(scrollPane);
-					split.setTopComponent(commandSplit);
-					commandSplit.setDividerLocation(30);
-					split.setDividerLocation((int)(GUI.this.getHeight()*0.25));
-					commandField.setFont(BOLD_FONT);
-					commandField.setText("");
-					commandField.setEditable(true);
-					commandField.requestFocusInWindow();
-				}
-				else
-				{
-					commandField.setEditable(false);
-					split.setTopComponent(scrollPane);
-					split.setDividerLocation((int)(GUI.this.getHeight()*0.25));
-				}
 			}
 		});
 		commandField.addKeyListener(new KeyAdapter()
