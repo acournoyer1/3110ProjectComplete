@@ -113,7 +113,6 @@ public class CommandParserGUI {
 			{
 				if(words.length == 2)
 				{
-					//dialog.open("Add Connection");
 					canvas.clearSelection();
 					canvas.setState(CanvasState.ADDCONNECTION);
 					statusWindow.append("Select the first node.\n");
@@ -142,7 +141,7 @@ public class CommandParserGUI {
 			{
 				if(words.length == 2)
 				{
-					dialog.open("Add Message");
+					dialog.open(DialogManagerGUI.ADD_MESSAGE);
 				}
 				else if(words.length != 4)
 				{
@@ -176,7 +175,7 @@ public class CommandParserGUI {
 			{
 				if(words.length == 2)
 				{
-					dialog.open("Remove Node");
+					dialog.open(DialogManagerGUI.REMOVE_NODE);
 				}
 				else if(words.length != 3)
 				{
@@ -197,7 +196,7 @@ public class CommandParserGUI {
 			{
 				if(words.length == 2)
 				{
-					dialog.open("Remove Connection");
+					dialog.open(DialogManagerGUI.REMOVE_CONNECTION);
 				}
 				else if(words.length != 4)
 				{
@@ -236,7 +235,7 @@ public class CommandParserGUI {
 			{
 				if(words.length == 2)
 				{
-					dialog.open("View Node");
+					dialog.open(DialogManagerGUI.VIEW_NODE);
 				}
 				else if(words.length != 3)
 				{

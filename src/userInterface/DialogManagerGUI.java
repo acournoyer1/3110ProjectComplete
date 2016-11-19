@@ -15,22 +15,31 @@ public class DialogManagerGUI {
 	private Simulation sim;
 	private JTextArea statusWindow;
 	
+	public static final int ADD_NODE = 0;
+	public static final int ADD_CONNECTION = 1;
+	public static final int ADD_MESSAGE = 2;
+	public static final int REMOVE_NODE = 3;
+	public static final int REMOVE_CONNECTION = 4;
+	public static final int VIEW_NODE = 5;
+	public static final int SET_RATE = 6;
+	public static final int SET_LENGTH = 7;
+	
 	public DialogManagerGUI(Simulation sim, JTextArea statusWindow)
 	{
 		this.sim = sim;
 		this.statusWindow = statusWindow;
 	}
 	
-	public void open(String s)
+	public void open(int dialogCode)
 	{
-		if(s.equals("Add Node")) new AddNodeGUI();
-		else if(s.equals("Add Connection")) new AddConnectionGUI();
-		else if(s.equals("Add Message")) new AddMessageGUI();
-		else if(s.equals("Remove Node")) new RemoveNodeGUI();
-		else if(s.equals("Remove Connection")) new RemoveConnectionGUI();
-		else if(s.equals("View Node")) new ViewNodeGUI();
-		else if(s.equals("Set Rate")) new SetRateGUI();
-		else if(s.equals("Set Length")) new SetLengthGUI();
+		if(dialogCode == ADD_NODE) new AddNodeDialog();
+		else if(dialogCode == ADD_CONNECTION) new AddConnectionDialog();
+		else if(dialogCode == ADD_MESSAGE) new AddMessageDialog();
+		else if(dialogCode == REMOVE_NODE) new RemoveNodeDialog();
+		else if(dialogCode == REMOVE_CONNECTION) new RemoveConnectionDialog();
+		else if(dialogCode == VIEW_NODE) new ViewNodeDialog();
+		else if(dialogCode == SET_RATE) new SetRateDialog();
+		else if(dialogCode == SET_LENGTH) new SetLengthDialog();
 	}
 	
 	/*
@@ -38,13 +47,13 @@ public class DialogManagerGUI {
 	 *  and sets up listeners for addNode GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class AddNodeGUI extends JDialog
+	private class AddNodeDialog extends JDialog
 	{
 		private JTextField nameField;
 		private JButton addButton;
 		private JButton cancelButton;
 		
-		public AddNodeGUI()
+		public AddNodeDialog()
 		{
 			JLabel label = new JLabel("Name: ");
 			label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -128,14 +137,14 @@ public class DialogManagerGUI {
 	 *  and sets up listeners for addConnection GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class AddConnectionGUI extends JDialog
+	private class AddConnectionDialog extends JDialog
 	{
 		private JComboBox<Node> firstNode;
 		private JComboBox<Node> secondNode;
 		private JButton addButton;
 		private JButton cancelButton;
 		
-		public AddConnectionGUI()
+		public AddConnectionDialog()
 		{
 			firstNode = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
 			secondNode = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
@@ -191,14 +200,14 @@ public class DialogManagerGUI {
 	 *  and sets up listeners for addMessage GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class AddMessageGUI extends JDialog
+	private class AddMessageDialog extends JDialog
 	{
 		private JComboBox<Node> source;
 		private JComboBox<Node> destination;
 		private JButton addButton;
 		private JButton cancelButton;
 		
-		public AddMessageGUI()
+		public AddMessageDialog()
 		{
 			source = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
 			destination = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
@@ -249,7 +258,6 @@ public class DialogManagerGUI {
 					dispose();
 				}		
 			});
-			//Possibly implement enter shortcut
 		}
 	}
 	
@@ -258,13 +266,13 @@ public class DialogManagerGUI {
 	 *  and sets up listeners for removeNode GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class RemoveNodeGUI extends JDialog
+	private class RemoveNodeDialog extends JDialog
 	{
 		private JComboBox<Node> node;
 		private JButton removeButton;
 		private JButton cancelButton;
 		
-		public RemoveNodeGUI()
+		public RemoveNodeDialog()
 		{
 			node = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
 			removeButton = new JButton("Remove");
@@ -318,13 +326,13 @@ public class DialogManagerGUI {
 	 *  and sets up listeners for removeConnection GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class RemoveConnectionGUI extends JDialog
+	private class RemoveConnectionDialog extends JDialog
 	{
 		private JComboBox<Connection> connection;
 		private JButton removeButton;
 		private JButton cancelButton;
 		
-		public RemoveConnectionGUI()
+		public RemoveConnectionDialog()
 		{
 			connection = new JComboBox<Connection>(sim.getConnections().toArray(new Connection[sim.getConnections().size()]));
 			removeButton = new JButton("Remove");
@@ -378,13 +386,13 @@ public class DialogManagerGUI {
 	 *  and sets up listeners for viewNode GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class ViewNodeGUI extends JDialog
+	private class ViewNodeDialog extends JDialog
 	{
 		private JComboBox<Node> node;
 		private JButton viewButton;
 		private JButton cancelButton;
 		
-		public ViewNodeGUI()
+		public ViewNodeDialog()
 		{
 			node = new JComboBox<Node>(sim.getNodes().toArray(new Node[sim.getNodes().size()]));
 			viewButton = new JButton("View");
@@ -437,13 +445,13 @@ public class DialogManagerGUI {
 	 *  and sets up listeners for SetRate GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class SetRateGUI extends JDialog
+	private class SetRateDialog extends JDialog
 	{
 		private JTextField rateField;
 		private JButton okButton;
 		private JButton cancelButton;
 		
-		public SetRateGUI()
+		public SetRateDialog()
 		{
 			JLabel label = new JLabel("Rate: ");
 			label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -523,13 +531,13 @@ public class DialogManagerGUI {
 	 *  and sets up listeners for SetRate GUI layout
 	 */
 	@SuppressWarnings("serial")
-	private class SetLengthGUI extends JDialog
+	private class SetLengthDialog extends JDialog
 	{
 		private JTextField lengthField;
 		private JButton okButton;
 		private JButton cancelButton;
 		
-		public SetLengthGUI()
+		public SetLengthDialog()
 		{
 			JLabel label = new JLabel("Length: ");
 			label.setHorizontalAlignment(SwingConstants.RIGHT);

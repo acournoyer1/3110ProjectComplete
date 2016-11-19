@@ -172,7 +172,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				dialog.open("Add Node");
+				dialog.open(DialogManagerGUI.ADD_NODE);
 			}
 		});
 		
@@ -181,7 +181,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				dialog.open("Add Connection");
+				dialog.open(DialogManagerGUI.ADD_CONNECTION);
 			}
 		});
 		
@@ -190,7 +190,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				dialog.open("Add Message");
+				dialog.open(DialogManagerGUI.ADD_MESSAGE);
 			}
 		});
 		removeNode.addActionListener(new ActionListener()
@@ -198,7 +198,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				dialog.open("Remove Node");
+				dialog.open(DialogManagerGUI.REMOVE_NODE);
 			}
 		});
 		removeConnection.addActionListener(new ActionListener()
@@ -206,7 +206,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				dialog.open("Remove Connection");
+				dialog.open(DialogManagerGUI.REMOVE_CONNECTION);
 			}
 		});
 		viewNode.addActionListener(new ActionListener()
@@ -214,7 +214,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				dialog.open("View Node");
+				dialog.open(DialogManagerGUI.VIEW_NODE);
 			}
 		});
 		commandField.addKeyListener(new KeyAdapter()
@@ -332,7 +332,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				dialog.open("Set Rate");
+				dialog.open(DialogManagerGUI.SET_RATE);
 			}
 		});
 		simLength.addActionListener(new ActionListener()
@@ -340,7 +340,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				dialog.open("Set Length");
+				dialog.open(DialogManagerGUI.SET_LENGTH);
 			}
 		});
 	}

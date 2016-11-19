@@ -250,12 +250,6 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		selectedNode = null;
 	}
 	
-	private void showPopup(JPopupMenu menu, Point p)
-	{
-		statusWindow.append("Showing menu at " + p + "\n");
-		menu.show(this, p.x, p.y);
-	}
-	
 	@Override
 	public void paint(Graphics g)
 	{
