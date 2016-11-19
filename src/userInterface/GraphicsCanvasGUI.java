@@ -2,13 +2,18 @@ package userInterface;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 
 import backEnd.Connection;
@@ -50,20 +55,14 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 			@Override
 			public void mousePressed(MouseEvent e)
 			{
-				boolean found;
 				switch(state)
 				{
 				case NEUTRAL:
-					found = false;
-					for(NodeImageGUI n: nodes)
+					selectedNode = findNode(e.getPoint());
+					if(selectedNode != null && (int)e.getButton() == (int)MouseEvent.BUTTON3)
 					{
-						if(n.contains(e.getPoint()))
-						{
-							selectedNode = n;
-							found = true;
-						}
+						createPopup(selectedNode.getNode()).show(e.getComponent(), e.getPoint().x, e.getPoint().y);
 					}
-					if(!found) selectedNode = null;
 					break;
 					
 				case ADDNODE:
@@ -74,36 +73,18 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 				case ADDCONNECTION:
 					if(selectedNode == null)
 					{
-						found = false;
-						for(NodeImageGUI n: nodes)
-						{
-							if(n.contains(e.getPoint()))
-							{
-								selectedNode = n;
-								statusWindow.append("Select the second node.\n");
-								found = true;
-							}
-						}
-						if(!found)
+						selectedNode = findNode(e.getPoint());
+						if(selectedNode != null) statusWindow.append("Select the second node.\n");
+						else
 						{
 							statusWindow.append("Invalid selection, terminating the creation of the connection.\n");
 							setState(CanvasState.NEUTRAL);
-							selectedNode = null;
 						}
 					}
 					else
 					{
-						found = false;
-						NodeImageGUI temp = null;
-						for(NodeImageGUI n: nodes)
-						{
-							if(n.contains(e.getPoint()))
-							{
-								temp = n;
-								found = true;
-							}
-						}
-						if(!found)
+						NodeImageGUI temp = findNode(e.getPoint());
+						if(temp == null)
 						{
 							statusWindow.append("Invalid selection, terminating the creation of the connection.\n");
 							setState(CanvasState.NEUTRAL);
@@ -116,7 +97,6 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 							tempShape = null;
 							selectedNode = null;
 							setState(CanvasState.NEUTRAL);
-							
 						}
 					}
 					break;
@@ -140,7 +120,7 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 				case ADDNODE:
 					break;
 				case NEUTRAL:
-					if(selectedNode != null)
+					if(selectedNode != null && ((int)e.getButton() == (int)MouseEvent.BUTTON1 || (int)e.getButton() == (int)MouseEvent.NOBUTTON))
 					{
 						selectedNode.setCenter(e.getPoint());
 						repaint();
@@ -187,6 +167,49 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		});
 	}
 	
+	public JPopupMenu createPopup(Node node)
+	{
+		JPopupMenu menu = new JPopupMenu();
+		JMenuItem removeNode = new JMenuItem("Remove Node");
+		removeNode.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				sim.removeNode(node);
+				statusWindow.append("Node " + node.getName() + " has been removed.\n");
+			}
+		});
+		menu.add(removeNode);
+		for(Node n: node.getConnections())
+		{
+			JMenuItem temp = new JMenuItem("Remove Connection to " + n.getName());
+			temp.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					sim.removeConnection(node, n);
+					statusWindow.append("Connection " + node.getName() + " < - > " + n.getName() + " has been removed.\n");
+				}
+			});
+			menu.add(temp);
+		}
+		return menu;
+	}
+	
+	public NodeImageGUI findNode(Point p)
+	{
+		for(NodeImageGUI n: nodes)
+		{
+			if(n.contains(p))
+			{
+				return n;
+			}
+		}
+		return null;
+	}
+	
 	public void setState(CanvasState s)
 	{
 		state = s;
@@ -202,9 +225,35 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		tempNode = n;
 	}
 	
+	public Node getTempNode()
+	{
+		return tempNode;
+	}
+	
+	public void setTempShape(Shape s)
+	{
+		tempShape = s;
+	}
+	
+	public void setSelectedNode(NodeImageGUI n)
+	{
+		selectedNode = n;
+	}
+	
+	public NodeImageGUI getSelectedNode()
+	{
+		return selectedNode;
+	}
+	
 	public void clearSelection()
 	{
 		selectedNode = null;
+	}
+	
+	private void showPopup(JPopupMenu menu, Point p)
+	{
+		statusWindow.append("Showing menu at " + p + "\n");
+		menu.show(this, p.x, p.y);
 	}
 	
 	@Override
