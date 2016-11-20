@@ -16,6 +16,8 @@ public class Node {
 	private ArrayList<Integer> MessagesVisited;
 	private NodeImageGUI image;
 	
+	private int count = 0;
+	
 	/*
 	 * Create a node that has connections to other nodes 
 	 * held in a linkedList
@@ -105,13 +107,19 @@ public class Node {
 		}
 	}
 
-	/*
+	/**
 	 * Add a message ID to the list
+	 * 
+	 * @param1 the id of the message that visited
 	 */
 	public void addMessagesVisited(int msgID){
 		MessagesVisited.add(msgID);
 	}
 	
+	/**
+	 * get the messages that have visited this node
+	 * @return ArrayList of the integer value IDs of the messages
+	 */
 	public ArrayList<Integer> getMessagesVisited(){
 		return MessagesVisited;
 	}

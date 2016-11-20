@@ -20,7 +20,7 @@ public class Message {
 	private LinkedList<Node> nodePath;
 	private int id;
 	private boolean stopped = false;
-	
+	private int unvisitedCount = 0;	
 	private static int idGenerator = 1;
 	
 	public Message(Node src, Node dest){
@@ -87,6 +87,14 @@ public class Message {
 	public boolean isStopped()
 	{
 		return stopped;
+	}
+	
+	public int getUnvisitedCount(){
+		return unvisitedCount;
+	}
+	
+	public void incUnvisitedCount(){
+		unvisitedCount++;
 	}
 	
 	public void paint(Graphics2D g)

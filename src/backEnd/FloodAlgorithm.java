@@ -12,11 +12,11 @@ public class FloodAlgorithm implements SimulationAlgorithm{
 	
 	@Override
 	public void step() {
-
 		//Temporary list containing the children messages
 		ArrayList<Message> childMsgs = new ArrayList<Message>();
 		ArrayList<Integer> idList = new ArrayList<Integer>();
 		ArrayList<Message> removeList = new ArrayList<Message>();
+		ArrayList<Message> messagesUnvisited = new ArrayList<Message>();
 		//Get the ID of the parent & child message and store it if it is complete
 		for(Message msg: sim.getListMessages())
 		{
@@ -25,21 +25,6 @@ public class FloodAlgorithm implements SimulationAlgorithm{
 				idList.add(msg.getId());
 			}
 		}
-		/*
-		//Add to a list all of the messages with the corresponding ID that have complete
-		for(Message msg: sim.getListMessages())
-		{
-			if(idList.contains(msg.getId()))
-			{
-				removeList.add(msg);
-			}
-		}
-		//Remove all items from the list of messages in the simulation that are done
-		for(Message msg: removeList)
-		{
-			sim.getListMessages().remove(msg);
-		}*/
-		//Clear the list that has finished
 		idList.clear();
 		removeList.clear();	
 		
@@ -47,7 +32,6 @@ public class FloodAlgorithm implements SimulationAlgorithm{
 		for(Message msg : sim.getListMessages()){
 			msg.incCount();
 			Node refNode = msg.getPath().getFirst();
-			
 			//Check all adjacent nodes
 			for(Node n : refNode.getConnections()){
 				//Check if the adjacent node has already been visited by a child message
@@ -72,6 +56,13 @@ public class FloodAlgorithm implements SimulationAlgorithm{
 					sim.getStatusWindow().append(s);
 				}
 			}
+			msg.incUnvisitedCount();
+			if(refNode.getConnections().size() == msg.getUnvisitedCount()){
+				messagesUnvisited.add(msg);
+			}
+		}
+		for(Message m : messagesUnvisited){
+			sim.getMessageList().remove(m);
 		}
 		//Remove the messages from the list
 		for(Message msg: removeList)
