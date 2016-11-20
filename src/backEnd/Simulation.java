@@ -55,7 +55,7 @@ public class Simulation {
 		this.statusWindow = statusWindow;
 		
 		//Default Type is initialized at random
-		simStep = new RandomAlgorithm(this);
+		simStep = new FloodAlgorithm(this);
 	}
 	
 	/**
@@ -185,6 +185,9 @@ public class Simulation {
 			break;
 		case FLOOD:
 			this.simStep = new FloodAlgorithm(this);
+			break;
+		case SHORTEST_PATH:
+			this.simStep = new ShortestPathAlgorithm(this);
 			break;
 		default:
 			this.simStep = new RandomAlgorithm(this);

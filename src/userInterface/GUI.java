@@ -149,7 +149,7 @@ public class GUI extends JFrame implements SimulationListener{
 		split.setDividerSize(1);
 		split.setEnabled(false);
 	    
-		stepButton.setEnabled(false);
+		stepButton.setEnabled(true);
 		removeNode.setEnabled(false);
 		removeConnection.setEnabled(false);
 		viewNode.setEnabled(false);
@@ -418,7 +418,7 @@ public class GUI extends JFrame implements SimulationListener{
 		}
 		if(randomMessages.isSelected())
 		{
-			stepButton.setEnabled(false);
+			stepButton.setEnabled(true);
 			simRate.setEnabled(true);
 			simLength.setEnabled(true);
 			if(sim.getConnections().size() == 0)
