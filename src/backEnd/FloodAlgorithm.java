@@ -56,11 +56,15 @@ public class FloodAlgorithm implements SimulationAlgorithm{
 					sim.getStatusWindow().append(s);
 				}
 			}
+			//Increment count of adjacent nodes for each message
 			msg.incUnvisitedCount();
+			
+			//If the message connection size is equal to the visited count add to remove
 			if(refNode.getConnections().size() == msg.getUnvisitedCount()){
 				messagesUnvisited.add(msg);
 			}
 		}
+		//Remove messages if there are no other available nodes adjacent
 		for(Message m : messagesUnvisited){
 			sim.getMessageList().remove(m);
 		}
