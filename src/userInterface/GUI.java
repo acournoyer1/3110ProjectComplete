@@ -14,7 +14,6 @@ import backEnd.Message;
 import backEnd.Node;
 import backEnd.Simulation;
 import backEnd.SimulationListener;
-import backEnd.SimulationType;
 import algorithms.*;
 
 @SuppressWarnings("serial")

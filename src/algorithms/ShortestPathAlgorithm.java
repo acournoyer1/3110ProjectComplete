@@ -63,5 +63,6 @@ public class ShortestPathAlgorithm implements SimulationAlgorithm{
 				}
 			}
 		}
+		sim.update();
 	}
 }
