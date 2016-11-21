@@ -220,7 +220,7 @@ public class DialogManagerGUI {
 			addButton = new JButton("Add");
 			cancelButton = new JButton("Cancel");
 			
-			this.setTitle("Add Connection");
+			this.setTitle("Add Message");
 			JPanel top = new JPanel();
 			top.add(new JLabel("Source: "));
 			top.add(source);
