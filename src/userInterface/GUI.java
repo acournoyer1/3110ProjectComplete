@@ -50,7 +50,8 @@ public class GUI extends JFrame implements SimulationListener{
 	
 	private final Font BOLD_FONT = new Font("Dialog", Font.BOLD, 12);
 	
-	/*
+	/**
+	 * GUI method
 	 *  Instantiate all global GUI elements and builds the layout
 	 * 
 	 */
@@ -161,9 +162,10 @@ public class GUI extends JFrame implements SimulationListener{
 		this.setVisible(true);
 	}
 	
-	/*
+	/**
 	 *  Add all global listeners in the method below 
 	 *  i.e anything that is in the main GUI window
+	 *  
 	 */
 	private void setUpListeners()
 	{
@@ -350,9 +352,11 @@ public class GUI extends JFrame implements SimulationListener{
 		refresh();
 	}
 	
-	/*
+	/** 
+	 * refresh method
 	 *  Call this class after appending to the statusWindow to re-evaluate.
 	 *  This class will then enable and disable GUI elements depending on current parameters
+	 * 
 	 */
 	private void refresh()
 	{
@@ -423,10 +427,7 @@ public class GUI extends JFrame implements SimulationListener{
 		}
 	}
 	
-	/*
-	 *  Builds a new GUI 
-	 * 
-	 */
+	
 	public static void main(String args[])
 	{
 		new GUI();
