@@ -8,5 +8,5 @@ package backEnd;
 public enum SimulationType {
 	RANDOM,
 	FLOOD,
-	GLOBAL
+	SHORTEST_PATH
 }

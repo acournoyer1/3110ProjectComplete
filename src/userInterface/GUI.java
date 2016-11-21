@@ -15,6 +15,7 @@ import backEnd.Node;
 import backEnd.Simulation;
 import backEnd.SimulationListener;
 import backEnd.SimulationType;
+import algorithms.*;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements SimulationListener{
@@ -32,6 +33,7 @@ public class GUI extends JFrame implements SimulationListener{
 	private JMenuItem simLength;
 	private JCheckBoxMenuItem randomType;
 	private JCheckBoxMenuItem floodType;
+	private JCheckBoxMenuItem shortestType;
 	private JMenuItem clearSim;
 	private JCheckBoxMenuItem randomMessages;
 	private JTextField commandField;
@@ -71,8 +73,16 @@ public class GUI extends JFrame implements SimulationListener{
 		statusWindow = new JTextArea();
 		stepButton = new JButton("Step");
 		runButton = new JButton("Run");
+		
 		randomType = new JCheckBoxMenuItem("Random", true);
 		floodType = new JCheckBoxMenuItem("Flood");
+		shortestType = new JCheckBoxMenuItem("Shortest Path");
+		
+		ButtonGroup g = new ButtonGroup();
+		g.add(randomType);
+		g.add(floodType);
+		g.add(shortestType);
+		
 		simRate = new JMenuItem("Set Rate");
 		simLength = new JMenuItem("Set Length");
 		clearSim = new JMenuItem("Clear Simulation");
@@ -85,8 +95,8 @@ public class GUI extends JFrame implements SimulationListener{
 		bottomSplit = new JSplitPane();
 		sim = new Simulation(statusWindow);
 		sim.addListener(this);
-		dialog = new DialogManagerGUI(sim, statusWindow);
 		canvas = new GraphicsCanvasGUI(sim, statusWindow);
+		dialog = new DialogManagerGUI(sim, statusWindow, canvas);
 		parser = new CommandParserGUI(statusWindow, dialog, sim, canvas);
 		refresh();
 		
@@ -117,6 +127,7 @@ public class GUI extends JFrame implements SimulationListener{
 		simulationMenu.add(simLength);
 		typeMenu.add(randomType);
 		typeMenu.add(floodType);
+		typeMenu.add(shortestType);
 		this.setJMenuBar(jMenuBar);
 		
 		buttonSplit = new JSplitPane();
@@ -297,8 +308,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				floodType.setSelected(false);
-				sim.setType(SimulationType.RANDOM);
+				sim.setType(new RandomAlgorithm(sim));
 				statusWindow.append("Simulation Type set to Random.\n");
 			}
 		});
@@ -307,9 +317,17 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				randomType.setSelected(false);
-				sim.setType(SimulationType.FLOOD);
+				sim.setType(new FloodAlgorithm(sim));
 				statusWindow.append("Simulation Type set to Flood.\n");
+			}
+		});
+		shortestType.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				sim.setType(new ShortestPathAlgorithm(sim));
+				statusWindow.append("Simulation Type set to Shortest Path.\n");
 			}
 		});
 		randomMessages.addActionListener(new ActionListener()
