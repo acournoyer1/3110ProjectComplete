@@ -24,6 +24,7 @@ public class DialogManagerGUI {
 	public static final int VIEW_NODE = 5;
 	public static final int SET_RATE = 6;
 	public static final int SET_LENGTH = 7;
+	public static final int HELP = 8;
 	
 	public DialogManagerGUI(Simulation sim, JTextArea statusWindow, GraphicsCanvasGUI canvas)
 	{
@@ -42,6 +43,7 @@ public class DialogManagerGUI {
 		else if(dialogCode == VIEW_NODE) new ViewNodeDialog();
 		else if(dialogCode == SET_RATE) new SetRateDialog();
 		else if(dialogCode == SET_LENGTH) new SetLengthDialog();
+		else if(dialogCode == HELP) new HelpDialog();
 	}
 	
 	/*
@@ -613,6 +615,53 @@ public class DialogManagerGUI {
 					}
 				}
 			});
+		}
+	}
+	
+	private class HelpDialog extends JDialog 
+	{
+		public HelpDialog()
+		{
+			this.setTitle("Help Commands");
+			JTextArea printArea = new JTextArea();
+			printArea.setEditable(false);
+			printArea.setText("\n\n"
+					+ "The commands in this program are:\n"
+					+ "\tHELP\n"
+					+ "\t\tShows all available commands.\n"
+					+ "\tADD NODE\n"
+					+ "\t\tOpens the window to add nodes.\n"
+					+ "\tADD NODE name\n"
+					+ "\t\tAdds a new node with the provided name.\n"
+					+ "\tADD CONNECTION\n"
+					+ "\t\tOpens the window to add connections.\n"
+					+ "\tADD CONNECTION node1 node2\n"
+					+ "\t\tAdds a connection between the two named nodes.\n"
+					+ "\tADD MESSAGE\n"
+					+ "\t\tOpens the window to add messages.\n"
+					+ "\tADD MESSAGE source destination\n"
+					+ "\t\tCreates a new message that will travel between the source and destination nodes.\n"
+					+ "\tREMOVE NODE\n"
+					+ "\t\tOpens the window to remove nodes.\n"
+					+ "\tREMOVE NODE node\n"
+					+ "\t\tRemoves the named node and all its connections\n"
+					+ "\tREMOVE CONNECTION\n"
+					+ "\t\tOpens the window to remove connections.\n"
+					+ "\tREMOVE CONNECTION node1 node2\n"
+					+ "\t\tRemoves the connection between the two named nodes.\n"
+					+ "\tVIEW NODE\n"
+					+ "\t\tDisplays all information about a node.\n"
+					+ "\tVIEW ALL\n"
+					+ "\t\tDisplay information about all nodes.\n"
+					+ "\tCLEAR\n"
+					+ "\t\tClears the simulation."
+					+ "\tAVERAGE\n"
+					+ "\t\tDisplays the average number of jumps a message had to take before reaching it's destination.\n"
+					+ "*** All commands are not case sensitive ***\n");
+			this.add(printArea);
+			this.setSize(800,600);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
 		}
 	}
 	

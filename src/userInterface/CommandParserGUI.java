@@ -26,8 +26,13 @@ public class CommandParserGUI {
 		commands.add(new testCommand());
 		commands.add(new clearCommand());
 		commands.add(new addNodeCommand());
-		commands.add(new removeCommand());
-		commands.add(new viewCommand());
+		commands.add(new addConnectionCommand());
+		commands.add(new addMessageCommand());
+		commands.add(new removeNodeCommand());
+		commands.add(new removeConnectionCommand());
+		commands.add(new viewNodeCommand());
+		commands.add(new viewAllCommand());
+		commands.add(new InvalidCommand());
 	}
 	
 	public void parse(String s)
