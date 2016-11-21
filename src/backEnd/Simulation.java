@@ -54,7 +54,7 @@ public class Simulation {
 		this.statusWindow = statusWindow;
 		
 		//Default Type is initialized at random
-		simStep = new RandomAlgorithm(this);
+		simStep = new DijkstrasAlgorithm(this);
 	}
 	
 	/**
