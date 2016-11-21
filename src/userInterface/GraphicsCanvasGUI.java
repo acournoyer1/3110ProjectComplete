@@ -122,7 +122,13 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 				case NEUTRAL:
 					if(selectedNode != null && ((int)e.getButton() == (int)MouseEvent.BUTTON1 || (int)e.getButton() == (int)MouseEvent.NOBUTTON))
 					{
-						selectedNode.setCenter(e.getPoint());
+						int x = e.getPoint().x;
+						int y = e.getPoint().y;
+						if(x < 0) x = 0;
+						else if(x > getWidth()) x = getWidth();
+						if(y < 0) y = 0;
+						else if(y > getHeight()) x = getHeight();
+						selectedNode.setCenter(new Point(x,y));
 						repaint();
 					}
 					break;
