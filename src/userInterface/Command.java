@@ -319,6 +319,19 @@ class viewAllCommand implements Command
 	}
 }
 
+class EmptyCommand implements Command 
+{
+	public boolean isTrue(String[] words)
+	{
+		return words.length == 1 && words[0].equalsIgnoreCase("");
+	}
+	
+	public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas)
+	{
+		return "";
+	}
+}
+
 class InvalidCommand implements Command 
 {
 	public boolean isTrue(String[] words)
@@ -328,6 +341,6 @@ class InvalidCommand implements Command
 	
 	public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas)
 	{
-		return "Invalid command, for all commands use 'Help'.";
+		return "Invalid command, for all commands use 'Help'.\n";
 	}
 }

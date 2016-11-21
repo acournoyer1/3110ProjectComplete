@@ -618,6 +618,7 @@ public class DialogManagerGUI {
 		}
 	}
 	
+	@SuppressWarnings("serial")
 	private class HelpDialog extends JDialog 
 	{
 		public HelpDialog()

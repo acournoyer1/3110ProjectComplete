@@ -32,6 +32,7 @@ public class CommandParserGUI {
 		commands.add(new removeConnectionCommand());
 		commands.add(new viewNodeCommand());
 		commands.add(new viewAllCommand());
+		commands.add(new EmptyCommand());
 		commands.add(new InvalidCommand());
 	}
 	
