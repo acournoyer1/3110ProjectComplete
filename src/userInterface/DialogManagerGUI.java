@@ -14,6 +14,7 @@ import backEnd.Simulation;
 public class DialogManagerGUI {
 	private Simulation sim;
 	private JTextArea statusWindow;
+	private GraphicsCanvasGUI canvas;
 	
 	public static final int ADD_NODE = 0;
 	public static final int ADD_CONNECTION = 1;
@@ -24,10 +25,11 @@ public class DialogManagerGUI {
 	public static final int SET_RATE = 6;
 	public static final int SET_LENGTH = 7;
 	
-	public DialogManagerGUI(Simulation sim, JTextArea statusWindow)
+	public DialogManagerGUI(Simulation sim, JTextArea statusWindow, GraphicsCanvasGUI canvas)
 	{
 		this.sim = sim;
 		this.statusWindow = statusWindow;
+		this.canvas = canvas;
 	}
 	
 	public void open(int dialogCode)
@@ -105,8 +107,10 @@ public class DialogManagerGUI {
 					Node n = sim.getNodeByName(nameField.getText());
 					if(n == null)
 					{
-						sim.addNode(new Node(nameField.getText()));
-						statusWindow.append("Node " + nameField.getText() + " has been added.\n");
+						canvas.clearSelection();
+						canvas.setTempNode(new Node(nameField.getText()));
+						canvas.setState(CanvasState.ADDNODE);
+						statusWindow.append("Use the canvas to place the node.\n");
 					}
 					else
 					{

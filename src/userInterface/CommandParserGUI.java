@@ -25,7 +25,7 @@ public class CommandParserGUI {
 		commands.add(new avgCommand());
 		commands.add(new testCommand());
 		commands.add(new clearCommand());
-		commands.add(new addCommand());
+		commands.add(new addNodeCommand());
 		commands.add(new removeCommand());
 		commands.add(new viewCommand());
 	}

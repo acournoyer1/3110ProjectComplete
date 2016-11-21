@@ -84,8 +84,8 @@ public class GUI extends JFrame implements SimulationListener{
 		bottomSplit = new JSplitPane();
 		sim = new Simulation(statusWindow);
 		sim.addListener(this);
-		dialog = new DialogManagerGUI(sim, statusWindow);
 		canvas = new GraphicsCanvasGUI(sim, statusWindow);
+		dialog = new DialogManagerGUI(sim, statusWindow, canvas);
 		parser = new CommandParserGUI(statusWindow, dialog, sim, canvas);
 		refresh();
 		

@@ -110,6 +110,46 @@ class clearCommand implements Command {
     }
 }
 
+class addNodeCommand implements Command 
+{
+	private String[] words;
+	
+	public boolean isTrue(String[] w)
+	{
+		this.words = w;
+		
+		return words.length >= 2 && words[0].equalsIgnoreCase("add") && words[1].equalsIgnoreCase("node");
+	}
+	
+	public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas)
+	{
+		if(words.length == 2)
+		{
+			dialog.open(DialogManagerGUI.ADD_NODE);
+			return("");
+		}
+		else if(words.length == 3)
+		{
+			Node n = sim.getNodeByName(words[2]);
+			if(n == null)
+			{
+				canvas.clearSelection();
+				canvas.setTempNode(new Node(words[2]));
+				canvas.setState(CanvasState.ADDNODE);
+				return("Use the canvas to place the node.\n");
+			}
+			else
+			{
+				return ("A node with this name already exists.\n");
+			}
+		}
+		else
+		{
+			return ("The add node command must be followed by either no words or 1 word, the name of the node.\n");
+		}
+	}
+}
+
 class addCommand implements Command {
     
 	private String[] words;
