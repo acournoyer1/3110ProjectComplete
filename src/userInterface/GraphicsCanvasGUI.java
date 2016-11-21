@@ -48,6 +48,11 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		this.setEnabled(true);
 	}
 	
+	/**
+	 *  Add all global listeners in the method below 
+	 *  i.e anything that is in the main GUI window
+	 *  
+	 */
 	private void setUpListeners()
 	{
 		this.addMouseListener(new MouseAdapter()
@@ -173,6 +178,13 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		});
 	}
 	
+	/**
+	 * createPopup method:
+	 * Creates a popup menu to remove a node and its connections
+	 * 
+	 * @param node to be removed
+	 * @return a menu with the remaining nodes
+	 */
 	public JPopupMenu createPopup(Node node)
 	{
 		JPopupMenu menu = new JPopupMenu();
@@ -204,6 +216,13 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		return menu;
 	}
 	
+	/**
+	 * findNode method:
+	 * finds if a node is contained in the GUI of the node tree
+	 * 
+	 * @param The X,Y coordinates of the node
+	 * @return The nodeImageGUI if found
+	 */
 	public NodeImageGUI findNode(Point p)
 	{
 		for(NodeImageGUI n: nodes)
@@ -216,46 +235,98 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		return null;
 	}
 	
+	/**
+	 * setState method:
+	 * Sets the state of the canvas
+	 * 
+	 * @param the canvaseState to be set
+	 */
 	public void setState(CanvasState s)
 	{
 		state = s;
 	}
 	
+	/**
+	 * getState method:
+	 * Gets the current state of the canvas
+	 * 
+	 * @return the current canvasState
+	 */
 	public CanvasState getState()
 	{
 		return state;
 	}
 	
+	/**
+	 * setTempNode method:
+	 * Creates a temp node
+	 * 
+	 * @param the node to be set
+	 */
 	public void setTempNode(Node n)
 	{
 		tempNode = n;
 	}
 	
+	/**
+	 * getTempNode method:
+	 * Gets the temp node that was created
+	 * 
+	 * @return the tempNode 
+	 */
 	public Node getTempNode()
 	{
 		return tempNode;
 	}
 	
+	/**
+	 * setTempShape method:
+	 * creates a temp shape
+	 * 
+	 * @param the shape to be set
+	 */
 	public void setTempShape(Shape s)
 	{
 		tempShape = s;
 	}
 	
+	/**
+	 * setSelectedNode method:
+	 * sets the node to be selected 
+	 * 
+	 * @param the NodeImageGUI to be selected
+	 */
 	public void setSelectedNode(NodeImageGUI n)
 	{
 		selectedNode = n;
 	}
 	
+	/**
+	 * getSelectedNode method:
+	 * gets the node that was selected
+	 * 
+	 * @return the selectedNode
+	 */
 	public NodeImageGUI getSelectedNode()
 	{
 		return selectedNode;
 	}
 	
+	/**
+	 * clearSelection method:
+	 * clears the selectedNode 
+	 */
 	public void clearSelection()
 	{
 		selectedNode = null;
 	}
 	
+	/**
+	 * paint method:
+	 * paints the canvas to represent the node tree and all changes made to it
+	 * 
+	 *  @param the graphics context
+	 */
 	@Override
 	public void paint(Graphics g)
 	{
@@ -296,6 +367,11 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		}
 	}
 	
+	/**
+	 * update method
+	 *  updates the canvas using current parameters
+	 *  
+	 */
 	public void update()
 	{
 		nodes.clear();

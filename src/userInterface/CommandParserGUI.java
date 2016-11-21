@@ -36,6 +36,12 @@ public class CommandParserGUI {
 		commands.add(new InvalidCommand());
 	}
 	
+	/**
+	 * parse method:
+	 * parses a command from the command line
+	 * 
+	 * @param the string to be parsed
+	 */
 	public void parse(String s)
 	{
 		String[] words = s.split(" ");
