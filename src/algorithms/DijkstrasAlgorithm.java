@@ -1,3 +1,4 @@
+
 package algorithms;
 
 import java.util.*;
@@ -29,9 +30,9 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 	
 	public DijkstrasAlgorithm(Simulation sim){
 		this.sim = sim;
-		this.unvisitedNodes = new ArrayList<Node>();
-		unchangedNodes = new ArrayList<Node>(sim.getNodes());
-		this.addedMessages = new ArrayList<Message>();
+		unvisitedNodes = new ArrayList<Node>();
+		unchangedNodes = new ArrayList<Node>();
+		addedMessages = new ArrayList<Message>();
 	}
 	
 	
@@ -42,12 +43,14 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 	@Override
 	public void step() {
 		addedMessages = sim.getListMessages();//receive list of Messages
-		
+		unchangedNodes.clear();	
+		for(Node n: sim.getNodes()){
+			unchangedNodes.add(n);
+		}
 		sim.getMessageList().removeAll(reachedDestination);
 		reachedDestination.clear();
 		
 		for (Message msg: addedMessages){
-			
 			int currentWeight=0;												//weight of the current Node
 			int tempWeight = 0;													//variable used to compare later in method
 			nextNode = null;													//Node representing the node we ill jump to
@@ -63,8 +66,8 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 			
 			for (Node n: currentNode.getConnections()){							//iterate over each connection to node
 				if(unvisitedNodes.contains(n)){									//ensure comparing against a not visited node
-					tempWeight = (unchangedNodes.indexOf(n) +1 );				//get 'weight' of possible node
-					if((tempWeight < currentWeight) || (currentWeight == 0)){	//if it is the first comparison OR if the jump is 'quicker'
+					tempWeight = (unchangedNodes.indexOf(n));				//get 'weight' of possible node
+					if((tempWeight > currentWeight) || (currentWeight == 0)){	//if it is the first comparison OR if the jump is 'quicker'
 						nextNode = n;											//if condition met this is the next Node to go to
 					}
 				}
@@ -75,10 +78,8 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 			}else{
 				currentNode = nextNode;											//everything went as planned set the nextNode
 			}
-				
-			
+					
 			msg.appendPath(currentNode);										//append to path so can be set as visited on next run through
-			
 			sim.getStatusWindow().append("Message " + msg.getId() + " sending child message to: " + currentNode.getName() + "\n");
 			msg.incCount();														//inc the message counter
 			
@@ -87,11 +88,9 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 				sim.getStatusWindow().append("Destination reached. \n");
 				sim.getStatusWindow().append("Number of jumps: " + msg.getCount() + "\n");
 				sim.getMessageJumps().add(msg.getCount());
-				msg.stop();
-				sim.update();
+				sim.getListMessages().remove(msg);
 				return;
 			}
-		}
-		sim.update();
+		}	
 	}
 }
