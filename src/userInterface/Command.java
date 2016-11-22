@@ -19,7 +19,7 @@ abstract class ParameterCommand implements Command
 }
 
 
-class helpCommand implements Command {
+class HelpCommand implements Command {
     public boolean isTrue(String[] words)
     {
     	return words.length == 1 && words[0].equalsIgnoreCase("help");
@@ -32,7 +32,7 @@ class helpCommand implements Command {
     }
 }
 
-class avgCommand implements Command {
+class AvgCommand implements Command {
     
 	public boolean isTrue(String[] words){
 	
@@ -49,7 +49,7 @@ class avgCommand implements Command {
 }
 
 
-class testCommand implements Command {
+class TestCommand implements Command {
     
 	public boolean isTrue(String[] words){
         
@@ -65,7 +65,7 @@ class testCommand implements Command {
     }
 }
 
-class clearCommand implements Command {
+class ClearCommand implements Command {
     
 	public boolean isTrue(String[] words){
         
@@ -81,7 +81,7 @@ class clearCommand implements Command {
     }
 }
 
-class addNodeCommand extends ParameterCommand 
+class AddNodeCommand extends ParameterCommand 
 {	
 	public boolean isTrue(String[] w)
 	{
@@ -119,7 +119,7 @@ class addNodeCommand extends ParameterCommand
 	}
 }
 
-class addConnectionCommand extends ParameterCommand 
+class AddConnectionCommand extends ParameterCommand 
 {	
 	public boolean isTrue(String[] w)
 	{
@@ -158,7 +158,7 @@ class addConnectionCommand extends ParameterCommand
 	}
 }
 
-class addMessageCommand extends ParameterCommand 
+class AddMessageCommand extends ParameterCommand 
 {
 	public boolean isTrue(String[] w)
 	{
@@ -196,7 +196,7 @@ class addMessageCommand extends ParameterCommand
 	}
 }
 
-class removeNodeCommand extends ParameterCommand
+class RemoveNodeCommand extends ParameterCommand
 {
 	public boolean isTrue(String[] w)
 	{
@@ -228,7 +228,7 @@ class removeNodeCommand extends ParameterCommand
 	}
 }
 
-class removeConnectionCommand extends ParameterCommand 
+class RemoveConnectionCommand extends ParameterCommand 
 {
 	public boolean isTrue(String[] w)
 	{
@@ -270,7 +270,7 @@ class removeConnectionCommand extends ParameterCommand
 	}
 }
 
-class viewNodeCommand extends ParameterCommand 
+class ViewNodeCommand extends ParameterCommand 
 {
 	public boolean isTrue(String[] w)
 	{
@@ -301,7 +301,7 @@ class viewNodeCommand extends ParameterCommand
 	}
 }
 
-class viewAllCommand implements Command 
+class ViewAllCommand implements Command 
 {
 	public boolean isTrue(String[] words)
 	{
