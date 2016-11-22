@@ -37,13 +37,13 @@ TEAM LOGISTICS
 
 	
 	Daman Singh
-		-Implementation of all unit tests
-		-Javadoc for all unit tests
+		-Updated Javadoc for the GUI
+		-Refactored the parser and separated out commands
 
 	Ryan Ha
-		- Implemented the flood algorithm
-		- Added JavaDoc
-		- UML Diagrams
+		- Updated JavaDoc
+		- Refactored the algorithms to use the SimulationAlgorithm interface
+		- Implemented the Breadth-First Search (Shortest Path) Algorithm
 
 -----------------------------------------------------------
 CONTENTS OF SUBMITTED MILESTONE 2:
