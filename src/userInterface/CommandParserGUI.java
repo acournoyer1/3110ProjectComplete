@@ -21,17 +21,17 @@ public class CommandParserGUI {
 		this.dialog = dialog;
 		this.sim = sim;
 		
-		commands.add(new helpCommand());
-		commands.add(new avgCommand());
-		commands.add(new testCommand());
-		commands.add(new clearCommand());
-		commands.add(new addNodeCommand());
-		commands.add(new addConnectionCommand());
-		commands.add(new addMessageCommand());
-		commands.add(new removeNodeCommand());
-		commands.add(new removeConnectionCommand());
-		commands.add(new viewNodeCommand());
-		commands.add(new viewAllCommand());
+		commands.add(new HelpCommand());
+		commands.add(new AvgCommand());
+		commands.add(new TestCommand());
+		commands.add(new ClearCommand());
+		commands.add(new AddNodeCommand());
+		commands.add(new AddConnectionCommand());
+		commands.add(new AddMessageCommand());
+		commands.add(new RemoveNodeCommand());
+		commands.add(new RemoveConnectionCommand());
+		commands.add(new ViewNodeCommand());
+		commands.add(new ViewAllCommand());
 		commands.add(new EmptyCommand());
 		commands.add(new InvalidCommand());
 	}
