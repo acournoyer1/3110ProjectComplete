@@ -5,6 +5,17 @@ import java.util.Iterator;
 import java.util.Random;
 import backEnd.*;
 
+/**
+ * RANDOM ALGORITHM
+ * 
+ * This algorithm will cause the simulation to select a 
+ * neighbouring node at random. Sending a message from X->Y
+ * will cause the simulation to step through the nodes at random.
+ * 
+ * @author Ryan Ha
+ *
+ */
+
 public class RandomAlgorithm implements SimulationAlgorithm{
 	Simulation sim;
 	
