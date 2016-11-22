@@ -36,8 +36,8 @@ TEAM LOGISTICS
 		  to assure each class has only one responsibility
 	
 	Daman Singh
-		-Implementation of all unit tests
-		-Javadoc for all unit tests
+		-Updated Javadoc for the GUI
+		-Refactored the parser and separated out commands
 
 	Ryan Ha
 		- Implemented the flood algorithm
