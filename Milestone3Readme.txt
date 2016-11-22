@@ -31,9 +31,10 @@ TEAM LOGISTICS
 		- UML updates
 		
 	Alex Cournoyer
-		- Implemented new GraphicsCanvas class
-		- Split the GUI class from its nested classes in iteration 1 into a few distinct classes 
-		  to assure each class has only one responsibility
+		- Added Drag and Drop functionality to the canvas along with pop up menus
+		- Helped refactor the Command portion of the code
+		- UML Diagram
+
 	
 	Daman Singh
 		-Implementation of all unit tests
@@ -48,9 +49,6 @@ TEAM LOGISTICS
 CONTENTS OF SUBMITTED MILESTONE 2:
 
 	- Runable .jar file of program, including source code
-		This .jar file meets the requirements of milestone 1 and has gone further to implement
-		a GUI also. The only thing not desirable currently is the fact that a message can be sent
-		from itself to itself.
 	- UML of program, showing all classes and their interactions.
 	- This readme
 
