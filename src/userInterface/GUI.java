@@ -33,6 +33,7 @@ public class GUI extends JFrame implements SimulationListener{
 	private JCheckBoxMenuItem randomType;
 	private JCheckBoxMenuItem floodType;
 	private JCheckBoxMenuItem shortestType;
+	private JCheckBoxMenuItem dijkstrasType;
 	private JMenuItem clearSim;
 	private JCheckBoxMenuItem randomMessages;
 	private JTextField commandField;
@@ -76,11 +77,13 @@ public class GUI extends JFrame implements SimulationListener{
 		randomType = new JCheckBoxMenuItem("Random", true);
 		floodType = new JCheckBoxMenuItem("Flood");
 		shortestType = new JCheckBoxMenuItem("Shortest Path");
+		dijkstrasType = new JCheckBoxMenuItem("Dijkstra's Algorithm");
 		
 		ButtonGroup g = new ButtonGroup();
 		g.add(randomType);
 		g.add(floodType);
 		g.add(shortestType);
+		g.add(dijkstrasType);
 		
 		simRate = new JMenuItem("Set Rate");
 		simLength = new JMenuItem("Set Length");
@@ -127,6 +130,7 @@ public class GUI extends JFrame implements SimulationListener{
 		typeMenu.add(randomType);
 		typeMenu.add(floodType);
 		typeMenu.add(shortestType);
+		typeMenu.add(dijkstrasType);
 		this.setJMenuBar(jMenuBar);
 		
 		buttonSplit = new JSplitPane();
@@ -327,6 +331,15 @@ public class GUI extends JFrame implements SimulationListener{
 			{
 				sim.setType(new ShortestPathAlgorithm(sim));
 				statusWindow.append("Simulation Type set to Shortest Path.\n");
+			}
+		});
+		dijkstrasType.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				sim.setType(new DijkstrasAlgorithm(sim));
+				statusWindow.append("Simulation Type set to Dijkstra's Algorithm.\n");
 			}
 		});
 		randomMessages.addActionListener(new ActionListener()

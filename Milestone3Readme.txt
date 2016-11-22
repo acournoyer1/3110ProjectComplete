@@ -26,10 +26,9 @@ Daman Singh			[100965225]
 TEAM LOGISTICS
 
 	Adam Staples
-		- Implemented all feedback fixes,aside form GUI refactoring, from previous milestone.
-		- run() method implemented and hooked into GUI
-		- Documentation of Simulation class
-		- Individual and collaboration UMLs for GUI and Backend classes(except Node)
+		- Implemented Fourth algorithm, Dijkstras Algorithm
+		- Readme updates
+		- UML updates
 		
 	Alex Cournoyer
 		- Implemented new GraphicsCanvas class
@@ -60,15 +59,17 @@ INSTRUCTIONS TO USE PROGRAM:
 	
 	1.	Run .jar file located in submitted file.
 	2. 	Once GUI has appeared, press "Add" on the menu bar and select "Create Test Network". *
-	3.	Once a network exists, the run button can be used to run simulations with random messages
+	3. 	To change the method of routing through the network select "Simulation" and go to "Set Type"
+		and then select one of the options.
+	4.	Once a network exists, the run button can be used to run simulations with random messages
 		or alternatively, the Randomly Generated Messages checkbox can be unselected in the
 		simulation menu. Steps 4 through 6 deal with this alternative.
-	4.	New messages can be added to the simulation by pressing "Add" on the menu bar and selecting
+	5.	New messages can be added to the simulation by pressing "Add" on the menu bar and selecting
 		"Add Message". **
-	5.	Now that new message has been created, click the "Step" button at the bottom of the GUI
+	6.	Now that new message has been created, click the "Step" button at the bottom of the GUI
 		to move the message from node to node until it reaches it's destination.
-	6.	A new message can now be created, or the network reset and a new one created.
-	7.	To quit simply X off the program.
+	7.	A new message can now be created, or the network reset and a new one created.
+	8.	To quit simply X off the program.
 	
 	*This will create a network with nodes and connections identical to the example given in the 
 	project description PDF. You can use the other options in the "Add" menu to create your own
@@ -105,14 +106,37 @@ Package backEnd
 	Node.java
 
 		Node class that holds the properties of every node that will be manipulated. 
-
-	SimulationType.java
-
-		SimulationType enum defines what mode the user has currently selected.
 		
 	SimulationListener.java
+		
+		Interface to update the GUI  
+		
+	SimulationType.java
+		
+		Strategy enums
 	
+Package algorithms
+
+	DijkstrasAlgorithm.java
 	
+		Method to go through a the table using Dijkstra's algorithm
+		
+	FloodAlgorithm.java
+	
+		Method to go through a the table using flood algorithm
+		
+	RandomAlgorithm.java
+	
+		Method to go through a the table randomly going to an adjacent node
+		
+	ShortestPathAlgorithm.java
+	
+		Method to go through a the table using breadth search finding the shortest pattern.
+		
+	SimulationAlgorithm.java
+	
+		Interface for all strategies
+		
 	
 Package userInterface
 
@@ -137,9 +161,13 @@ Package userInterface
 	
 		Holds the information necessary to draw a Node on the canvas.
 	
-	PolarPoint.java
+	Command.java
 	
-		Polar Point representation used in auto generating node placements.
+		Interface of and all of the command methods for command line.
+		
+	CanvasState.java
+	
+		ENUMS
 		
 
 
