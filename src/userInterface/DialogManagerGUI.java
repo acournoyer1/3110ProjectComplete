@@ -33,6 +33,12 @@ public class DialogManagerGUI {
 		this.canvas = canvas;
 	}
 	
+	/**
+	 *  open method
+	 *  creates a dialog based on the dialogCode provided
+	 *  
+	 *  @param a dialogCode that corresponds with a specific dialog
+	 */
 	public void open(int dialogCode)
 	{
 		if(dialogCode == ADD_NODE) new AddNodeDialog();
@@ -46,7 +52,8 @@ public class DialogManagerGUI {
 		else if(dialogCode == HELP) new HelpDialog();
 	}
 	
-	/*
+	/**
+	 *  AddNodeDialog class
 	 *  Nested class that builds the GUI for the addNode button
 	 *  and sets up listeners for addNode GUI layout
 	 */
@@ -138,7 +145,8 @@ public class DialogManagerGUI {
 		}
 	}
 	
-	/*
+	/**
+	 *  AddConnectionDialog class
 	 *  Nested class that builds the GUI for the addConnection button
 	 *  and sets up listeners for addConnection GUI layout
 	 */
@@ -201,7 +209,8 @@ public class DialogManagerGUI {
 		}
 	}
 	
-	/*
+	/**
+	 *  AddMessageDialog class
 	 *  Nested class that builds the GUI for the addMessage button
 	 *  and sets up listeners for addMessage GUI layout
 	 */
@@ -267,7 +276,8 @@ public class DialogManagerGUI {
 		}
 	}
 	
-	/*
+	/**
+	 *  RemoveNodeDialog class
 	 *  Nested class that builds the GUI for the removeNode button
 	 *  and sets up listeners for removeNode GUI layout
 	 */
@@ -327,7 +337,8 @@ public class DialogManagerGUI {
 		}
 	}
 	
-	/*
+	/**
+	 *  RemoveConnectionDialog class
 	 *  Nested class that builds the GUI for the removeConnection button
 	 *  and sets up listeners for removeConnection GUI layout
 	 */
@@ -387,7 +398,8 @@ public class DialogManagerGUI {
 		}
 	}
 	
-	/*
+	/**
+	 *  ViewNodeDialog class
 	 *  Nested class that builds the GUI for the viewNode button
 	 *  and sets up listeners for viewNode GUI layout
 	 */
@@ -446,7 +458,8 @@ public class DialogManagerGUI {
 		}
 	}
 	
-	/*
+	/**
+	 *  SetRateDialog class
 	 *  Nested class that builds the GUI for the setRate button
 	 *  and sets up listeners for SetRate GUI layout
 	 */
@@ -532,7 +545,8 @@ public class DialogManagerGUI {
 		}
 	}
 	
-	/*
+	/**
+	 *  SetLengthDialog class
 	 *  Nested class that builds the GUI for the setRate button
 	 *  and sets up listeners for SetRate GUI layout
 	 */
@@ -618,6 +632,11 @@ public class DialogManagerGUI {
 		}
 	}
 	
+	/**
+	 *  helpDialog class
+	 *  Nested class that builds the GUI for the help button
+	 *  and sets up listeners for help GUI layout
+	 */
 	@SuppressWarnings("serial")
 	private class HelpDialog extends JDialog 
 	{
