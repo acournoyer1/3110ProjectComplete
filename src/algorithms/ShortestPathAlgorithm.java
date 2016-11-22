@@ -30,28 +30,44 @@ public class ShortestPathAlgorithm implements SimulationAlgorithm{
 	
 	@Override
 	public void step() {
+		//Remove the list of messages that have completed
+		sim.getMessageList().removeAll(reachedDestination);
+		reachedDestination.clear();
+		
+		//Loop through each message
 		for(Message msg : sim.getListMessages()){
+			//Check if the first node has already been added to the queue
 			if(!addedMessages.contains(msg)){
 				//Add the first node to the queue
 				adjNode.add(msg.getSrc());
 				addedMessages.add(msg);
 			}
+			//Clear the message's path to properly update the GUI
+			msg.getPath().clear();
 			//Dequeue and change reference
 			Node refNode = adjNode.remove();
 			refNode.addMessagesVisited(msg.getId());
 			//For each connecting node
 			for(Node connection : refNode.getConnections()){
+				//Check if the connecting node has already been visited
 				if(!connection.getMessagesVisited().contains(msg.getId())){
+					//Add the node the message path
+					msg.appendPath(connection);
+					//Immediately update the node on the GUI
+					sim.update();
+					//Increment the number of jumps by 1
 					msg.incCount();
 					//Check if the neighbouring node is the destination
 					if(connection.equals(msg.getDest())){
+						msg.stop();
+						//Add the message to the list to be removed
 						reachedDestination.add(msg);
 						sim.getStatusWindow().append("Destination reached. \n");
 						sim.getStatusWindow().append("Number of jumps: " + msg.getCount() + "\n");
 						sim.getMessageJumps().add(msg.getCount());
-						sim.getListMessages().remove(msg);
+						//Clear the lists containing data
 						addedMessages.remove(msg);
-						adjNode.clear();						
+						adjNode.clear();				
 						return;
 					}
 					//Else: Add the connection to the back of the queue
