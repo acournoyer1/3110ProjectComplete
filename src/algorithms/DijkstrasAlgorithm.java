@@ -47,13 +47,13 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 		for(Node n: sim.getNodes()){
 			unchangedNodes.add(n);
 		}
+		
 		sim.getMessageList().removeAll(reachedDestination);
 		reachedDestination.clear();
 		
 		for (Message msg: addedMessages){
-			int currentWeight=0;												//weight of the current Node
-			int tempWeight = 0;													//variable used to compare later in method
-			nextNode = null;													//Node representing the node we ill jump to
+			
+			nextNode = null;													//Node representing the node we will jump to
 			currentNode = msg.getPath().getLast();								//the current/starting node
 			
 			unvisitedNodes.clear();												//reset list of Nodes
@@ -64,14 +64,25 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 				unvisitedNodes.remove(visited);
 			}
 			
+			
+			for(Node n : unvisitedNodes){
+				System.out.println(n.getName());
+			}
+			int currentWeight= 0;												//weight of the current Node
+			int tempWeight = 0;													//variable used to compare later in method
+			int count = 0;
 			for (Node n: currentNode.getConnections()){							//iterate over each connection to node
 				if(unvisitedNodes.contains(n)){									//ensure comparing against a not visited node
-					tempWeight = (unchangedNodes.indexOf(n));				//get 'weight' of possible node
-					if((tempWeight > currentWeight) || (currentWeight == 0)){	//if it is the first comparison OR if the jump is 'quicker'
+					tempWeight = unchangedNodes.indexOf(n);						//get 'weight' of possible node
+					if(count == 0 || (tempWeight < currentWeight)){				//if it is the first comparison OR if the jump is 'quicker'
 						nextNode = n;											//if condition met this is the next Node to go to
+						currentWeight = unchangedNodes.indexOf(n);
 					}
 				}
+				count++;
 			 }
+			System.out.println("~~~~~~~~~~~~");
+			
 			if (nextNode == null){												//if the nextNode is null then there is no node to jump to there.
 				currentNode = unvisitedNodes.get(0);							//THEREFORE pick a new start point to jump to, in our case the 
 																				//'quickest' node still unvisited
