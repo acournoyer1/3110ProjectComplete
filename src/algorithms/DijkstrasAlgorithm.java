@@ -64,10 +64,6 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 				unvisitedNodes.remove(visited);
 			}
 			
-			
-			for(Node n : unvisitedNodes){
-				System.out.println(n.getName());
-			}
 			int currentWeight= 0;												//weight of the current Node
 			int tempWeight = 0;													//variable used to compare later in method
 			int count = 0;
@@ -81,7 +77,7 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 				}
 				count++;
 			 }
-			System.out.println("~~~~~~~~~~~~");
+
 			
 			if (nextNode == null){												//if the nextNode is null then there is no node to jump to there.
 				currentNode = unvisitedNodes.get(0);							//THEREFORE pick a new start point to jump to, in our case the 
