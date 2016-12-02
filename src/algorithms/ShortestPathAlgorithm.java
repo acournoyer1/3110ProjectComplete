@@ -21,6 +21,7 @@ public class ShortestPathAlgorithm implements SimulationAlgorithm{
 	private Simulation sim;
 	private Queue<Node> adjNode;
 	private ArrayList<Message> addedMessages;
+	private Node refNode;
 	
 	public ShortestPathAlgorithm(Simulation sim){
 		this.sim = sim;
@@ -41,42 +42,39 @@ public class ShortestPathAlgorithm implements SimulationAlgorithm{
 				//Add the first node to the queue
 				adjNode.add(msg.getSrc());
 				addedMessages.add(msg);
+				refNode = adjNode.remove();
 			}
-			//Clear the message's path to properly update the GUI
-			msg.getPath().clear();
-			//Dequeue and change reference
-			Node refNode = adjNode.remove();
-			refNode.addMessagesVisited(msg.getId());
-			//For each connecting node
-			for(Node connection : refNode.getConnections()){
-				//Check if the connecting node has already been visited
+			//Add adjacent connections to the queue
+			for (Node connection : refNode.getConnections()){
 				if(!connection.getMessagesVisited().contains(msg.getId())){
-					//Add the node the message path
-					msg.appendPath(connection);
-					//Immediately update the node on the GUI
-					sim.update();
-					//Increment the number of jumps by 1
-					msg.incCount();
-					//Check if the neighbouring node is the destination
-					if(connection.equals(msg.getDest())){
-						msg.stop();
-						//Add the message to the list to be removed
-						reachedDestination.add(msg);
-						sim.getStatusWindow().append("Destination reached. \n");
-						sim.getStatusWindow().append("Number of jumps: " + msg.getCount() + "\n");
-						sim.getMessageJumps().add(msg.getCount());
-						//Clear the lists containing data
-						addedMessages.remove(msg);
-						adjNode.clear();				
-						return;
-					}
-					//Else: Add the connection to the back of the queue
-					else{
-						adjNode.add(connection);
-						connection.addMessagesVisited(msg.getId());
-						sim.getStatusWindow().append("Adding " + connection.getName() + " to the queue.\n");
-					}
+					adjNode.add(connection);
+					sim.getStatusWindow().append("Adding Node " + connection.getName() + " to queue.\n");
+					connection.addMessagesVisited(msg.getId());
 				}
+			}
+			
+			//Clear the path of the message
+			msg.getPath().clear();
+			//Dequeue
+			refNode = adjNode.remove();
+			//Increment number of jumps
+			msg.incCount();
+			//Put the changed node on the path of the message
+			msg.appendPath(refNode);
+			
+			//Check if this node is the destination node
+			if(refNode.equals(msg.getDest())){
+				msg.stop();
+				sim.update();
+				//Add the message to the list to be removed
+				reachedDestination.add(msg);
+				sim.getStatusWindow().append("Destination reached. \n");
+				sim.getStatusWindow().append("Number of jumps: " + msg.getCount() + "\n");
+				sim.getMessageJumps().add(msg.getCount());
+				//Clear the lists containing data
+				addedMessages.remove(msg);
+				adjNode.clear();				
+				return;
 			}
 		}
 		sim.update();
