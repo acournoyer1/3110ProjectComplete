@@ -31,6 +31,7 @@ public class MessageTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		Message.reset();
 		srcNode = new Node("Source");
 		destNode = new Node("Destination");
 		testNode = new Node("Test");
@@ -42,6 +43,17 @@ public class MessageTest {
 
 	
 	/**
+	 * Test method for {@link Message#getId()}.
+	 */
+	@Test
+	public void testGetId() {
+		
+		Message msg = new Message(srcNode, destNode);
+		assertEquals("Msg Id is 2", 2, msg.getId());
+		assertFalse("Msg Id is not 1",msg.getId() == (1));
+	}
+	
+	/**
 	 * Test method for {@link Message#appendPath(Node)}.
 	 */
 	@Test
@@ -51,14 +63,7 @@ public class MessageTest {
 		assertEquals("The next node in the path is testNode", testList, testMsg.getPath());;
 	}
 
-	/**
-	 * Test method for {@link Message#getId()}.
-	 */
-	@Test
-	public void testGetId() {
-		
-		assertEquals("TestMsg Id is 2", 2, testMsg.getId());
-	}
+	
 
 	/**
 	 * Test method for {@link Message#reset()}.
