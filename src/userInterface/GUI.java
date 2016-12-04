@@ -35,6 +35,7 @@ public class GUI extends JFrame implements SimulationListener{
 	private JCheckBoxMenuItem shortestType;
 	private JCheckBoxMenuItem dijkstrasType;
 	private JMenuItem clearSim;
+	private JMenuItem exportSim;
 	private JCheckBoxMenuItem randomMessages;
 	private JTextField commandField;
 	private JTextArea statusWindow;
@@ -88,6 +89,7 @@ public class GUI extends JFrame implements SimulationListener{
 		simRate = new JMenuItem("Set Rate");
 		simLength = new JMenuItem("Set Length");
 		clearSim = new JMenuItem("Clear Simulation");
+		exportSim = new JMenuItem("Export");
 		randomMessages = new JCheckBoxMenuItem("Generate Random Messages", true);
 		
 		commandField = new JTextField("");
@@ -114,6 +116,7 @@ public class GUI extends JFrame implements SimulationListener{
 		jMenuBar.add(viewMenu);
 		jMenuBar.add(simulationMenu);
 		fileMenu.add(clearSim);
+		fileMenu.add(exportSim);
 		addMenu.add(addNode);
 		addMenu.add(addConnection);
 		addMenu.add(addMessage);
@@ -183,6 +186,12 @@ public class GUI extends JFrame implements SimulationListener{
 	 */
 	private void setUpListeners()
 	{
+		exportSim.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0){
+				new ExportGUI(canvas);
+			}
+		});
 		addNode.addActionListener(new ActionListener()
 		{
 			@Override
