@@ -73,11 +73,5 @@ public class Connection {
 		Connection c = (Connection)o;
 		return c.firstNode.equals(this.firstNode) && c.secondNode.equals(this.secondNode);
 	}
-	
-	public void paint(Graphics2D g)
-	{
-		NodeImageGUI n1 = firstNode.getNodeImage();
-		NodeImageGUI n2 = secondNode.getNodeImage();
-		g.drawLine(n1.getCenterX(), n1.getCenterY(), n2.getCenterX(), n2.getCenterY());
-	}
+
 }

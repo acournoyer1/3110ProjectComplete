@@ -437,41 +437,6 @@ public class Simulation {
 
 	}
 	
-	/*
-	 *  Builds a test simulation with pre-determined nodes and connections
-	 * 
-	 */
-	public void buildTest()
-	{
-		this.setIgnore(true);
-		this.clear();
-		Node a = new Node("A");
-		a.setNodeImage(new NodeImageGUI(new Point(300, 90), a));
-		Node b = new Node("B");
-		b.setNodeImage(new NodeImageGUI(new Point(620, 100), b));
-		Node c = new Node("C");
-		c.setNodeImage(new NodeImageGUI(new Point(350, 270), c));
-		Node d = new Node("D");
-		d.setNodeImage(new NodeImageGUI(new Point(570, 300), d));
-		Node e = new Node("E");
-		e.setNodeImage(new NodeImageGUI(new Point(700, 200), e));
-		
-		this.addNode(a);
-		this.addNode(b);
-		this.addNode(c);
-		this.addNode(d);
-		this.addNode(e);
-		
-		this.addConnection(a, b);
-		this.addConnection(a, c);
-		this.addConnection(a, e);
-		this.addConnection(c, d);
-		this.addConnection(d, b);
-		this.addConnection(b, e);
-		this.setIgnore(false);
-		update();
-	}
-	
 	/**
 	 * Sums the list of number of jumps messages went through
 	 * Finds the average number of jumps done between all messages

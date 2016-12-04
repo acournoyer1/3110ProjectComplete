@@ -6,6 +6,7 @@ package userInterface;
  * Last Edited by: Adam Staples
  */
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -280,8 +281,7 @@ public class GUI extends JFrame implements SimulationListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				sim.buildTest();
-				statusWindow.setText("");
+				buildTest();
 				statusWindow.append("Test Network has been created.\n");
 			}
 		});
@@ -469,6 +469,41 @@ public class GUI extends JFrame implements SimulationListener{
 		{
 			viewAverage.setEnabled(true);
 		}
+	}
+	
+	/*
+	 *  Builds a test simulation with pre-determined nodes and connections
+	 * 
+	 */
+	public void buildTest()
+	{
+		sim.setIgnore(true);
+		sim.clear();
+		Node a = new Node("A");
+		canvas.addNodeImage(new NodeImageGUI(new Point(300, 90), a));
+		Node b = new Node("B");
+		canvas.addNodeImage(new NodeImageGUI(new Point(620, 100), b));
+		Node c = new Node("C");
+		canvas.addNodeImage(new NodeImageGUI(new Point(350, 270), c));
+		Node d = new Node("D");
+		canvas.addNodeImage(new NodeImageGUI(new Point(570, 300), d));
+		Node e = new Node("E");
+		canvas.addNodeImage(new NodeImageGUI(new Point(700, 200), e));
+		
+		sim.addNode(a);
+		sim.addNode(b);
+		sim.addNode(c);
+		sim.addNode(d);
+		sim.addNode(e);
+		
+		sim.addConnection(a, b);
+		sim.addConnection(a, c);
+		sim.addConnection(a, e);
+		sim.addConnection(c, d);
+		sim.addConnection(d, b);
+		sim.addConnection(b, e);
+		sim.setIgnore(false);
+		sim.update();
 	}
 	
 	

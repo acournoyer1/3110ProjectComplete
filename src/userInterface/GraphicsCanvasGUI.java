@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
@@ -335,11 +336,11 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		Graphics2D g2 = (Graphics2D)g;
 		for(Message m: messages)
 		{
-			m.paint(g2);
+			paintMessage(m, g2);
 		}
 		for(Connection c: connections)
 		{
-			c.paint(g2);
+			paintConnection(c, g2);
 		}
 		if(tempShape != null)
 		{
@@ -367,6 +368,46 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		}
 	}
 	
+	private void paintMessage(Message m, Graphics2D g)
+	{
+		NodeImageGUI n = getImage(m.getPath().getLast());
+		if(n == null) return;
+		Ellipse2D.Double circle = new Ellipse2D.Double(n.getCenterX()-30, n.getCenterY()-30, 60, 60);
+		if(!m.reachedDestination())
+		{
+			if(m.isStopped()) g.setColor(Color.YELLOW);
+			else g.setColor(Color.GREEN);
+		}
+		else g.setColor(Color.RED);
+		g.fill(circle);
+		g.setColor(Color.BLACK);
+		g.draw(circle);
+		g.drawString(""+m.getId(), n.getCenterX()+30, n.getCenterY()-30);
+	}
+	
+	private void paintConnection(Connection c, Graphics2D g)
+	{
+		NodeImageGUI n1 = getImage(c.getFirstNode());
+		NodeImageGUI n2 = getImage(c.getSecondNode());
+		if(n1 == null || n2 == null)
+		{
+			return;
+		}
+		g.drawLine(n1.getCenterX(), n1.getCenterY(), n2.getCenterX(), n2.getCenterY());
+	}
+	
+	private NodeImageGUI getImage(Node node)
+	{
+		for(NodeImageGUI n: nodes)
+		{
+			if(n.getNode().equals(node))
+			{
+				return n;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * update method
 	 *  updates the canvas using current parameters
@@ -374,14 +415,23 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 	 */
 	public void update()
 	{
-		nodes.clear();
 		ArrayList<Node> nodeList = sim.getNodes();
 		connections = sim.getConnections();
 		messages = sim.getMessageList();
-		for(Node n: nodeList)
+		ArrayList<NodeImageGUI> remove = new ArrayList<NodeImageGUI>();
+		for(NodeImageGUI n: nodes)
 		{
-			nodes.add(n.getNodeImage());
+			if(!nodeList.contains(n.getNode()))
+			{
+				remove.add(n);
+			}
 		}
+		nodes.removeAll(remove);
 		repaint();
+	}
+	
+	public void addNodeImage(NodeImageGUI n)
+	{
+		nodes.add(n);
 	}
 }

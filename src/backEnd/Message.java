@@ -164,27 +164,4 @@ public class Message {
 	public void incUnvisitedCount(){
 		unvisitedCount++;
 	}
-	
-	/**
-	 * paint method:
-	 * Draws the ellipse around a node where the message is on
-	 * 
-	 * @param g
-	 */
-	public void paint(Graphics2D g)
-	{
-		NodeImageGUI n = nodePath.getLast().getNodeImage();
-		Ellipse2D.Double circle = new Ellipse2D.Double(n.getCenterX()-30, n.getCenterY()-30, 60, 60);
-		if(!reachedDestination())
-		{
-			if(stopped) g.setColor(Color.YELLOW);
-			else g.setColor(Color.GREEN);
-		}
-		else g.setColor(Color.RED);
-		g.fill(circle);
-		g.setColor(Color.BLACK);
-		g.draw(circle);
-		g.drawString(""+this.getId(), n.getCenterX()+30, n.getCenterY()-30);
-	}
-	
 }

@@ -14,7 +14,6 @@ public class NodeImageGUI {
 	{
 		circle = new Ellipse2D.Double(p.getX() - 25, p.getY() - 25, 50, 50);
 		this.node = node;
-		node.setNodeImage(this);
 	}
 	
 	/**

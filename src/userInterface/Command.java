@@ -49,21 +49,21 @@ class AvgCommand implements Command {
 }
 
 
-class TestCommand implements Command {
-    
-	public boolean isTrue(String[] words){
-        
-    	return words.length == 1 && words[0].equalsIgnoreCase("test");
-    
-    	
-    }
-
-    public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas){
-    	sim.buildTest();
-		
-    return "The test network has been built.\n";
-    }
-}
+//class TestCommand implements Command {
+//    
+//	public boolean isTrue(String[] words){
+//        
+//    	return words.length == 1 && words[0].equalsIgnoreCase("test");
+//    
+//    	
+//    }
+//
+//    public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas){
+//    	.buildTest();
+//		
+//    return "The test network has been built.\n";
+//    }
+//}
 
 class ClearCommand implements Command {
     

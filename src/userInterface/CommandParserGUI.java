@@ -23,7 +23,7 @@ public class CommandParserGUI {
 		
 		commands.add(new HelpCommand());
 		commands.add(new AvgCommand());
-		commands.add(new TestCommand());
+		//commands.add(new TestCommand());
 		commands.add(new ClearCommand());
 		commands.add(new AddNodeCommand());
 		commands.add(new AddConnectionCommand());
