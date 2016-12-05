@@ -466,4 +466,12 @@ public class Simulation {
 		s += "</Simulation>\n";
 		return s;
 	}
+	
+	/**
+	 * Adam, this stub is for you
+	 */
+	public void undo()
+	{
+		
+	}
 }

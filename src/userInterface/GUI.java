@@ -32,6 +32,7 @@ public class GUI extends JFrame implements SimulationListener{
 	private JCheckBoxMenuItem floodType;
 	private JCheckBoxMenuItem shortestType;
 	private JCheckBoxMenuItem dijkstrasType;
+	private JMenuItem undo;
 	private JMenuItem clearSim;
 	private JMenuItem exportAsImage;
 	private JMenuItem exportAsXML;
@@ -84,6 +85,7 @@ public class GUI extends JFrame implements SimulationListener{
 		save = new JMenuItem("Save");
 		saveAs = new JMenuItem("Save As");
 		newTab = new JMenuItem("New");
+		undo = new JMenuItem("Undo");
 		closeTab = new JMenuItem("Close Tab");
 		randomMessages = new JCheckBoxMenuItem("Generate Random Messages", true);
 		tabbedPane = new JTabbedPane();
@@ -103,10 +105,10 @@ public class GUI extends JFrame implements SimulationListener{
 		JMenu typeMenu = new JMenu("Set type");
 		JMenu exportMenu = new JMenu("Export");
 		jMenuBar.add(fileMenu);
+		jMenuBar.add(simulationMenu);
 		jMenuBar.add(addMenu);
 		jMenuBar.add(removeMenu);
 		jMenuBar.add(viewMenu);
-		jMenuBar.add(simulationMenu);
 		fileMenu.add(newTab);
 		fileMenu.add(open);
 		fileMenu.addSeparator();
@@ -160,6 +162,13 @@ public class GUI extends JFrame implements SimulationListener{
 				currentTab = (GuiTab)tabbedPane.getSelectedComponent();
 				if(currentTab != null)currentTab.refresh();
 				refresh();
+			}
+		});
+		
+		undo.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0){
+				sim.undo();
 			}
 		});
 		
@@ -444,5 +453,10 @@ public class GUI extends JFrame implements SimulationListener{
 		{
 			viewAverage.setEnabled(true);
 		}
+	}
+	
+	public static void main(String args[])
+	{
+		new GUI();
 	}
 }

@@ -378,9 +378,4 @@ public class GuiTab extends JPanel implements SimulationListener{
 		if(file == null) return "Untitled";
 		else return file.getName();
 	}
-	
-	public static void main(String args[])
-	{
-		new GUI();
-	}
 }
