@@ -19,7 +19,7 @@ public class Connection {
 		secondNode = n2;
 	}
 	
-	/*
+	/**
 	 * Get the first node that this connection is associated with
 	 *
 	 * @ret a node object with the associated node
@@ -29,7 +29,7 @@ public class Connection {
 		return firstNode;
 	}
 	
-	/*
+	/**
 	 * Get the second node that this connection is associated with
 	 *
 	 * @ret a node object with the associated node
@@ -39,7 +39,7 @@ public class Connection {
 		return secondNode;
 	}
 	
-	/*
+	/**
 	 * Get a string defining this connection
 	 *
 	 * @ret a String containing the connection information
@@ -49,7 +49,7 @@ public class Connection {
 		return firstNode.toString() + " < - > " + secondNode.toString();
 	}
 	
-	/*
+	/**
 	 * Check if the node exists for this connection
 	 *
 	 * @param1 the node to be checked
@@ -61,7 +61,7 @@ public class Connection {
 		return firstNode == n || secondNode == n;
 	}
 	
-	/*
+	/**
 	 * Check if this connection is the same connection between another connection
 	 * 
 	 * @ret a boolean object describing if the objects are equal
