@@ -31,7 +31,7 @@ import algorithms.*;
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements SimulationListener{
 	
-	private final File file = new File("temp.xml");
+	private File file = null;
 	
 	private JMenuItem addNode;
 	private JMenuItem addConnection;
@@ -252,6 +252,34 @@ public class GUI extends JFrame implements SimulationListener{
 					}
 				} catch (ParserConfigurationException | SAXException | IOException e) {
 					e.printStackTrace();
+				}
+			}
+		});
+		
+		save.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0){
+				if(file == null)
+				{
+					saveAs.doClick();
+				}
+				else
+				{
+					exportXML(file);
+					statusWindow.append("File saved.\n");
+				}				
+			}
+		});
+		
+		saveAs.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0){
+				File f = XMLFileChooser.exportXML();
+				if(f != null)
+				{
+					file = f;
+					exportXML(file);
+					statusWindow.append("File saved to " + file.getAbsolutePath() + ".\n");
 				}
 			}
 		});

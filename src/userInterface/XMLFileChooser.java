@@ -30,6 +30,10 @@ public class XMLFileChooser {
 		chooser.setFileFilter(new FileNameExtensionFilter(".xml", "xml"));	
 		int option = chooser.showSaveDialog(null);
 		if(option == JFileChooser.APPROVE_OPTION){
+			if(chooser.getSelectedFile().getAbsolutePath().endsWith(".xml"))
+			{
+				return chooser.getSelectedFile();
+			}
 			return new File(chooser.getSelectedFile().getAbsolutePath() + ".xml");
 		}
 		else
