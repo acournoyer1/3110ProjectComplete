@@ -29,6 +29,12 @@ public class ShortestPathAlgorithm implements SimulationAlgorithm{
 		this.addedMessages = new ArrayList<Message>();
 	}
 	
+	/**
+	 * Step method: 
+	 * 
+	 * Go through the table using ShortestPath algorithm
+	 *
+	 */
 	@Override
 	public void step() {
 		//Remove the list of messages that have completed

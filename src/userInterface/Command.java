@@ -4,7 +4,19 @@ import backEnd.Message;
 import backEnd.Node;
 import backEnd.Simulation;
 
-
+/**
+ * Command Interface:
+ * 
+ * Contains an isTrue and runCommand method
+ * 
+ * isTrue method:
+ * checks if a command is valid
+ * 
+ * runCommand:
+ * runs the appropriate command
+ * 
+ *
+ */
 public interface Command{
 	public boolean isTrue(String[] words);
     public String runCommand(Simulation sim, DialogManagerGUI dialog, GraphicsCanvasGUI canvas);

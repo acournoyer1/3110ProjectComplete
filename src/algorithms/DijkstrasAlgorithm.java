@@ -36,8 +36,10 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 	}
 	
 	
-	/*
-	 * Step method to go through a the table using Dijkstra's algorithm
+	/**
+	 * Step method: 
+	 * 
+	 * Go through the table using Dijkstra's algorithm
 	 *
 	 */
 	@Override

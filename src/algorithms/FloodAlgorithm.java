@@ -10,6 +10,12 @@ public class FloodAlgorithm implements SimulationAlgorithm{
 		this.sim = sim;
 	}
 	
+	/**
+	 * Step method: 
+	 * 
+	 * Go through the table using flooding algorithm
+	 *
+	 */
 	@Override
 	public void step() {
 		//Temporary list containing the children messages

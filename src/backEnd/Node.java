@@ -16,7 +16,9 @@ public class Node {
 	private ArrayList<Integer> MessagesVisited;
 	private NodeImageGUI image;
 	
-	/*
+	/**
+	 * Node constructor: 
+	 * 
 	 * Create a node that has connections to other nodes 
 	 * held in a linkedList
 	 */
@@ -36,7 +38,7 @@ public class Node {
 		this.image = image;
 	}
 	
-	/*
+	/**
 	 * Get the name of the current node object.
 	 * 
 	 * @ret a string containing the name of the node.
@@ -45,8 +47,8 @@ public class Node {
 		return name;
 	}
 	
-	/*
-	 * Set the name of the ndoe
+	/**
+	 * Set the name of the node
 	 *
 	 * @param1 the string that the node will be set to
 	 */
@@ -54,7 +56,7 @@ public class Node {
 		this.name = name;
 	}
 
-	/*
+	/**
 	 * Get the hashset of nodes that the current node is connected to
 	 *
 	 * @ret a hashset of connections
@@ -63,7 +65,7 @@ public class Node {
 		return connections;
 	}
 	
-	/*
+	/**
 	 * Connect this node to another node
 	 *
 	 * @param1 the node object that this node will be connected to
@@ -74,7 +76,7 @@ public class Node {
 		n.connections.add(this);
 	}
 	
-	/*
+	/**
 	 * Disconnect this node from another node
 	 *
 	 * @param2 the node to disconnect from
@@ -85,7 +87,7 @@ public class Node {
 		n.connections.remove(this);
 	}
 
-	/*
+	/**
 	 * Returns a list of all nodes connected to this node
 	 * 
 	 * @ret a string of the node properties
@@ -105,7 +107,7 @@ public class Node {
 		}
 	}
 
-	/*
+	/**
 	 * Add a message ID to the list
 	 */
 	public void addMessagesVisited(int msgID){

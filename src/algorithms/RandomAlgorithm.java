@@ -23,6 +23,12 @@ public class RandomAlgorithm implements SimulationAlgorithm{
 		this.sim = sim;
 	}
 	
+	/**
+	 * Step method: 
+	 * 
+	 * Go through the table using a Random algorithm
+	 *
+	 */
 	@Override
 	public void step() {
 		//Add messages that have finished to the list
