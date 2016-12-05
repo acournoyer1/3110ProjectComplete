@@ -8,7 +8,7 @@ public class CommandParserGUI {
 	private ArrayList<Command> commands = new ArrayList<>();
 	private JTextArea statusWindow;
 	
-	public CommandParserGUI(GUI g)
+	public CommandParserGUI(GuiTab g)
 	{
 		this.statusWindow = g.getStatusWindow();
 		commands.addAll(Command.getAllCommands(g));

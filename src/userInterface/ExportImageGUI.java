@@ -46,7 +46,7 @@ public class ExportImageGUI {
 	 */
 	public void CreateImage(){
 		String directory = chooser.getSelectedFile().getPath();
-		String extension = chooser.getFileFilter().getDescription();
+		String extension = chooser.getFileFilter().getDescription().substring(1);
 		BufferedImage image = new BufferedImage(canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = image.createGraphics();
 		canvas.printAll(g);
