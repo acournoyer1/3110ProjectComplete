@@ -21,16 +21,16 @@ import javax.swing.JFileChooser;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class ExportGUI {
+public class ExportImageGUI {
 	JFileChooser chooser;
 	JComponent canvas;
-	public ExportGUI(JComponent canvas){
+	public ExportImageGUI(JComponent canvas){
 		chooser = new JFileChooser();
 		this.canvas = canvas;
 		chooser.setAcceptAllFileFilterUsed(false);
-		chooser.setFileFilter(new FileNameExtensionFilter("jpg", "jpg"));
-		chooser.setFileFilter(new FileNameExtensionFilter("gif", "gif"));
-		chooser.setFileFilter(new FileNameExtensionFilter("png", "png"));	
+		chooser.setFileFilter(new FileNameExtensionFilter(".jpg", "jpg"));
+		chooser.setFileFilter(new FileNameExtensionFilter(".gif", "gif"));
+		chooser.setFileFilter(new FileNameExtensionFilter(".png", "png"));	
 		int option = chooser.showSaveDialog(null);
 		if(option == JFileChooser.APPROVE_OPTION){
 			CreateImage();

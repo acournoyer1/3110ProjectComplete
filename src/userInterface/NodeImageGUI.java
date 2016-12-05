@@ -106,4 +106,9 @@ public class NodeImageGUI {
 		g.draw(circle);
 		g.drawString(node.getName(), getCenterX(), getCenterY());
 	}
+	
+	public String toXML()
+	{
+		return "<NodeImage>\n" + "<x>" + getCenterX() + "</x>\n" + "<y>" + getCenterY() + "</y>\n" + "<name>" + node.getName() + "</name>\n" + "</NodeImage>\n"; 
+	}
 }

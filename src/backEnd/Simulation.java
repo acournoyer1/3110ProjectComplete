@@ -451,4 +451,19 @@ public class Simulation {
 		//Return average (number of jumps/size of arraylist)
 		return tempSum/this.messageJumps.size();
 	}
+	
+	public String toXML()
+	{
+		String s = "<Simulation>\n";
+		for(Node n: listNodes)
+		{
+			s += n.toXML(); 
+		}
+		for(Connection c: connections)
+		{
+			s += c.toXML();
+		}
+		s += "</Simulation>\n";
+		return s;
+	}
 }

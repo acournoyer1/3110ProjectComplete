@@ -8,8 +8,19 @@ package userInterface;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import backEnd.Message;
 import backEnd.Node;
@@ -19,6 +30,8 @@ import algorithms.*;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements SimulationListener{
+	
+	private final File file = new File("temp.xml");
 	
 	private JMenuItem addNode;
 	private JMenuItem addConnection;
@@ -36,7 +49,12 @@ public class GUI extends JFrame implements SimulationListener{
 	private JCheckBoxMenuItem shortestType;
 	private JCheckBoxMenuItem dijkstrasType;
 	private JMenuItem clearSim;
-	private JMenuItem exportSim;
+	private JMenuItem exportAsImage;
+	private JMenuItem exportAsXML;
+	private JMenuItem newSim;
+	private JMenuItem open;
+	private JMenuItem save;
+	private JMenuItem saveAs;
 	private JCheckBoxMenuItem randomMessages;
 	private JTextField commandField;
 	private JTextArea statusWindow;
@@ -90,7 +108,12 @@ public class GUI extends JFrame implements SimulationListener{
 		simRate = new JMenuItem("Set Rate");
 		simLength = new JMenuItem("Set Length");
 		clearSim = new JMenuItem("Clear Simulation");
-		exportSim = new JMenuItem("Export");
+		exportAsImage = new JMenuItem("Image");
+		exportAsXML = new JMenuItem("XML");
+		open = new JMenuItem("Open");
+		save = new JMenuItem("Save");
+		saveAs = new JMenuItem("Save As");
+		newSim = new JMenuItem("New");
 		randomMessages = new JCheckBoxMenuItem("Generate Random Messages", true);
 		
 		commandField = new JTextField("");
@@ -111,13 +134,23 @@ public class GUI extends JFrame implements SimulationListener{
 		JMenu viewMenu = new JMenu("View");
 		JMenu simulationMenu = new JMenu("Simulation");
 		JMenu typeMenu = new JMenu("Set type");
+		JMenu exportMenu = new JMenu("Export");
 		jMenuBar.add(fileMenu);
 		jMenuBar.add(addMenu);
 		jMenuBar.add(removeMenu);
 		jMenuBar.add(viewMenu);
 		jMenuBar.add(simulationMenu);
+		fileMenu.add(newSim);
+		fileMenu.add(open);
+		fileMenu.addSeparator();
+		fileMenu.add(save);
+		fileMenu.add(saveAs);
+		fileMenu.addSeparator();
+		fileMenu.add(exportMenu);
+		fileMenu.addSeparator();
 		fileMenu.add(clearSim);
-		fileMenu.add(exportSim);
+		exportMenu.add(exportAsImage);
+		exportMenu.add(exportAsXML);
 		addMenu.add(addNode);
 		addMenu.add(addConnection);
 		addMenu.add(addMessage);
@@ -187,12 +220,42 @@ public class GUI extends JFrame implements SimulationListener{
 	 */
 	private void setUpListeners()
 	{
-		exportSim.addActionListener(new ActionListener(){
+		exportAsImage.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0){
-				new ExportGUI(canvas);
+				new ExportImageGUI(canvas);
 			}
 		});
+		
+		exportAsXML.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				File f = XMLFileChooser.exportXML();
+				if(f != null)
+				{
+					exportXML(f);
+					statusWindow.append("XML exported to " + f.getAbsolutePath() + ".\n");
+				}
+			}
+		});
+		
+		open.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0){
+				try {
+					File f = XMLFileChooser.importXML();
+					if(f != null)
+					{
+						importXML(f);
+						statusWindow.setText(f.getAbsolutePath() + " opened.\n");
+					}
+				} catch (ParserConfigurationException | SAXException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+				
 		addNode.addActionListener(new ActionListener()
 		{
 			@Override
@@ -521,9 +584,99 @@ public class GUI extends JFrame implements SimulationListener{
 		return canvas;
 	}
 	
+	public void setCanvas(GraphicsCanvasGUI canvas)
+	{
+		this.canvas = canvas;
+	}
+	
 	public Simulation getSimulation()
 	{
 		return sim;
+	}
+	
+	public void setSimulation(Simulation sim)
+	{
+		this.sim = sim;
+	}
+	
+	public String toXML()
+	{
+		return "<Network>\n" + sim.toXML() + canvas.toXML() + "</Network>\n";
+	}
+	
+	public void exportXML(File f)
+	{
+		try {
+			FileWriter fw = new FileWriter(f);
+			fw.write(this.toXML());
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void importXML(File f) throws ParserConfigurationException, SAXException, IOException
+	{
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder d = factory.newDocumentBuilder();
+		Document doc = d.parse(f);
+		doc.getDocumentElement().normalize();
+		
+		Simulation s = new Simulation(statusWindow);
+		GraphicsCanvasGUI c = new GraphicsCanvasGUI(s, statusWindow);
+		
+		NodeList nodes = doc.getElementsByTagName("Node");
+		for(int i = 0; i < nodes.getLength(); i++)
+		{
+			org.w3c.dom.Node n = nodes.item(i);
+			if(n.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE)
+			{
+				Element element = (Element)n;
+				String name = element.getElementsByTagName("name").item(0).getTextContent();
+				s.addNode(new Node(name));
+			}
+		}
+		NodeList connections = doc.getElementsByTagName("Connection");
+		for(int i = 0; i < connections.getLength(); i++)
+		{
+			org.w3c.dom.Node n = connections.item(i);
+			if(n.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE)
+			{
+				Element element = (Element)n;
+				String firstNodeName = element.getElementsByTagName("firstNode").item(0).getTextContent();
+				String secondNodeName = element.getElementsByTagName("secondNode").item(0).getTextContent();
+				Node firstNode = s.getNodeByName(firstNodeName);
+				Node secondNode = s.getNodeByName(secondNodeName);
+				if(firstNode != null && secondNode != null)
+				{
+					s.addConnection(firstNode, secondNode);
+				}
+			}
+		}
+		NodeList images = doc.getElementsByTagName("NodeImage");
+		for(int i = 0; i < images.getLength(); i++)
+		{
+			org.w3c.dom.Node n = images.item(i);
+			if(n.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE)
+			{
+				Element element = (Element)n;
+				int x = Integer.parseInt(element.getElementsByTagName("x").item(0).getTextContent());
+				int y = Integer.parseInt(element.getElementsByTagName("y").item(0).getTextContent());
+				String name = element.getElementsByTagName("name").item(0).getTextContent();
+				Node node = s.getNodeByName(name);
+				if(node != null)
+				{
+					c.addNodeImage(new NodeImageGUI(new Point(x,y), node));
+				}
+			}
+		}
+		s.addListener(this);
+		sim = s;
+		canvas = c;
+		dialog = new DialogManagerGUI(sim, statusWindow, canvas);
+		parser = new CommandParserGUI(this);
+		bottomSplit.setTopComponent(c);
+		bottomSplit.setDividerLocation((int)(this.getHeight()*0.60));
 	}
 	
 	public static void main(String args[])

@@ -107,4 +107,9 @@ public class Node {
 	public String toString() {
 		return name;
 	}
+	
+	public String toXML()
+	{
+		return "<Node>\n" + "<name>" + name + "</name>\n" + "</Node>\n";
+	}
 }

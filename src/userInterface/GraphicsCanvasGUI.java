@@ -26,9 +26,8 @@ import backEnd.SimulationListener;
 @SuppressWarnings("serial")
 public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 	private ArrayList<NodeImageGUI> nodes;
-	private ArrayList<Connection> connections;
+	//private ArrayList<Connection> connections;
 	private Shape tempShape;
-	private ArrayList<Message> messages;
 	private Simulation sim;
 	private JTextArea statusWindow;
 	private NodeImageGUI selectedNode = null;
@@ -41,10 +40,7 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		nodes = new ArrayList<NodeImageGUI>();
 		this.sim = sim;
 		this.statusWindow = statusWindow;
-		connections = sim.getConnections();
 		sim.addListener(this);
-		connections = sim.getConnections();
-		messages = sim.getMessageList();
 		this.setUpListeners();
 		this.setEnabled(true);
 	}
@@ -133,7 +129,7 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 						if(x < 0) x = 0;
 						else if(x > getWidth()) x = getWidth();
 						if(y < 0) y = 0;
-						else if(y > getHeight()) x = getHeight();
+						else if(y > getHeight()) y = getHeight();
 						selectedNode.setCenter(new Point(x,y));
 						repaint();
 					}
@@ -334,11 +330,11 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 		super.paint(g);
 		setBackground(Color.WHITE);
 		Graphics2D g2 = (Graphics2D)g;
-		for(Message m: messages)
+		for(Message m: sim.getListMessages())
 		{
 			paintMessage(m, g2);
 		}
-		for(Connection c: connections)
+		for(Connection c: sim.getConnections())
 		{
 			paintConnection(c, g2);
 		}
@@ -416,8 +412,6 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 	public void update()
 	{
 		ArrayList<Node> nodeList = sim.getNodes();
-		connections = sim.getConnections();
-		messages = sim.getMessageList();
 		ArrayList<NodeImageGUI> remove = new ArrayList<NodeImageGUI>();
 		for(NodeImageGUI n: nodes)
 		{
@@ -433,5 +427,16 @@ public class GraphicsCanvasGUI extends JPanel implements SimulationListener{
 	public void addNodeImage(NodeImageGUI n)
 	{
 		nodes.add(n);
+	}
+	
+	public String toXML()
+	{
+		String s = "<Canvas>\n";
+		for(NodeImageGUI n: nodes)
+		{
+			s += n.toXML();
+		}
+		s += "</Canvas>\n";
+		return s;
 	}
 }

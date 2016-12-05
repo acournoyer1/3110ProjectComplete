@@ -70,5 +70,10 @@ public class Connection {
 		Connection c = (Connection)o;
 		return c.firstNode.equals(this.firstNode) && c.secondNode.equals(this.secondNode);
 	}
+	
+	public String toXML()
+	{
+		return "<Connection>\n" + "<firstNode>" + firstNode.getName() + "</firstNode>\n" + "<secondNode>" + secondNode.getName() + "</secondNode>\n" + "</Connection>\n"; 
+	}
 
 }
