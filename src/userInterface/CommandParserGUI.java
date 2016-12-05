@@ -3,37 +3,15 @@ import java.util.*;
 
 import javax.swing.JTextArea;
 
-import backEnd.Simulation;
-
 public class CommandParserGUI {
 	
-	private JTextArea statusWindow;
-	private DialogManagerGUI dialog;
-	private Simulation sim;
-	private GraphicsCanvasGUI canvas;
-	
 	private ArrayList<Command> commands = new ArrayList<>();
+	private JTextArea statusWindow;
 	
-	public CommandParserGUI(JTextArea statusWindow, DialogManagerGUI dialog, Simulation sim, GraphicsCanvasGUI canvas)
+	public CommandParserGUI(GUI g)
 	{
-		this.canvas = canvas;
-		this.statusWindow = statusWindow;
-		this.dialog = dialog;
-		this.sim = sim;
-		
-		commands.add(new HelpCommand());
-		commands.add(new AvgCommand());
-		//commands.add(new TestCommand());
-		commands.add(new ClearCommand());
-		commands.add(new AddNodeCommand());
-		commands.add(new AddConnectionCommand());
-		commands.add(new AddMessageCommand());
-		commands.add(new RemoveNodeCommand());
-		commands.add(new RemoveConnectionCommand());
-		commands.add(new ViewNodeCommand());
-		commands.add(new ViewAllCommand());
-		commands.add(new EmptyCommand());
-		commands.add(new InvalidCommand());
+		this.statusWindow = g.getStatusWindow();
+		commands.addAll(Command.getAllCommands(g));
 	}
 	
 	/**
@@ -50,10 +28,15 @@ public class CommandParserGUI {
 		{
 			for(Command c : commands){
 				if(c.isTrue(words)){
-					statusWindow.append(c.runCommand(sim, dialog, canvas));
+					statusWindow.append(c.runCommand());
 					break;
 				}	
 			}
 		}
+	}
+	
+	public void getAllCommands()
+	{
+		
 	}
 }

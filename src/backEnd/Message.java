@@ -7,12 +7,7 @@ package backEnd;
  * 
  */
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
 import java.util.LinkedList;
-
-import userInterface.NodeImageGUI;
 
 public class Message {
 	private Node dest;

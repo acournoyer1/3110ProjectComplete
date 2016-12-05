@@ -102,7 +102,7 @@ public class GUI extends JFrame implements SimulationListener{
 		sim.addListener(this);
 		canvas = new GraphicsCanvasGUI(sim, statusWindow);
 		dialog = new DialogManagerGUI(sim, statusWindow, canvas);
-		parser = new CommandParserGUI(statusWindow, dialog, sim, canvas);
+		parser = new CommandParserGUI(this);
 		refresh();
 		
 		JMenu fileMenu = new JMenu("File");
@@ -506,6 +506,25 @@ public class GUI extends JFrame implements SimulationListener{
 		sim.update();
 	}
 	
+	public JTextArea getStatusWindow()
+	{
+		return statusWindow;
+	}
+	
+	public DialogManagerGUI getDialogManager()
+	{
+		return dialog;
+	}
+	
+	public GraphicsCanvasGUI getCanvas()
+	{
+		return canvas;
+	}
+	
+	public Simulation getSimulation()
+	{
+		return sim;
+	}
 	
 	public static void main(String args[])
 	{

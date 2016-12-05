@@ -1,7 +1,4 @@
 package backEnd;
-import java.awt.Graphics2D;
-
-import userInterface.NodeImageGUI;
 
 /**
  * Connection class defines the properties to connect two nodes

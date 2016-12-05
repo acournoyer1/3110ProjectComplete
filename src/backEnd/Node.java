@@ -8,8 +8,6 @@ package backEnd;
 
 import java.util.*;
 
-import userInterface.NodeImageGUI;
-
 public class Node {
 	private String name;
 	private HashSet<Node> connections;

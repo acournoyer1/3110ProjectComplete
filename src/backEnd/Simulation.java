@@ -1,6 +1,6 @@
 package backEnd;
 
-import java.awt.Point;
+
 
 /**
  * Simulation class designated to manage the step process of walking through the simulation.
@@ -18,7 +18,6 @@ import java.util.LinkedList;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 
-import userInterface.NodeImageGUI;
 import algorithms.*;
 
 import java.util.Random;
