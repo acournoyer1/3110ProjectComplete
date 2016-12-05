@@ -19,7 +19,7 @@ Alex Cournoyer			[100964534]
 Daman Singh			[100965225]
 
 
-21/10/2016
+12/05/2016
 
 
 -----------------------------------------------------------
@@ -41,12 +41,12 @@ TEAM LOGISTICS
 		-Refactored the parser and separated out commands
 
 	Ryan Ha
-		- Updated JavaDoc
-		- Refactored the algorithms to use the SimulationAlgorithm interface
-		- Implemented the Breadth-First Search (Shortest Path) Algorithm
+		- Fixed Bread-First Search algorithm
+		- Implemented export as image
+		- Updated section of UML
 
 -----------------------------------------------------------
-CONTENTS OF SUBMITTED MILESTONE 2:
+CONTENTS OF SUBMITTED MILESTONE 4:
 
 	- Runable .jar file of program, including source code
 	- UML of program, showing all classes and their interactions.
@@ -167,7 +167,8 @@ Package userInterface
 	
 		ENUMS
 		
-
+	ExportImageGUI.java
+		Prompts user for an image location/file type to save.
 
 Package tests
 	
