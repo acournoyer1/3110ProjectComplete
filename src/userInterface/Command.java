@@ -11,7 +11,7 @@ public interface Command{
 	public boolean isTrue(String[] words);
     public String runCommand();
     
-    public static LinkedList<Command> getAllCommands(GUI g)
+    public static LinkedList<Command> getAllCommands(GuiTab g)
     {
     	LinkedList<Command> commands = new LinkedList<Command>();
     	
@@ -91,9 +91,9 @@ class AvgCommand implements Command {
 
 
 class TestCommand implements Command {
-    private GUI gui;
+    private GuiTab gui;
     
-    public TestCommand(GUI gui)
+    public TestCommand(GuiTab gui)
     {
     	this.gui = gui;
     }
