@@ -184,7 +184,7 @@ public class GuiTab extends JPanel implements SimulationListener{
 			if(sim.getMessageListSize() > 1)
 			{
 				runButton.setEnabled(true);
-				runButton.setEnabled(true);
+				stepButton.setEnabled(true);
 			}
 		}
 	}
