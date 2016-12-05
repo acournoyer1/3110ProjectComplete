@@ -121,6 +121,16 @@ public class GUI extends JFrame implements SimulationListener{
 		fileMenu.add(clearSim);
 		exportMenu.add(exportAsImage);
 		exportMenu.add(exportAsXML);
+		simulationMenu.add(undo);
+		simulationMenu.addSeparator();
+		simulationMenu.add(typeMenu);
+		simulationMenu.add(randomMessages);
+		simulationMenu.add(simRate);
+		simulationMenu.add(simLength);
+		typeMenu.add(randomType);
+		typeMenu.add(floodType);
+		typeMenu.add(shortestType);
+		typeMenu.add(dijkstrasType);
 		addMenu.add(addNode);
 		addMenu.add(addConnection);
 		addMenu.add(addMessage);
@@ -130,14 +140,6 @@ public class GUI extends JFrame implements SimulationListener{
 		removeMenu.add(removeConnection);
 		viewMenu.add(viewNode);
 		viewMenu.add(viewAverage);
-		simulationMenu.add(typeMenu);
-		simulationMenu.add(randomMessages);
-		simulationMenu.add(simRate);
-		simulationMenu.add(simLength);
-		typeMenu.add(randomType);
-		typeMenu.add(floodType);
-		typeMenu.add(shortestType);
-		typeMenu.add(dijkstrasType);
 		this.setJMenuBar(jMenuBar);
 		
 		this.add(tabbedPane);
