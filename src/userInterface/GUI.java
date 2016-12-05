@@ -3,15 +3,9 @@ package userInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import algorithms.DijkstrasAlgorithm;
 import algorithms.FloodAlgorithm;
 import algorithms.RandomAlgorithm;
@@ -21,6 +15,7 @@ import backEnd.Node;
 import backEnd.Simulation;
 import backEnd.SimulationListener;
 
+@SuppressWarnings("serial")
 public class GUI extends JFrame implements SimulationListener{
 	private JMenuItem addNode;
 	private JMenuItem addConnection;

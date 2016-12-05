@@ -23,11 +23,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import backEnd.Message;
 import backEnd.Node;
 import backEnd.Simulation;
 import backEnd.SimulationListener;
-import algorithms.*;
 
 @SuppressWarnings("serial")
 public class GuiTab extends JPanel implements SimulationListener{
