@@ -5,7 +5,7 @@
 *	|    /|  __||  _  | | | | | |\/| ||  __| 	*
 *	| |\ \| |___| | | | |/ /  | |  | || |___ 	*
 *	\_| \_\____/\_| |_/___/   \_|  |_/\____/ 	*
-*												*
+*						        *
 *********************************************************
 
                        
@@ -31,10 +31,10 @@ TEAM LOGISTICS
 		- UML updates
 		
 	Alex Cournoyer
-		- Added Drag and Drop functionality to the canvas along with pop up menus
-		- Helped refactor the Command portion of the code
-		- UML Diagram
-
+		- XML importing and exporting, opening and saving
+		- Refactored the Command portion of the code further
+		- UML Diagrams
+		- Changed the GUI to a Tab pane with a simulation per tab 
 	
 	Daman Singh
 		-Updated Javadoc for the GUI
@@ -170,6 +170,15 @@ Package userInterface
 	ExportImageGUI.java
 		Prompts user for an image location/file type to save.
 
+	GuiTab.java
+		One tab of the GUI.
+
+	XMLFileChooser.java
+		Allows importing and exporting of specific XML files.
+
+	ExportImageGUI.java
+		Allows exporting of the canvas as an image.	
+
 Package tests
 	
 	ConnectionTest.java
@@ -184,7 +193,7 @@ Package tests
 	
 		Unit test class designed to test the Node class methods
 	
-	SimulationTest.
+	SimulationTest.java
 		
 		Unit test class designed to test the Simulation class methods
 	
