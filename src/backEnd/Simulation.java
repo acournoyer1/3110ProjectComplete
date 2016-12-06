@@ -29,7 +29,7 @@ public class Simulation {
 	private ArrayList<Message> listMessages;
 	private ArrayList<Connection> connections;
 	private ArrayList<SimulationListener> listeners;
-	private SimulationAlgorithm simStep;
+	private SimulationAlgorithm algorithm;
 	
 	private boolean ignoreUpdate = false;
 	private boolean randomMessages = true;
@@ -53,7 +53,7 @@ public class Simulation {
 		this.statusWindow = statusWindow;
 		
 		//Default Type is initialized at random
-		simStep = new RandomAlgorithm(this);
+		algorithm = new RandomAlgorithm(this);
 	}
 	
 	/**
@@ -177,7 +177,7 @@ public class Simulation {
 	 */
 	public void setType(SimulationAlgorithm algorithm)
 	{
-		this.simStep = algorithm;
+		this.algorithm = algorithm;
 	}
 	
 	/**
@@ -359,7 +359,7 @@ public class Simulation {
 	 * simulation selected
 	 */
 	public void step(){
-		this.simStep.step();
+		this.algorithm.step();
 	}
 	/**
 	 * Run a created network, creating messages at a determined rate for a determined length of steps.
@@ -472,6 +472,7 @@ public class Simulation {
 	 */
 	public void undo()
 	{
-		
+		this.algorithm.undo();
+	
 	}
 }

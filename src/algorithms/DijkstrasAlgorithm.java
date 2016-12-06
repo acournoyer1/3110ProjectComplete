@@ -42,15 +42,15 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 	 */
 	@Override
 	public void step() {
+
+		sim.getMessageList().removeAll(reachedDestination);
+		reachedDestination.clear();
 		addedMessages = sim.getListMessages();//receive list of Messages
 		unchangedNodes.clear();	
 		for(Node n: sim.getNodes()){
 			unchangedNodes.add(n);
 		}
-		
-		sim.getMessageList().removeAll(reachedDestination);
-		reachedDestination.clear();
-		
+
 		for (Message msg: addedMessages){
 			
 			nextNode = null;													//Node representing the node we will jump to
@@ -58,11 +58,11 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 			
 			unvisitedNodes.clear();												//reset list of Nodes
 			for(Node n: unchangedNodes){										//clone total list of nodes
-				unvisitedNodes.add(n);
+				if(!msg.getPath().contains(n)){
+					unvisitedNodes.add(n);
+				}
 			}
-			for(Node visited: msg.getPath()){									//remove all nodes that have been visited by msg
-				unvisitedNodes.remove(visited);
-			}
+				
 			
 			int currentWeight= 0;												//weight of the current Node
 			int tempWeight = 0;													//variable used to compare later in method
@@ -89,15 +89,43 @@ public class DijkstrasAlgorithm implements SimulationAlgorithm{
 			msg.appendPath(currentNode);										//append to path so can be set as visited on next run through
 			sim.getStatusWindow().append("Message " + msg.getId() + " sending child message to: " + currentNode.getName() + "\n");
 			msg.incCount();														//inc the message counter
+			sim.update();
 			
 			if(currentNode.equals(msg.getDest())){								//If has reached its destination, add it to the list and print message
 				reachedDestination.add(msg);
 				sim.getStatusWindow().append("Destination reached. \n");
-				sim.getStatusWindow().append("Number of jumps: " + msg.getCount() + "\n");
-				sim.getMessageJumps().add(msg.getCount());
-				sim.getListMessages().remove(msg);
-				return;
 			}
 		}	
+		//Remove the messages from the list when it is complete
+		//Also total the jump counts and print to window
+		for(Message msg: reachedDestination)
+		{
+			sim.getListMessages().remove(msg);
+			sim.getMessageJumps().add(msg.getCount());
+			String s = "The average amount of jumps so far is: " + sim.average() + "\n";
+			sim.getStatusWindow().append(s);
+		}
+		//Draw a break line in the status window
+		if(reachedDestination.size()>0)
+		{
+			sim.getStatusWindow().append("----------------------------\n");
+		}
 	}
+	
+	public void undo(){
+		sim.getStatusWindow().append("Undo last step. \n");
+		for (Message msg: sim.getListMessages()){
+			LinkedList<Node> path = msg.getPath();
+			Node current = path.getLast();
+			if(path.size() > 1){
+				path.removeLast();
+				Node back = path.getLast();
+				sim.getStatusWindow().append("Message " + msg.getId() + ": " + current.getName() + " -> " + back.getName()+"\n");
+				sim.update();
+				msg.decCount();
+			}
+		}
+	}
+		
+	
 }
