@@ -6,6 +6,10 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class XMLFileChooser {
+	/**
+	 * Opens a GUI to import XML Files
+	 * @return
+	 */
 	public static File importXML()
 	{
 		JFileChooser chooser = new JFileChooser();
@@ -22,6 +26,10 @@ public class XMLFileChooser {
 		}
 	}
 	
+	/**
+	 * Opens a GUI to export XML Files
+	 * @return
+	 */
 	public static File exportXML()
 	{
 		JFileChooser chooser = new JFileChooser();

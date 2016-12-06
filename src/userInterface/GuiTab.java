@@ -189,7 +189,7 @@ public class GuiTab extends JPanel implements SimulationListener{
 		}
 	}
 	
-	/*
+	/**
 	 *  Builds a test simulation with pre-determined nodes and connections
 	 * 
 	 */
