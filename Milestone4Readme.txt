@@ -26,7 +26,7 @@ Daman Singh			[100965225]
 TEAM LOGISTICS
 
 	Adam Staples
-		- Implemented Fourth algorithm, Dijkstras Algorithm
+		- Feedback Fixes
 		- Readme updates
 		- Added undo to Dijkstra's and Random algorithms, undo for Flood and Shortest Path algorithm partially implemented 
 		
