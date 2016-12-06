@@ -74,6 +74,19 @@ public class Message {
 	}
 	
 	/**
+	 * setPath method:
+	 * sets path of the message
+	 * 
+	 * @return the LinkedList of the node
+	 */
+	public void setPath(LinkedList<Node> list){
+		nodePath .clear();
+		for(Node n: list){
+			nodePath.add(n);
+		}
+	}
+	
+	/**
 	 * getSrc method:
 	 * Get the first node in the path
 	 * 
@@ -120,6 +133,14 @@ public class Message {
 	 */
 	public void incCount() {
 		count++;
+	}
+	
+	/**
+	 * decCount method:
+	 * decrement the count of the current message
+	 */
+	public void decCount() {
+		count--;
 	}
 	
 	/**

@@ -2,6 +2,7 @@ package algorithms;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 import backEnd.*;
 
@@ -12,7 +13,7 @@ import backEnd.*;
  * neighbouring node at random. Sending a message from X->Y
  * will cause the simulation to step through the nodes at random.
  * 
- * @author Ryan Ha
+ * @author Ryan Ha and Adam Staples
  *
  */
 
@@ -81,5 +82,22 @@ public class RandomAlgorithm implements SimulationAlgorithm{
 		sim.update();
 		if(sim.getListMessages().size()==0) sim.getStatusWindow().append("No activity this step.\n");
 		
+	
 	}
+	
+	public void undo(){
+		sim.getStatusWindow().append("Undo last step. \n");
+		for (Message msg: sim.getListMessages()){
+			LinkedList<Node> path = msg.getPath();
+			Node current = path.getLast();
+			if(path.size() > 1){
+				path.removeLast();
+				Node back = path.getLast();
+				sim.getStatusWindow().append("Message " + msg.getId() + ": " + current.getName() + " -> " + back.getName()+"\n");
+				sim.update();
+				msg.decCount();
+			}
+		}
+	}
+
 }

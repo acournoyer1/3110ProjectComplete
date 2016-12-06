@@ -103,6 +103,9 @@ public class Node {
 		return MessagesVisited;
 	}
 	
+	public void removeMessagesVisited(Integer i){
+		MessagesVisited.remove(i);
+	}
 	@Override
 	public String toString() {
 		return name;

@@ -1,6 +1,8 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+
 import backEnd.*;
 
 public class FloodAlgorithm implements SimulationAlgorithm{
@@ -107,6 +109,27 @@ public class FloodAlgorithm implements SimulationAlgorithm{
 		
 		sim.update();
 		if(sim.getListMessages().size()==0) sim.getStatusWindow().append("No activity this step.\n");
+	}
+	//id, nodepath and 
+	
+	public void undo(){
+		sim.getStatusWindow().append("Undo last step. \n");
+		ArrayList<Message> list = sim.getListMessages();
+		
+		for (Message msg: list){
+			
+			LinkedList<Node> path = msg.getPath();
+			if(path.size() >1){
+				for(int i = list.indexOf(msg);i <= list.size(); i++){
+					if(msg.getId() == list.get(i).getId()){
+						sim.getStatusWindow().append("Removed: " + list.get(i).getId());
+						path.remove(list.get(i));
+						sim.update();
+						msg.decCount();
+					}
+				}	
+			}
+		}
 	}
 
 }
