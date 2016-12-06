@@ -28,13 +28,13 @@ TEAM LOGISTICS
 	Adam Staples
 		- Implemented Fourth algorithm, Dijkstras Algorithm
 		- Readme updates
-		- UML updates
+		- Added undo to Dijkstra's and Random algorithms, undo for Flood and Shortest Path algorithm partially implemented 
 		
 	Alex Cournoyer
 		- XML importing and exporting, opening and saving
 		- Refactored the Command portion of the code further
 		- UML Diagrams
-		- Changed the GUI to a Tab pane with a simulation per tab 
+		- Changed the GUI to a Tabbed pane with a simulation per tab 
 	
 	Daman Singh
 		-Updated Javadoc for the GUI
